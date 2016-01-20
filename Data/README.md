@@ -22,3 +22,5 @@ Small data files for Deleterious Mutations 2.
 - Population_Schematic.pdf
     - A sketch of the history of the population being studied. Hand-drawn by
     Tyler Tiede. May be re-drawn in OmniGraffle eventually.
+- Population_Schematic_OG.pdf
+    - The same as above, but re-drawn in Omnigraffle.
