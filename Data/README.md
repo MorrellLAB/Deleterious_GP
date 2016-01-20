@@ -1,7 +1,7 @@
 # Deleterious_GP/Data
 Small data files for Deleterious Mutations 2. 
 ## Directories:
-- Genotypic_Data/
+- Genotyping_Data/
     - Progeny genotype data for three cycles of genomic selection. Genotyped at
     384 BOPA SNPs. Both [Alchemy](http://alchemy.sourceforge.net/) and curated
     calls from K. Beaubien are included.
