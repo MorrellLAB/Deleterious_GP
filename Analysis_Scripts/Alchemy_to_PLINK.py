@@ -33,9 +33,29 @@ class PedFile(object):
             #   Note: the way we slice up the sample name to get family ID and
             #   individual ID will vary from cycle to cycle. Naming conventions
             #   are slightly different.
+            #       Cycle 1: G10WXXX-YY
+            #           G: ?
+            #           10: 2010
+            #           W: ?
+            #           XXX: Family ID
+            #           YY: Line ID
+            #       Cycle 2: MS11S2XXX-YYY
+            #           M: Minnesota
+            #           S: Spring
+            #           11: 2011
+            #           S2: 2nd gen. selfing (F3)
+            #           XXX: Family ID
+            #           YYY: Line ID
+            #       Cycle 3: MS12_2XXX-YYY
+            #           M: Minnesota
+            #           S: Spring
+            #           12: 2012
+            #           2: S2 (F3)
+            #           XXX: Family ID
+            #           YYY: Line ID
             self.ped_data[ind_id] = {
-                'familyid': ind_id[3:7],
-                'individualid': ind_id[-2:],
+                'familyid': ind_id[6:9],
+                'individualid': ind_id[-3:],
                 'paternalid': self.missing,
                 'maternalid': self.missing,
                 'sex': self.missing,
