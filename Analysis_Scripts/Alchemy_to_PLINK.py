@@ -27,9 +27,12 @@ class PedFile(object):
         dictionary to hold genetic data. We use a dictionary so that we can
         ensure agreement between the PED and the MAP files."""
         #   Watch out for duplicate entries
-        if ind_id in self.ped_data:
+        if ind_id in self.ped_data or ind_id == 'Blank':
             return
         else:
+            #   Note: the way we slice up the sample name to get family ID and
+            #   individual ID will vary from cycle to cycle. Naming conventions
+            #   are slightly different.
             self.ped_data[ind_id] = {
                 'familyid': ind_id[3:7],
                 'individualid': ind_id[-2:],
