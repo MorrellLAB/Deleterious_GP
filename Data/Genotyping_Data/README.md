@@ -2,7 +2,10 @@
 Genotyping data for Deleterious Mutations 2. 
 
 Contains both [ALCHEMY](http://alchemy.sourceforge.net/) and curated genotype
-calls for each cycle of the genomic prediction experiment. 
+calls for each cycle of the genomic prediction experiment. Also contains the
+genetic map and GoldenPath (proxy for physical position) for each of the
+genotyped SNPs from [HarvEST](http://harvest.ucr.edu/), according to the
+consensus genetic map from [Muñoz-Amatriaín et al. 2011](https://dl.sciencesocieties.org/publications/tpg/articles/4/3/238).
 
 The parameters for running ALCHEMY are as follows:
 - ALCHEMY v. 1.07
