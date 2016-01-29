@@ -32,4 +32,10 @@ By running
     $ qsub -t 0-10 my_script.job
 
 you will submit the script to the queue, and run 11 total jobs, one for each
-value of `${PBS_ARRAYID}` from 0 to 10, inclusive.
+value of `${PBS_ARRAYID}` from 0 to 10, inclusive. If you run `qstat`, you will
+see `[]` after your job ID, which tells you it is an array job.
+
+To delete jobs from a task array, you can specify the array index as part of the
+`qdel` command. `qdel 12345[0]` will delete the first job out of the array. You
+can supposedly specify ranges here, so `qdel 12345[0-10]` should work, too, but
+I haven't seen that work on MSI.
