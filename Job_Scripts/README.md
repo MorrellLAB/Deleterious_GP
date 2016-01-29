@@ -12,8 +12,9 @@ submission with a loop perform effectively the same thing, but do not require
 the user to maintain a separate script for each job.
 
 To use a task array, use the `-t [RANGE]` option with `qsub`. Within the script,
-the variable `${PBS_ARRAYID}` will take values as specified in `[RANGE]`. For
-instance, a script called `my_script.job` may contain the following lines:
+the variable `${PBS_ARRAYID}` will take values as specified in `[RANGE]`. The
+submitted script must contain some special variables for task arrays to work. 
+For instance, a script called `my_script.job` may contain the following lines:
 
 ```bash
 SAMPLES=$(cat /path/to/sample/list.txt)
