@@ -1,0 +1,75 @@
+#!/bin/sh
+#PBS -l mem=8gb,nodes=1:ppn=1,walltime=2:00:00
+#PBS -m abe
+#PBS -M konox006@umn.edu
+#PBS -q lab
+
+#   Programs and versions
+SAMTOOLS=${HOME}/Soft/samtools/samtools
+PICARD=${HOME}/Soft/picard-tools-2.0.1/picard.jar
+
+#	Picard now requires a version of java that is not used by default on MSI
+module load java
+
+#   We will use a PBS Task Array to handle batch submission of these alignment
+#   jobs. It is a nicer way to submit groups of jobs without having to use
+#   a for loop. To populate our array, we will get the contents of the reads
+#   directory
+SAM_DIR=/scratch/tkono/Genomic_Prediction/Aligned
+OUTPUT_DIR=/scratch/tkono/Genomic_Prediction/Cleaned
+#   Get just the sample names and store them in an array. $() does command
+#   substitution, and ($()) will convert that output into an array that we can
+#   fetch data from.
+#   Sample names are the first field before an underscore.
+SAMPLE_NAMES=($(/bin/ls -1 ${SAM_DIR} | grep '.sam' | cut -f 1 -d '_' | uniq))
+#   The sample to analyze is the value of the ${PBS_ARRAYID} variable
+SAMPLE=${SAMPLE_NAMES[${PBS_ARRAYID}]}
+#   Build the paths to the SAM file
+ALIGN_DATE="2016-01-23"
+SAMFILE=${SAM_DIR}/${SAMPLE}_${ALIGN_DATE}.sam
+
+#	Build the output files for each program
+SAMTOOLS_OUT=${OUTPUT_DIR}/${SAMPLE}_${ALIGN_DATE}_trimmed.bam
+PICARD_SORT=${SAMTOOLS_OUT/.bam/_sorted.bam}
+PICARD_DUP=${PICARD_SORT/.bam/_nodup.bam}
+PICARD_DUP_MET=${SAMTOOLS_OUT/_trimmed.bam/_DuplicationMetrics.txt}
+PICARD_RG=${PICARD_DUP/.bam/_finished.bam}
+
+#	Print some nice metadata for this job
+echo "Node list stored in ${PBS_NODEFILE}"
+echo "Cores (servers) allocated to this job:"
+cat ${PBS_NODEFILE}
+echo "Cleaning ${SAMPLE}, with task ID of ${PBS_ARRAYID}."
+
+#	First, convert SAM to BAM, and remove reads we don't want to analyze
+#		-f 3: give only reads paired properly
+#		-F 256: excludes reads' secondary alignments (split hits etc.)
+${SAMTOOLS} view -f 3 -F 256 -bS ${SAMFILE} > ${SAMTOOLS_OUT}
+#	Then sort the file
+java -jar ${PICARD} SortSam\
+	INPUT=${SAMTOOLS_OUT}\
+	OUTPUT=${PICARD_SORT}\
+	SO="coordinate"\
+	CREATE_INDEX="true"
+
+#	And then remove duplicates
+java -jar ${PICARD} MarkDuplicates\
+	INPUT=${PICARD_SORT}\
+	OUTPUT=${PICARD_DUP}\
+	METRICS_FILE=${PICARD_DUP_MET}\
+	REMOVE_DUPLICATES="true"\
+	ASSUME_SORTED="true"\
+	CREATE_INDEX="true"
+
+#	Add read groups
+#		Most of the values in the RG tags are just the sample name. Could
+#		probably do that better.
+java -jar ${PICARD} AddOrReplaceReadGroups\
+	INPUT=${PICARD_DUP}\
+	OUTPUT=${PICARD_RG}\
+	RGID=${SAMPLE}\
+	RGLB=${SAMPLE}\
+	RGPL="illumina"\
+	RGPU=${SAMPLE}\
+	RGSM=${SAMPLE}\
+	CREATE_INDEX="true"

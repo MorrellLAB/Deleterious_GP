@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#PBS -l mem=15gb,nodes=1:ppn=8,walltime=12:00:00
+#PBS -m abe
+#PBS -M konox006@umn.edu
+#PBS -q lab
+
+SHARED=/home/morrellp/shared
+#   The file with the adapters
+export ADAPTERS=${SHARED}/Software/scythe/illumina_adapters.fa
+#	The path to scythe
+export SCYTHE=${SHARED}/Software/scythe/scythe
+#   The prior contamination rate
+#   I use 0.05 (5%)
+export PRIOR=0.05
+#	For parallel processing
+module load parallel
+
+#	Directory where our reads are stored
+READS_DIR=/scratch.global/tkono/Genomic_Prediction/Reads
+#	Define a bash function for doing the scythe trimming
+#	since it is the same for each file, and we don't want to keep repeating
+
+scythetrim() {
+	READ=${1}
+	#	Make some named pipes to deal with gzip input
+	#	For some reason the shell that MSI uses doesn't understand the command
+	#	substitution and file descriptor syntax?
+	RNAME=${READ/.fastq.gz/_R}
+	mkfifo ${RNAME}
+	#	Start reading the gzip data into the R pipe
+	gzip -cd ${READ} > ${RNAME} &
+	#	Create file names for the output
+	TRIMMED=${READ/.fastq.gz/_ScytheTrimmed.fastq.gz}
+	MATCH=${READ/.fastq.gz/.match}
+	#	Start running scythe
+	${SCYTHE} -a ${ADAPTERS} -p ${PRIOR} -m ${MATCH} ${RNAME} --quiet | gzip -c > ${TRIMMED}
+}
+#   Export function so we can call it with parallel
+export -f scythetrim
+#	cd into the reads directory
+cd ${READS_DIR}
+#	Clean up any named pipes we already have
+find . -type p -exec rm {} \;
+#	Trim them in parallel and then gzip
+parallel scythetrim ::: *.fastq.gz
+#	And then remove the pipes
+find . -type p -exec rm {} \;

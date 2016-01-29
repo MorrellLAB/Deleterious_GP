@@ -1,0 +1,29 @@
+#!/bin/sh
+#PBS -l mem=15gb,nodes=1:ppn=8,walltime=2:00:00
+#PBS -m abe
+#PBS -M konox006@umn.edu
+#PBS -q lab
+
+#   ALCHEMY executable
+ALCHEMY=${HOME}/Shared/Software/alchemy-v1.07/alchemy
+#   Intensity file
+INTENSITY=Cycle_2_Alchemy_Report.txt
+#   SNP map
+SNP_MAP=Cycle_2_Alchemy_Report.map.txt
+#   Sample map
+SAMPLE_MAP=Cycle_2_Alchemy_Report.sample_map.txt
+#   Log file
+LOG=Cycle_2_Alchemy_Log.txt
+#   Output calls
+CALLS=Cycle_2_Alchemy_Calls.txt
+
+#   Project directory with input file
+cd ~/Projects/Genomic_Prediction/Data/Alchemy/Cycle_2
+
+${ALCHEMY} \
+	-f ${INTENSITY} \
+	-m ${SNP_MAP} \
+	-s ${SAMPLE_MAP} \
+	--illumina \
+	--log=${LOG} > \
+	${CALLS}
