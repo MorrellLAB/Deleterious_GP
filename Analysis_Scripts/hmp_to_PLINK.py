@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-"""Convert from the hapmap(?) format into PLINK PED format. In the original
-file, SNPs are rows and individuals are columns, and genotype calls are coded
-as -1, 0, 1."""
+"""Convert from the HMP format from T3 into PLINK PED files."""
 
 import sys
 
@@ -10,39 +8,43 @@ import sys
 missing = '0'
 pheno_missing = '-9'
 samplenames = []
-genotype_matrix = []
+genotype_matrix = {}
 
 with open(sys.argv[1], 'r') as f:
     for index, line in enumerate(f):
         tmp = line.strip().split('\t')
         if index == 0:
             #   In the first row, get the sample names.
-            samplenames = tmp[4:]
+            samplenames = tmp[11:]
         else:
-            #   Alleles are the second column, separated by a slash
-            alleles = tmp[1].split('/')
             gt = []
-            #   Convert from the -1/0/1 genotype calls to ATCG calls for PLINK
-            for g in tmp[4:]:
-                if g == '-1':
-                    #   Homozygous for the first allele
-                    gt.append(alleles[0] + '\t' + alleles[0])
-                elif g == '0':
-                    #   Heterozygous
-                    gt.append(alleles[0] + '\t' + alleles[1])
-                elif g == '1':
-                    #   Homozygous for the second allele
-                    gt.append(alleles[1] + '\t' + alleles[1])
-                elif g == 'NA':
-                    #   Missing
+            #   Convert to the tab-separated PLINK format
+            for g in tmp[11:]:
+                if g == 'NN':
                     gt.append(missing + '\t' + missing)
+                else:
+                    gt.append(g[0] + '\t' + g[1])
             #   Tack the genotypes onto our matrix
-            genotype_matrix.append(gt)
+            genotype_matrix[tmp[0]] = gt
+
+#   Which order should the SNPs be printed in? This should be from the PLINK
+#   .map file
+snporder = []
+with open(sys.argv[2], 'r') as f:
+    for line in f:
+        snporder.append(line.strip())
+
+ordered_geno = []
+for s in snporder:
+    if s in genotype_matrix:
+        ordered_geno.append(genotype_matrix[s])
+    else:
+        continue
 
 #   Print the .PED file, with missing values for family ID, maternal ID,
 #   paternal ID, and sex. zip() will transpose a matrix, now indiviuals are
 #   rows
-for l in zip(samplenames, *genotype_matrix):
+for l in zip(samplenames, *ordered_geno):
     towrite = [
         missing,
         l[0],
