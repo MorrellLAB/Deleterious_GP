@@ -57,9 +57,9 @@ def parse_peds(ped, cycle):
                 #   Cycle 1 names are MS10S3 + family ID + individual number
                 lineid = 'MS10S3' + tmp[0][1:] + '-0' + tmp[1]
             elif cycle == 2:
-                lineid = 'MS11S2' + tmp[0] + '-0' + tmp[1]
+                lineid = 'MS11S2' + tmp[0] + '-' + tmp[1]
             elif cycle == 3:
-                lineid = 'MS12_2' + tmp[0] + '-0' + tmp[1]
+                lineid = 'MS12_2' + tmp[0] + '-' + tmp[1]
             ped_data[lineid] = tmp[6:]
     return ped_data
 
@@ -172,8 +172,8 @@ def print_csv(s_names, chrom, cm, family, progeny):
 def main(pedigree, plink_map, parent, progeny):
     """Main function."""
     crosses = parse_pedigrees(pedigree)
-    parental_genotypes = parse_peds(parent, cycle=0)
-    progeny_genotypes = parse_peds(progeny, cycle=1)
+    parental_genotypes = parse_peds(parent, cycle=2)
+    progeny_genotypes = parse_peds(progeny, cycle=3)
     snpnames, snpchrom, snppos = parse_map(plink_map)
     families = {}
     for p in progeny_genotypes.items():
