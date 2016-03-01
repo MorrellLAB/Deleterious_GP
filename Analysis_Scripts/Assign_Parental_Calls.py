@@ -132,7 +132,7 @@ def print_csv(s_names, chrom, cm, family, progeny):
     to_drop = sorted(list(set(to_drop)))
     #   Then, write the data out to a csv file
     famname = family[0] + '_x_' + family[1]
-    handle = open(famname + '.csvs', 'w')
+    handle = open(famname + '.csv', 'w')
     #   Get the marker names to keep
     final_snps =  [s for i, s in enumerate(s_names) if i not in to_drop]
     #   And the chromosomes
@@ -141,8 +141,8 @@ def print_csv(s_names, chrom, cm, family, progeny):
     genotypes = []
     #   Then iterate through the progeny matrix, and build the genotypes
     for i, p in enumerate(progeny):
-        #   Start it off with a numerical ID, required for csvs format
-        prog_gen = [str(i+1)]
+        #   Start it off with NA, no phenotypic data.
+        prog_gen = ['NA']
         for marker, c in enumerate(p):
             if marker in to_drop:
                 continue
@@ -153,7 +153,7 @@ def print_csv(s_names, chrom, cm, family, progeny):
         genotypes.append(prog_gen)
     #   Then, print everything out
     handle.write(
-        ','.join(['id'] + final_snps) + '\n'
+        ','.join(['Phe'] + final_snps) + '\n'
         )
     handle.write(
         ',' + ','.join(final_chr) + '\n'
