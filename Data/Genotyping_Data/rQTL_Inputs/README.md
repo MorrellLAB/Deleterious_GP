@@ -17,3 +17,6 @@ cross <- read.cross(
     F.gen=3)
 ```
 
+Note that if you read the data in this way, then certain functions will not
+work. `checkAlleles()` and similar linkage map construction functions are only
+defined for F2 cross objects.
