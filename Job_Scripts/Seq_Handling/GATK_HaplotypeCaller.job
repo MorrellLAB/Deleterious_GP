@@ -1,0 +1,48 @@
+#!/bin/bash
+#PBS -l mem=48gb,nodes=1:ppn=16,walltime=36:00:00
+#PBS -m abe
+#PBS -M konox006@umn.edu
+#PBS -q mesabi
+
+module load java
+module load gatk
+
+#	Path to the reference
+REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.fasta
+#	The capture design
+CAP_DES=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference_ExCap_Design.bed
+
+BAM_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Recalibrated
+#	 Build the sample list
+SAMPLE_LIST=($(find ${BAM_DIR} -name '*_recal.bam'))
+CURRENT_SAMPLE=$(basename ${SAMPLE_LIST[${PBS_ARRAYID}]})
+SAMPLENAME=$(echo ${CURRENT_SAMPLE} | cut -f 1 -d '_')
+INFILE=${BAM_DIR}/${CURRENT_SAMPLE}
+OUTPUT_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/GVCFs
+
+mkdir -p ${OUTPUT_DIR}
+
+#	HaplotypeCaller options:
+#		-R Reference
+#		-L regions.bed: operate only over supplied regions
+#		-I Input file
+#		-o Output file
+#		--genotyping_mode DISCOVERY: call new variants
+#		--emitRefConfidence GVCF: output GLs instead of SNPs, useful for
+#		batch calling many samples later
+#		--heterozygosity 0.008: Use a prior on nucleotide diversity of 0.008/bp
+#		-nct 4: use 4 CPU threads
+
+export _JAVA_OPTIONS="-Xmx47g"
+java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar\
+	-T HaplotypeCaller\
+	-R ${REF}\
+	-L ${CAP_DES}\
+	-I ${INFILE}\
+	-o ${OUTPUT_DIR}/${SAMPLENAME}_RawGLs.g.vcf\
+	-nct 16\
+	--genotyping_mode DISCOVERY\
+	--heterozygosity 0.008\
+	--emitRefConfidence GVCF\
+	-variant_index_type LINEAR\
+	-variant_index_parameter 128000

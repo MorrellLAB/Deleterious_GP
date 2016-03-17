@@ -1,0 +1,67 @@
+#!/bin/sh
+
+#PBS -l mem=128gb,nodes=1:ppn=8,walltime=72:00:00
+#PBS -m abe
+#PBS -M konox006@umn.edu
+#PBS -q mesabi
+
+#	Required for Java
+module load java
+#	Path to the GATK
+#GATK=${HOME}/Shared/Software/GATK-3.5/GenomeAnalysisTK.jar
+
+#	Directory where finished BAM files are stored
+BAM_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Cleaned
+
+#	Build the sample list
+SAMPLE_LIST=($(find ${BAM_DIR} -name '*finished.bam'))
+#	Put them into a format that will be accepted by the GATK command line
+GATK_IN=()
+for s in "${SAMPLE_LIST[@]}"
+do
+	GATK_IN+=("-I $s")
+done
+
+#	The output targets file
+RTC_OUT=/panfs/roc/scratch/tkono/Genomic_Prediction/Cleaned/realign.intervals
+
+#	The known Indels file
+INDELS=${HOME}/Shared/Datasets/SNP_Calls/Hv_Known_Variants/18_Loci_Sanger_Indels.vcf
+#	The capture design file
+CAPTURE_DESIGN=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference_ExCap_Design.bed
+#	The reference sequence
+REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.fasta
+
+#	JAVA OPTIONS
+#	-Xmx[amount]	:	use [amount] of memory.
+#	-jar <file>		:	execute <file>, which is a jar file
+
+#	GATK OPTIONS
+#	-T RealignerTargetCreator
+#		Create a list of regions to realign
+#	-L Regions
+#		Operate only in the genomic intervals specified in this regions file
+#	-nct <int>
+#		Use <int> CPU cores
+#		NOTE: This option can make performance WORSE if the system is 
+#		IO-limited, and not compute-limited.
+#	-R <FASTA file>
+#		Where the reference sequence is stored
+#	-I <BAM file>
+#		The BAM file for which to create intervals
+#	-known <file>
+#		<file> contains known INDELs. VCF or BED format
+#	-o <file>
+#		Write the intervals to this file
+#		NOTE: This file must end in .list, .intervals, or .interval_list
+
+export _JAVA_OPTIONS="-Xmx127g -Djava.io.tmpdir=/panfs/roc/scratch/tkono/PICARD_TMP"
+java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar \
+	-T RealignerTargetCreator\
+	-L ${CAPTURE_DESIGN}\
+	-nt 1\
+	-R ${REF}\
+	${GATK_IN[@]}\
+	-known ${INDELS}\
+	-o ${RTC_OUT}
+

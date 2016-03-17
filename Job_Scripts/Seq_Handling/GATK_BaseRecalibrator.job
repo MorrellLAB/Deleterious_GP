@@ -1,0 +1,79 @@
+#!/bin/sh
+
+#PBS -l mem=24gb,nodes=1:ppn=8,walltime=8:00:00
+#PBS -m abe
+#PBS -M konox006@umn.edu
+#PBS -q lab
+
+#	Required for Java
+module load java
+module load gatk
+#	Path to the GATK
+#GATK=${HOME}/Shared/Software/GATK-3.5/GenomeAnalysisTK.jar
+
+#	Directory where finished BAM files are stored
+BAM_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Realigned
+#	And the output directory
+OUT_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Recalibrated
+
+#	 Build the sample list
+SAMPLE_LIST=($(find ${BAM_DIR} -name '*realigned.bam' -exec basename {} \;))
+CURRENT_SAMPLE=${SAMPLE_LIST[${PBS_ARRAYID}]}
+
+SAMPLENAME=$(echo ${CURRENT_SAMPLE} | cut -f 1 -d '_')
+INFILE=${BAM_DIR}/${CURRENT_SAMPLE}
+OUT_TAB=${OUT_DIR}/recal.table
+
+#	Previously known SNPs
+BMI_SNPS=${HOME}/Shared/Datasets/SNP_Calls/Hv_Known_Variants/BadMutationsI_SNP_Calls.vcf
+
+#	The capture design file
+CAPTURE_DESIGN=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference_ExCap_Design.bed
+#	The reference sequence
+REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.fasta
+
+#	Print some nice metadata for this job
+echo "Node list stored in ${PBS_NODEFILE}"
+echo "Cores (servers) allocated to this job:"
+cat ${PBS_NODEFILE}
+echo "Creating recalibration table for ${SAMPLENAME}."
+echo "The task ID for this job is ${PBS_ARRAYID}."
+
+
+#	Options
+#	-T BaseRecalibrator
+#		Use the base recalibrator program in GATK. This recalibrates base
+#		qualities based on empirical mismatches, accounting for real variation,
+#		as opposed to using machine-reported values. It should ideally correct
+#		for platform-dependent quality score bias.
+#	-R Ref
+#		The reference sequence
+#	--knownSites
+#		Known SNPs that do not penalize read qualities in the model.
+#	--covariate COV
+#		Analyze using this covariate. We will use the following:
+#		ContextCovariate: dinucleotide context
+#		CycleCovariate: Position in read
+#		QualityScoreCovariate: machine-reported quality
+#export _JAVA_OPTIONS="-Xmx23g"
+#java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar \
+#	-T BaseRecalibrator\
+#	-R ${REF}\
+#	--knownSites ${BMI_SNPS}\
+#	-I ${BAM_DIR}/Merged.bam\
+#	--covariate ContextCovariate\
+#	--covariate CycleCovariate\
+#	--covariate QualityScoreCovariate\
+#	--covariate ReadGroupCovariate\
+#	-o ${OUT_TAB}\
+#	-nct 16
+
+#	Then use the PrintReads tool to apply the recalibration
+export _JAVA_OPTIONS="-Xmx23g"
+java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar \
+	-T PrintReads\
+	-R ${REF}\
+	-I ${INFILE}\
+	-BQSR ${OUT_TAB}\
+	-o ${OUT_DIR}/${SAMPLENAME}_recal.bam\
+	-nct 16
