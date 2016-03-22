@@ -28,4 +28,4 @@ with open(sys.argv[1], 'r') as f:
             print '\t'.join(['id', 'Male', 'Female', 'Observed'])
         else:
             tmp = line.strip().split(',')
-            print '\t'.join([tmp[1], tmp[9], tmp[8], '1'])
+            print '\t'.join([tmp[1], tmp[8], tmp[7], '1'])
