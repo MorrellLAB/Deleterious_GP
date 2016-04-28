@@ -17,7 +17,7 @@ submitted script must contain some special variables for task arrays to work.
 For instance, a script called `my_script.job` may contain the following lines:
 
 ```bash
-SAMPLES=$(cat /path/to/sample/list.txt)
+SAMPLES=($(cat /path/to/sample/list.txt))
 CURRENT_SAMPLE=${SAMPLES[${PBS_ARRAYID}]}
 samtools view view -f 3 -F 256 -bS ${CURRENT_SAMPLE} > ${CURRENT_SAMPLE/sam/bam}
 ```

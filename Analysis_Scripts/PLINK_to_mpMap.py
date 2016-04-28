@@ -5,6 +5,7 @@ only takes 2, 4, or 8 founder lines. Therefore, the ped files that are fed to
 this script should be split by family."""
 
 import sys
+import os
 
 
 def atcg_to_numeric(ped, snpmap, missingval='0'):
@@ -58,9 +59,11 @@ def atcg_to_numeric(ped, snpmap, missingval='0'):
     return snp_numeric
 
 
-def create_mpmap_mat(ped, snpmap, num, cycle):
+def create_mpmap_mat(ped, snpmap, num, cycle, par=None):
     """Creates a genotyping matrix out of a PED file and the SNP map file.
-    Heterozygous sites are treated as missing data."""
+    Heterozygous sites are treated as missing data. 'par' is an optional
+    argument that denotes the parents. If it is supplied, then only the
+    specified samples will be printed."""
     snp_order = []
     with open(snpmap, 'r') as f:
         for line in f:
@@ -72,17 +75,15 @@ def create_mpmap_mat(ped, snpmap, num, cycle):
     with open(ped, 'r') as f:
         for line in f:
             tmp = line.strip().split('\t')
-            #   We do this complicated cycle check, since in each cycle the
-            #   individuals have slightly different names.
-            if cycle == 0:
+            if not par:
                 samples.append(tmp[1])
-            elif cycle == 1:
-                samples.append('MS10S3' + tmp[0][1:] + '-0' + tmp[1])
-            elif cycle == 2:
-                samples.append('MS11S2' + tmp[0] + '-' + tmp[1])
-            elif cycle == 3:
-                samples.append('MS12_2' + tmp[0] + '-' + tmp[1])
-            g_mat.append(tmp[6:])
+                g_mat.append(tmp[6:])
+            else:
+                if tmp[1] in par:
+                    samples.append(tmp[1])
+                    g_mat.append(tmp[6:])
+                else:
+                    continue
     g_mat_t = zip(*g_mat)
     founder_mat = []
     for snpid, col in zip(snp_order, xrange(0, len(g_mat_t), 2)):
@@ -107,24 +108,35 @@ def create_map(snpmap):
     return m_map
 
 
+def get_parents(offspring):
+    """Gets the parental IDs from the offspring PED. These will be written to
+    the "founder" matrix. We just read the first line since the PED files
+    should all be split by family already."""
+    with open(offspring, 'r') as f:
+        for line in f:
+            tmp = line.strip().split()
+            return tmp[2:4]
+
+
 def main(parents, offspring, snpmap):
     """Main function."""
     snp_num = atcg_to_numeric(parents, snpmap)
-    founders = create_mpmap_mat(parents, snpmap, snp_num, 0)
+    par = get_parents(offspring)
+    founders = create_mpmap_mat(parents, snpmap, snp_num, 0, par=par)
     final = create_mpmap_mat(offspring, snpmap, snp_num, 1)
     m_map = create_map(snpmap)
     #   Write the output to tab-separated files
-    founder_fname = parents.replace('.ped', '_mpMap.txt')
+    founder_fname = os.path.basename(parents).replace('.ped', '_mpMap.txt')
     handle = open(founder_fname, 'w')
     for row in founders:
         handle.write('\t'.join(row) + '\n')
     handle.close()
-    final_fname = offspring.replace('.ped', '_mpMap.txt')
+    final_fname = os.path.basename(offspring).replace('.ped', '_mpMap.txt')
     handle = open(final_fname, 'w')
     for row in final:
         handle.write('\t'.join(row) + '\n')
     handle.close()
-    map_fname = snpmap.replace('.map', '_mpMap.map')
+    map_fname = os.path.basename(snpmap).replace('.map', '_mpMap.map')
     handle = open(map_fname, 'w')
     for row in m_map:
         handle.write('\t'.join(row) + '\n')

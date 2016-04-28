@@ -1,8 +1,8 @@
 #!/bin/bash
-#PBS -l mem=256gb,nodes=1:ppn=24,walltime=72:00:00
+#PBS -l mem=768gb,nodes=1:ppn=1,walltime=72:00:00
 #PBS -m abe
 #PBS -M konox006@umn.edu
-#PBS -q mesabi
+#PBS -q ram1t
 
 module load java
 module load gatk
@@ -12,7 +12,7 @@ REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.f
 #	Path to the capture design
 CAP_DES=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference_ExCap_Design.bed
 #	Path to directory containing GVCFs
-GVCF_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/GVCFs
+GVCF_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/GVCFs/
 #	 Build the sample list
 SAMPLE_LIST=($(find ${GVCF_DIR} -name '*.g.vcf'))
 #	Put them into a format that will be accepted by the GATK command line
@@ -34,7 +34,7 @@ mkdir -p ${OUTPUT_DIR}
 #		--sample_ploidy 1: treat samples as haploid (they are highly inbred)
 #		-nct 24: use 24 CPU threads
 
-export _JAVA_OPTIONS="-Xmx255g"
+export _JAVA_OPTIONS="-Xmx767g"
 java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar\
 	-T GenotypeGVCFs \
 	-R ${REF} \
@@ -42,5 +42,4 @@ java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar\
 	${GATK_IN[@]}\
 	--heterozygosity 0.008\
 	--sample_ploidy 1\
-	-nt 24 \
-	-o ${OUTPUT_DIR}/BadMutationsII_FirstPassVariants_20Par.vcf
+	-o ${OUTPUT_DIR}/BadMutationsII_FirstPassVariants_${BP}.vcf
