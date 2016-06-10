@@ -74,7 +74,7 @@ def parse_map(p_map):
         for line in f:
             tmp = line.strip().split()
             #   Build up lists for outputting the map data as the header columns
-            #   in an r/QTL csvs file. The columns in a MAP file are, from 
+            #   in an r/QTL csvs file. The columns in a MAP file are, from
             #   left to right:
             #       Chromosome
             #       Marker name
@@ -134,7 +134,7 @@ def print_csv(s_names, chrom, cm, family, progeny):
     famname = family[0] + '_x_' + family[1]
     handle = open(famname + '.csv', 'w')
     #   Get the marker names to keep
-    final_snps =  [s for i, s in enumerate(s_names) if i not in to_drop]
+    final_snps = [s for i, s in enumerate(s_names) if i not in to_drop]
     #   And the chromosomes
     final_chr = [c for i, c in enumerate(chrom) if i not in to_drop]
     final_cm = [p for i, p in enumerate(cm) if i not in to_drop]
