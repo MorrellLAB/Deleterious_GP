@@ -16,6 +16,7 @@ plink2 --bfile Prog_Bin --flip Merged.missnp --make-bed --out Prog_Bin_Flipped -
 plink2 --bfile Parents_Bin --bmerge Prog_Bin_Flipped --out Merged_Flipped --allow-extra-chr
 plink2 --bfile Merged_Flipped --recode --out MS10S3001_Merged --allow-extra-chr
 python Fix_Map_Order.py MS10S3001.map MS10S3001_Merged.map MS10S3001_Merged.ped > MS10S3001_Reordered.ped
+python Flip_PED_Strand.py MS10S3001_Reordered.ped > MS10S3001_Reordered_Flipped.ped
 ```
 
 Use PLINK2 to merge the parents with the progeny, and check for potential flip
