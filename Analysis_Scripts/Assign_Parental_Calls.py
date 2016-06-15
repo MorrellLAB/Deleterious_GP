@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
-"""Takes PED files for the parental lines, and a CSV describing the pedigrees
-of the individuals in the genomic prediction experiment, and writes r/QTL input
-files (csvs format), with the genotypes polarized by parent. That is, the first
-parent gets the A allele, and the second parent gets the B allele. Will also
-remove markers that are monomorphic within familes. This script treats
-heterozyogosity in the parents as missing data. This will have to be examined
-more closely."""
+"""Reads a single family PED file (with parental lines) and writes a csvs input
+file for r/QTL. The genotypes are polarized by parent, with parent 1 getting the
+A allele, and parent 2 getting the B allele. The parents are not included in the
+output. The parents should be the first two lines in the PED file."""
 
 import sys
 
@@ -14,7 +11,7 @@ def usage():
     """Usage message. Prints if no arguments."""
     msg = """
 Usage:
-    Assign_Parental_Calls.py [parents.ped] [parents.map] [prog.ped] [prog.map]
+    Assign_Parental_Calls.py [ped] [map]
 
 Will write csv format data file for r/QTL, separated by family. Each data file
 will have A, B, and H calls polarized by parent, with the maternal parent
@@ -23,32 +20,19 @@ represented by A, paternal by B, and H for heterozygotes."""
     exit(1)
 
 
-def parse_pedigrees(pedigree_file):
-    """Reads a PED file, and returns a dictionary of the parental IDs,
-    keyed on progeny ID."""
-    pedigree = {}
-    with open(pedigree_file, 'r') as f:
-        for line in f:
-            tmp = line.strip().split('\t')
-            #   The second field is the line ID, the eighth is parent 1,
-            #   and the ninth is parent 2
-            famid = tmp[0]
-            lineid = tmp[1]
-            par1 = tmp[2]
-            par2 = tmp[3]
-            pedigree[lineid] = (par1, par2, famid)
-    return pedigree
-
-
-def parse_peds(ped, cycle):
-    """Reads the PLINK ped files, and returns a dictionary of genotyping
-    matrices, keyed on line ID."""
-    ped_data = {}
+def parse_peds(ped):
+    """Reads a PED file and returns a genotyping matrix with diploid calls."""
+    ped_data = []
     with open(ped, 'r') as f:
         for line in f:
             tmp = line.strip().split()
-            lineid = tmp[1]
-            ped_data[lineid] = tmp[6:]
+            calls = tmp[6:]
+            nsnps = len(calls)/2
+            genotypes = []
+            for i in range(0, nsnps):
+                dip = calls[2*i] + calls[1 + 2*i]
+                genotypes.append(dip)
+            ped_data.append(genotypes)
     return ped_data
 
 
@@ -74,117 +58,86 @@ def parse_map(p_map):
     return(marker_names, marker_chr, marker_cm)
 
 
-def assign_genotypes(p1_geno, p2_geno, progeny, par_snpnames, prog_snpnames):
-    """Assigns A for p1 allele, B for p2 for allele, and H for heterozygous
-    sites. Returns a copy of `progeny` with the calls replaced."""
-    #   Build a list of the indexes of the parental SNPs that are in the
-    #   progeny.
-    seg = [i
-           for i in xrange(0, len(par_snpnames))
-           if par_snpnames[i] in prog_snpnames]
-    #   Iterate through the three genotype rows and assign the appropriate
-    #   state to the progeny
-    new_genotypes = []
-    for i, j in enumerate(seg):
-        p1_bases = (p1_geno[2*j], p1_geno[2*j + 1])
-        p2_bases = (p2_geno[2*j], p2_geno[2*j + 1])
-        prog_bases = (progeny[2*i], progeny[2*i + 1])
-        print p1_bases, p2_bases, prog_bases
-        if '0' in prog_bases:
-            polarized = 'NA'
-        #   Then, if either of the parents are heterozygous, then call it
-        #   missing
-        elif len(set(p1_bases)) != 1 or len(set(p2_bases)) != 1:
-            polarized = 'NA'
-        elif prog_bases == p1_bases:
-            polarized = 'A'
-        elif prog_bases == p2_bases:
-            polarized = 'B'
-        #   We will assume that if the progeny has two different alleles, then
-        #   one came from each parent, and it is a true heterozygote
-        elif len(set(prog_bases)) != 1:
-            polarized = 'H'
+def assign_calls(ped_column):
+    """Assigns A/B/H to each progeny given its genotype and its parents'
+    genotypes. Heterozygous sites in the parents are treated as missing data."""
+    parent_1 = list(set(ped_column[0]))
+    parent_2 = list(set(ped_column[1]))
+    #   If either of the parents are heterozygous, then the whole column gets
+    #   missing data.
+    if len(parent_1) != 1 or len(parent_2) != 1:
+        return ['-'] * len(ped_column[2:])
+    #   Then, get the parental alleles
+    parent_1 = parent_1[0]
+    parent_2 = parent_2[0]
+    new_calls = []
+    for prog in ped_column[2:]:
+        #   If the progeny is the same as p1, it gets 'A'
+        if prog == 2*parent_1:
+            new_calls.append('A')
+        elif prog == 2*parent_2:
+            new_calls.append('B')
+        elif prog == parent_1 + parent_2 or prog == parent_2 + parent_1:
+            new_calls.append('H')
+        elif prog == '00':
+            new_calls.append('-')
+        elif prog != 2*parent_1:
+            new_calls.append('C')
+        elif prog != 2*parent_2:
+            new_calls.append('D')
         else:
-            polarized = '-'
-        new_genotypes.append(polarized)
-    return new_genotypes
+            new_calls.append('-')
+    return new_calls
 
 
-def print_csv(s_names, chrom, cm, family, progeny):
+def clean_matrix(genotypes, snpnames, snpchrom, snppos):
+    """Removes markers that are monomorphic."""
+    new_geno = []
+    new_names = []
+    new_chrom = []
+    new_pos = []
+    for g, n, c, p in zip(genotypes, snpnames, snpchrom, snppos):
+        if len(set(g)) == 1:
+            continue
+        else:
+            new_geno.append(g)
+            new_names.append(n)
+            new_chrom.append(c)
+            new_pos.append(p)
+    return (new_geno, new_names, new_chrom, new_pos)
+
+
+def print_csv(genotypes, snpnames, snpchrom, snppos):
     """Prints the genotyping matrix in csv format for r/QTL."""
-    to_drop = []
-    #   We will iterate through the progeny genotypes, and build up a list of
-    #   positions to drop from the genotyping matrix. Markers with 'NA' or
-    #   'monomorphic' calls will be removed.
-    for p in progeny:
-        for index, marker in enumerate(p):
-            if marker == 'monomorphic':
-                to_drop.append(index)
-    to_drop = sorted(list(set(to_drop)))
-    handle = open(family + '.csv', 'w')
-    #   Get the marker names to keep
-    final_snps = [s for i, s in enumerate(s_names) if i not in to_drop]
-    #   And the chromosomes
-    final_chr = [c for i, c in enumerate(chrom) if i not in to_drop]
-    final_cm = [p for i, p in enumerate(cm) if i not in to_drop]
-    genotypes = []
-    #   Then iterate through the progeny matrix, and build the genotypes
-    for i, p in enumerate(progeny):
-        #   Start it off with NA, no phenotypic data.
-        prog_gen = ['NA']
-        for marker, c in enumerate(p):
-            if marker in to_drop:
-                continue
-            elif c == 'NA':
-                prog_gen.append('-')
-            else:
-                prog_gen.append(c)
-        genotypes.append(prog_gen)
-    #   Then, print everything out
-    handle.write(
-        ','.join(['Phe'] + final_snps) + '\n'
-        )
-    handle.write(
-        ',' + ','.join(final_chr) + '\n'
-        )
-    handle.write(
-        ',' + ','.join(final_cm) + '\n'
-        )
-    for g in genotypes:
-        handle.write(','.join(g) + '\n')
-
-    #   Close that handle
-    handle.close()
+    #   First, print the marker names, with a 'Phe' in front for Phenotype. It
+    #   will be missing, but it is part of the r/QTL format
+    print ','.join(['Phe'] + snpnames)
+    #   Then print the marker chromosomes. We need an empty field in front for
+    #   the phenotype.
+    print ','.join([''] + snpchrom)
+    #   And then the marker positions
+    print ','.join([''] + snppos)
+    #   And then the genotyping data. We have to transpose it, since it is still
+    #   column-oriented.
+    for g in zip(*genotypes):
+        print ','.join(['NA'] + list(g))
     return
 
 
-def main(parent_ped, parent_map, progeny_ped, progeny_map):
+def main(ped, snp_map):
     """Main function."""
-    #   Get the pedigree from the progeny PED file. These will just be the
-    #   two parent IDs from the PED file.
-    crosses = parse_pedigrees(progeny_ped)
-    parental_genotypes = parse_peds(parent_ped, cycle=0)
-    progeny_genotypes = parse_peds(progeny_ped, cycle=1)
-    snpnames_par, snpchrom_par, snppos_par = parse_map(parent_map)
-    snpnames_prog, snpchrom_prog, snppos_prog = parse_map(progeny_map)
-    #   Assign A/B genotypes to each progeny
-    family = {}
-    for p in progeny_genotypes.iteritems():
-        polarized_progeny = assign_genotypes(
-            parental_genotypes[crosses[p[0]][0]],
-            parental_genotypes[crosses[p[0]][1]],
-            p[1],
-            snpnames_par,
-            snpnames_prog)
-        if crosses[p[0]][2] not in family:
-            family[crosses[p[0]][2]] = [polarized_progeny]
-        else:
-            family[crosses[p[0]][2]].append(polarized_progeny)
-#   Then, iterate through each family and remove monomorphic markers
-    for f, p in family.iteritems():
-        print_csv(snpnames_prog, snpchrom_prog, snppos_prog, f, p)
+    genotypes = parse_peds(ped)
+    snpnames, snpchrom, snppos = parse_map(snp_map)
+    #   Transpose the genotyping matrix
+    genotypes_t = zip(*genotypes)
+    #   Then assign A/B/H/- calls
+    polarized = [assign_calls(col) for col in genotypes_t]
+    cleaned_matrix, cleaned_names, cleaned_chrom, cleaned_pos = clean_matrix(
+        polarized, snpnames, snpchrom, snppos)
+    print_csv(cleaned_matrix, cleaned_names, cleaned_chrom, cleaned_pos)
+    return
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 3:
     usage()
 else:
-    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    main(sys.argv[1], sys.argv[2])

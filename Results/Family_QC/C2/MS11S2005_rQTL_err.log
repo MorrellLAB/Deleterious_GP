@@ -1,0 +1,45 @@
+Warning message:
+In summary.cross(cross) :
+  Some markers at the same position on chr 5H; use jittermap().
+Warning messages:
+1: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+2: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+3: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+4: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+5: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+6: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+7: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+Warning message:
+In summary.cross(cross) :
+  Some markers at the same position on chr 5H; use jittermap().
+Warning message:
+In summary.cross(pop) :
+  Some markers at the same position on chr 5H; use jittermap().
+Warning messages:
+1: In chisq.test(dat[1:3], p = init.geno[1:3]) :
+  Chi-squared approximation may be incorrect
+2: In chisq.test(dat[1:3], p = init.geno[1:3]) :
+  Chi-squared approximation may be incorrect
+3: In chisq.test(dat[1:3], p = init.geno[1:3]) :
+  Chi-squared approximation may be incorrect
+4: In chisq.test(dat[1:3], p = init.geno[1:3]) :
+  Chi-squared approximation may be incorrect
+5: In chisq.test(dat[1:3], p = init.geno[1:3]) :
+  Chi-squared approximation may be incorrect
+6: In chisq.test(dat[1:3], p = init.geno[1:3]) :
+  Chi-squared approximation may be incorrect
+Warning messages:
+1: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+2: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+3: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+4: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+5: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+6: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+7: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
