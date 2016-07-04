@@ -192,30 +192,44 @@ yield_plot_data <- melt(yield_plot_data)
 #   Then create a side-by-side boxplot for DON, and one for yield.
 pdf(
     file="DON_Boxplots.pdf",
-    width=6,
-    height=6)
+    width=4.75,
+    height=7)
 plt <- ggplot(
     don_plot_data,
     aes(x=factor(variable), y=value))
 plt + geom_boxplot(aes(fill=factor(Type))) +
     scale_fill_manual(
-        values=c("white", "grey"),
+        values=c("white", "red"),
         name="Type") +
     theme_bw() +
+    theme(
+        axis.text.x = element_text(colour="black",size=14,face="bold"),
+        axis.text.y = element_text(colour="black",size=14,face="bold"),
+        axis.title.y = element_text(colour="black", size=16, face="bold"),
+        axis.title.x = element_text(color="black", size=16, face="bold"),
+        legend.position="none"
+        ) +
     labs(x="Cycle", y="DON Concentration (ppm)")
 dev.off()
 
 pdf(
     file="Yield_Boxplots.pdf",
-    width=6,
-    height=6)
+    width=4.75,
+    height=7)
 plt <- ggplot(
     yield_plot_data,
     aes(x=factor(variable), y=value*53.7996))
 plt + geom_boxplot(aes(fill=factor(Type))) +
     scale_fill_manual(
-        values=c("white", "grey"),
+        values=c("white", "red"),
         name="Type") +
     theme_bw() +
+    theme(
+        axis.text.x = element_text(colour="black",size=14,face="bold"),
+        axis.text.y = element_text(colour="black",size=14,face="bold"),
+        axis.title.y = element_text(colour="black", size=16, face="bold"),
+        axis.title.x = element_text(color="black", size=16, face="bold"),
+        legend.position="none"
+        ) +
     labs(x="Cycle", y="Yield (kg/ha)")
 dev.off()
