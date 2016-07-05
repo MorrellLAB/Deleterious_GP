@@ -1,0 +1,61 @@
+ --Read the following data:
+	 24  individuals
+	 62  markers
+	 1  phenotypes
+ --Cross type: f2 
+null device 
+          1 
+ --Read the following data:
+	 24  individuals
+	 62  markers
+	 1  phenotypes
+ --Cross type: bcsft 
+    BC(0)F(3) cross
+
+    No. individuals:    24 
+
+    No. phenotypes:     1 
+    Percent phenotyped: 0 
+
+    No. chromosomes:    8 
+        Autosomes:      0 1H 2H 3H 4H 5H 6H 7H 
+
+    Total markers:      62 
+    No. markers:        1 1 22 4 9 3 8 14 
+    Percent genotyped:  96.8 
+    Genotypes (%):      AA:35.8  AB:28.5  BB:34.9  not BB:0.0  not AA:0.9 
+null device 
+          1 
+[1] "12_10650"
+[1] "11_21338" "11_20690"
+$`12_30155`
+[1] "12_31095"
+
+$`11_10326`
+[1] "12_30396"
+
+$`12_10447`
+[1] "11_21250" "11_11380"
+
+$`11_11086`
+[1] "11_10926"
+
+$`11_10221`
+[1] "11_20777" "12_30988"
+
+$`11_10208`
+[1] "11_20974" "12_31138"
+
+$`11_20545`
+[1] "12_30566"
+
+$`11_10427`
+[1] "12_30361"
+
+$`12_31450`
+[1] "12_30496"
+
+null device 
+          1 
+null device 
+          1 

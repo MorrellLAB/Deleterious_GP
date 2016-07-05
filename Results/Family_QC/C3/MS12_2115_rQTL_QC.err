@@ -1,0 +1,31 @@
+Warning message:
+In summary.cross(cross) :
+  Some markers at the same position on chr 2H,5H; use jittermap().
+Warning messages:
+1: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+2: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+3: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+4: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+5: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+6: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+7: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
+Warning message:
+In summary.cross(cross) :
+  Some markers at the same position on chr 2H,5H; use jittermap().
+Warning message:
+In summary.cross(pop) :
+  Some markers at the same position on chr 2H,5H; use jittermap().
+There were 36 warnings (use warnings() to see them)
+Warning messages:
+1: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+2: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+3: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+4: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+5: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.
+6: In plotGeno(pop, chr = chr, include.xo = FALSE) :
+  First running calc.errorlod.

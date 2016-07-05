@@ -1,9 +1,0 @@
-Warning message:
-In summary.cross(cross) :
-  Some markers at the same position on chr 5H; use jittermap().
-Error in cross$geno[[i]] : subscript out of bounds
-Calls: plotGeno -> top.errorlod -> %in% -> match
-In addition: Warning messages:
-1: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
-2: In plotGeno(pop_pre, chr = chr) : First running calc.errorlod.
-Execution halted
