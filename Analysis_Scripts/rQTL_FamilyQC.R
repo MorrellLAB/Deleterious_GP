@@ -6,6 +6,7 @@
 library(qtl)
 args <- commandArgs(TRUE)
 
+all_chr_names <- c("1H", "2H", "3H", "4H", "5H", "6H", "7H")
 #   First, read in the cross object as an F2. We want to at least plot the
 #   genotype distribution across the chromosomes.
 pop_pre <- read.cross(
@@ -17,12 +18,22 @@ pdf(
     height=15,
     width=15)
 par(mfrow=c(4, 2))
-for(chr in chrnames(pop_pre)) {
-    plotGeno(pop_pre, chr=chr)
+par(mfrow=c(4, 2))
+for(chr in all_chr_names) {
+    if(chr %in% chrnames(pop_pre)) {
+        if(length(pop_pre[["geno"]][[chr]][["map"]]) == 1) {
+            plot(0, 0, type="n", main=paste("Chromosome ", chr))
+        }
+        else {
+            plotGeno(pop_pre, chr=chr)
+        }
+    }
+    else {
+        plot(0, 0, type="n", main=paste("Chromosome ", chr))
+    }
 }
 dev.off()
 
-all_chr_names <- c("1H", "2H", "3H", "4H", "5H", "6H", "7H")
 
 #   In our case, the cross type will be of 'bcsft' - meaning s generation of
 #   backcrossing, and t generations of self fertilization. We use s=0 and t=3

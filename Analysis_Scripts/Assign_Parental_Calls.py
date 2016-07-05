@@ -72,19 +72,28 @@ def assign_calls(ped_column):
     parent_2 = parent_2[0]
     new_calls = []
     for prog in ped_column[2:]:
+        #   If the parents are identical, skip the marker. But we have to use
+        #   a placeholder value so that our genotypes do not get out of sync
+        #   with the map
+        if parent_1 == parent_2:
+            new_calls.append('DROP')
         #   If the progeny is the same as p1, it gets 'A'
-        if prog == 2*parent_1:
+        elif prog == 2*parent_1:
             new_calls.append('A')
+        #   p2 gets B
         elif prog == 2*parent_2:
             new_calls.append('B')
+        #   hets get H
         elif prog == parent_1 + parent_2 or prog == parent_2 + parent_1:
             new_calls.append('H')
-        elif prog == '00':
-            new_calls.append('-')
-        elif prog != 2*parent_1:
+        #   If the progeny is NOT p1, but has p2, then we know it's not p1/p1,
+        #   and gets C
+        elif parent_1 not in prog and parent_2 in prog:
             new_calls.append('C')
-        elif prog != 2*parent_2:
+        #   if not p2, then D
+        elif parent_2 not in prog and parent_1 in prog:
             new_calls.append('D')
+        #   Everything else is missing
         else:
             new_calls.append('-')
     return new_calls
