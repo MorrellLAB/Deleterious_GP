@@ -102,6 +102,75 @@ get_marker_spacing <- function(cross) {
     return(spacing)
 }
 
+#   Define a function to return which chromosome arms we lose or do not have
+#   coverage of with markers for whatever reason. Requires a cross object, and
+#   a dataframe with the chromosome arm assignments of the SNPs. Threshold is
+#   an optional argument with the cM distance between adjacent markers to be
+#   considered as "unobservable." Defaults to 25 cM for the F3.
+unobservable_regions <- function(cross, armpos, threshold=25) {
+    #   Define a sub-function to calculate the average interval
+    intervals <- function(distances) {
+        sp <- sapply(
+            seq_along(distances)[1:length(distances)-1],
+            function(d) {
+                return(distances[d+1] - distances[d])
+            }
+        )
+    }
+    arms <- levels(armpos$Arm)
+    #   Get the markers and their arms
+    segmarkers <- markernames(cross)
+    #   For each arm, we find the start and end, use them as endpoints for
+    #   checking our interval. This is a matrix with named dimensions - the
+    #   rows are 'Min' and 'Max' and the columns are chromosome arms
+    endpoints <- sapply(arms, function(x) {
+        return(
+            c(
+                Min=min(armpos[armpos$Arm==x, "X2011cM"], na.rm=T),
+                Max=max(armpos[armpos$Arm==x, "X2011cM"], na.rm=T)
+                )
+            )
+        })
+    #   then, for each chromosome arm, we want to figure out whether or not
+    #   we lose it in the family
+    dropped <- sapply(arms, function(x, crs=cross, t=threshold) {
+        #   Get all the markers that are on that arm
+        onarm <- as.character(armpos[armpos$Arm == x, "QuerySNP"])
+        #   Remove missing values and duplicates
+        onarm <- unique(onarm[!is.na(onarm)])
+        #   Get only the ones that are in this population
+        inpop_onarm <- segmarkers[segmarkers %in% onarm]
+        #   Then the positions
+        inpop_onarm_pos <- find.markerpos(crs, inpop_onarm)
+        #   And get their spacing
+        spacing <- intervals(
+            c(endpoints["Min", x], sort(inpop_onarm_pos$pos), endpoints["Max", x])
+            )
+        #   If any of the spacing is above the threshold, return TRUE, else
+        #   return false
+        if(any(spacing > t)) {
+            return(TRUE)
+        }
+        else {
+            return(FALSE)
+        }
+    })
+    #   Then, we want to return which arms were dropped
+    dropped <- names(which(dropped))
+    if(length(dropped) == 0) {
+        return(NA)
+    }
+    else {
+        return(dropped)
+    }
+}
+
+
+#   Read in the genetic position file, which has chromosome and arm info for
+#   each of the genotyped SNPs, except for those on 1H. This path is relative
+#   to the GitHub repo.
+arms <- read.table("/Users/tomkono/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/HarvEST_384_ProgenySNPs.txt", header=T)
+
 #   Read in all the crosses
 c1_fnames <- list.files("Cycle_1", pattern="*.csv", full.names=TRUE)
 c2_fnames <- list.files("Cycle_2", pattern="*.csv", full.names=TRUE)
@@ -156,10 +225,23 @@ c1_marker_spacing <- lapply(c1_crosses, get_marker_spacing)
 c2_marker_spacing <- lapply(c2_crosses, get_marker_spacing)
 c3_marker_spacing <- lapply(c3_crosses, get_marker_spacing)
 
+#   Figure out which chromsome arms should be dropped
+c1_dropped_arms <- lapply(c1_crosses, unobservable_regions, armpos=arms)
+c2_dropped_arms <- lapply(c2_crosses, unobservable_regions, armpos=arms)
+c3_dropped_arms <- lapply(c3_crosses, unobservable_regions, armpos=arms)
+
 #   Finally, put it all together into a data frame
 pop_summary <- data.frame(
     Cycle=c(rep(1, length(c1_fnames)), rep(2, length(c2_fnames)), rep(3, length(c3_fnames))),
     FamilyID=c(c1_famids, c2_famids, c3_famids),
+    DroppedArms=c(
+        unlist(lapply(c1_dropped_arms, function(x) return(paste(x, collapse=",")))),
+        unlist(lapply(c2_dropped_arms, function(x) return(paste(x, collapse=",")))),
+        unlist(lapply(c3_dropped_arms, function(x) return(paste(x, collapse=","))))),
+    NumDroppedArms=c(
+        sapply(c1_dropped_arms, function(x) {if(is.na(x)) {return(0)} else {return(length(x))}}),
+        sapply(c2_dropped_arms, function(x) {if(is.na(x)) {return(0)} else {return(length(x))}}),
+        sapply(c3_dropped_arms, function(x) {if(is.na(x)) {return(0)} else {return(length(x))}})),
     NMarkers=c(c1_nmarkers, c2_nmarkers, c3_nmarkers),
     NMarkers_1H=c(
         unlist(lapply(c1_chr_nmarkers, function(x) return(x[["1H"]]))),
@@ -255,3 +337,52 @@ write.table(
     row.names=FALSE,
     quote=FALSE,
     sep="\t")
+
+#   Make some barplots
+make_barplot <- function(threshold) {
+    fname <- paste("Dropped_Arms_", threshold, "cM_Threshold.pdf", sep="")
+    title <- paste(threshold, "cM Threshold for Excluding a Chromosome Arm")
+    c1_dat <- table(unlist(lapply(c1_crosses, unobservable_regions, armpos=arms, threshold=threshold)))
+    c2_dat <- table(unlist(lapply(c2_crosses, unobservable_regions, armpos=arms, threshold=threshold)))
+    c3_dat <- table(unlist(lapply(c3_crosses, unobservable_regions, armpos=arms, threshold=threshold)))
+    plot_data <- as.data.frame(
+    cbind(
+        c1_dat,
+        c2_dat,
+        c3_dat
+        )
+    )
+    pdf(
+        file=fname,
+        width=11,
+        height=8
+    )
+    plt <- barplot(
+        t(plot_data),
+        ylim=c(0, 65),
+        beside=TRUE,
+        axisnames=F,
+        xlab="Chromosome Arm",
+        ylab="Number of Families Failing Threshold",
+        main=title,
+        col=c("white", "grey60", "black")
+        )
+    labels <- as.character(levels(arms$Arm))
+    at <- apply(plt, 2, mean)
+    axis(
+        side=1,
+        at=at,
+        labels=labels,
+        font=1,
+        cex.axis=0.75
+        )
+    legend(
+        "topright",
+        c("Cycle 1", "Cycle 2", "Cycle 3"),
+        fill=c("white", "grey60", "black"),
+        cex=1.0
+        )
+    dev.off()
+}
+
+sapply(c(10, 20, 30, 40, 50), make_barplot)
