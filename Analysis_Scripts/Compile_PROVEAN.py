@@ -3,6 +3,7 @@
 
 import sys
 import os
+import math
 
 effects_table = sys.argv[1]
 pred_dir = sys.argv[2]

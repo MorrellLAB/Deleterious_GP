@@ -342,9 +342,9 @@ write.table(
 make_barplot <- function(threshold) {
     fname <- paste("Dropped_Arms_", threshold, "cM_Threshold.pdf", sep="")
     title <- paste(threshold, "cM Threshold for Excluding a Chromosome Arm")
-    c1_dat <- table(unlist(lapply(c1_crosses, unobservable_regions, armpos=arms, threshold=threshold)))
-    c2_dat <- table(unlist(lapply(c2_crosses, unobservable_regions, armpos=arms, threshold=threshold)))
-    c3_dat <- table(unlist(lapply(c3_crosses, unobservable_regions, armpos=arms, threshold=threshold)))
+    c1_dat <- table(unlist(lapply(c1_crosses, unobservable_regions, armpos=arms, threshold=threshold)))/length(c1_crosses)
+    c2_dat <- table(unlist(lapply(c2_crosses, unobservable_regions, armpos=arms, threshold=threshold)))/length(c2_crosses)
+    c3_dat <- table(unlist(lapply(c3_crosses, unobservable_regions, armpos=arms, threshold=threshold)))/length(c3_crosses)
     plot_data <- as.data.frame(
     cbind(
         c1_dat,
@@ -359,11 +359,11 @@ make_barplot <- function(threshold) {
     )
     plt <- barplot(
         t(plot_data),
-        ylim=c(0, 65),
+        ylim=c(0, 1.2),
         beside=TRUE,
         axisnames=F,
         xlab="Chromosome Arm",
-        ylab="Number of Families Failing Threshold",
+        ylab="Proportion of Families Failing Threshold",
         main=title,
         col=c("white", "grey60", "black")
         )

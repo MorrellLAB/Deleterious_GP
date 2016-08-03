@@ -3,6 +3,7 @@
 assign full family ID and line IDs in the PED files."""
 
 import sys
+import math
 
 ped = {}
 with open(sys.argv[1], 'r') as f:
