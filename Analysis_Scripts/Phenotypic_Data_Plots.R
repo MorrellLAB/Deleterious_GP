@@ -196,12 +196,16 @@ pdf(
     height=7)
 plt <- ggplot(
     don_plot_data,
-    aes(x=factor(variable), y=value))
-plt + geom_boxplot(aes(fill=factor(Type))) +
+    aes(x=factor(variable), y=value, fill=factor(Type)))
+plt + geom_boxplot() +
+    geom_point(aes(color=factor(Type)), pch=19, alpha=0.5, position=position_jitterdodge()) +
     scale_fill_manual(
-        values=c("white", "red"),
+        values=c("white", "grey"),
         name="Type") +
     theme_bw() +
+    scale_color_manual(
+        values=c("black", "red"),
+        name="Type") +
     theme(
         axis.text.x = element_text(colour="black",size=14,face="bold"),
         axis.text.y = element_text(colour="black",size=14,face="bold"),
@@ -218,10 +222,14 @@ pdf(
     height=7)
 plt <- ggplot(
     yield_plot_data,
-    aes(x=factor(variable), y=value*53.7996))
-plt + geom_boxplot(aes(fill=factor(Type))) +
+    aes(x=factor(variable), y=value*53.7996, fill=factor(Type)))
+plt + geom_boxplot() +
+    geom_point(aes(color=factor(Type)), pch=19, alpha=0.5, position=position_jitterdodge()) +
     scale_fill_manual(
-        values=c("white", "red"),
+        values=c("white", "grey"),
+        name="Type") +
+    scale_color_manual(
+        values=c("black", "red"),
         name="Type") +
     theme_bw() +
     theme(
