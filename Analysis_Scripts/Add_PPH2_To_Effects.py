@@ -27,6 +27,7 @@ with open(pph_table, 'r') as f:
             v = tmp[14]
             pph_data[k] = v
 
+
 #   Then iterate through the effects table and print out the PPH prediction at
 #   the end of the table.
 with open(effect_table, 'r') as f:
@@ -39,8 +40,10 @@ with open(effect_table, 'r') as f:
             #   Rebuild the key for looking up PPH2 predictions. Be aware that
             #   the transcript name has to hvae full stops replaced with
             #   underscores.
-            tid = tmp[4].replace('.', '_')
-            k = (tid, tmp[10], tmp[8], tmp[9])
+            # tid = tmp[4].replace('.', '_')
+            #   We don't need to do the replacement anymore!
+            tid = tmp[4]
+            k = (tid, tmp[10], tmp[9], tmp[8])
             if k in pph_data:
                 towrite = line.strip() + '\t' + pph_data[k]
             else:

@@ -3,20 +3,20 @@
 
 import sys
 import os
-import math
 
 effects_table = sys.argv[1]
 pred_dir = sys.argv[2]
 
+
+#   Set this to the extnesion that contains the PROVEAN prediction output
+prov_extension = '.out'
 #   Get the prediction files out of the predictions directory
 pred_dir_contents = os.listdir(pred_dir)
 pred_files = [
     fname
     for fname
     in pred_dir_contents
-    if fname.endswith('_prov_out.txt')]
-    #   Note that _prov_out.txt is my file extension. When others run PROVEAN
-    #   they will have different extensions
+    if fname.endswith(prov_extension)]
 
 provean_predictions = {}
 #   Then, iterate through the files and open them up, and save the prediction
