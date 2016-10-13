@@ -38,7 +38,7 @@ nonsense <- as.character(nonsense[!is.na(nonsense)])
 a <- intersect(lrt, provean)
 b <- intersect(a, pph2)
 
-print(c(LRT=length(lrt), PROVEAN=length(provean), PPH2=length(pph2), Nonsense=length(nonsense)))
+print(c(LRT=length(lrt), PROVEAN=length(provean), PPH2=length(pph2), Intersect=length(b), Nonsense=length(nonsense)))
 
 #   append the nonsense SNPs to the vector of deleterious IDs
 del <- c(b, nonsense)

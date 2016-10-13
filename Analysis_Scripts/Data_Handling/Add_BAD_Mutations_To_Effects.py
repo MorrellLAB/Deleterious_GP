@@ -14,9 +14,7 @@ with open(bad_mutations_table, 'r') as f:
             header = line.strip().split()
         else:
             tmp = line.strip().split()
-            #   Key on transcript ID and position. Since HyPhy chokes on . in
-            #   gene names, we had to replace . with _. We fix that now
-            txid = '.'.join(tmp[0].rsplit('_', 1))
+            txid = tmp[0]
             #   And get the CDS position
             cdspos = tmp[1]
             if txid not in bad_mutations_data:
@@ -37,7 +35,7 @@ with open(effect_table, 'r') as f:
                 print line.strip() + '\t' + '\t'.join(['NA']*11)
             else:
                 txid = tmp[4]
-                cdspos = tmp[10]
+                cdspos = tmp[12]
                 if txid not in bad_mutations_data:
                     print line.strip() + '\t' + '\t'.join(['NA']*11)
                 elif cdspos not in bad_mutations_data[txid]:
