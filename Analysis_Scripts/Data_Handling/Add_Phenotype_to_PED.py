@@ -19,9 +19,8 @@ with open(sys.argv[1], 'r') as f:
             #   Some cycle 1 names start with G10W instead of MS10S3
             if lineid.startswith('G10W'):
                 lineid = lineid.replace('G10W', 'MS10S3')
-            elif lineid.startswith('MS11S2'):
-                #   And some cycle 2 names start with MS11S2 instead of MS11S3
-                lineid = lineid.replace('MS11S2', 'MS11S3')
+            elif lineid.startswith('MS11S3'):
+                lineid = lineid.replace('MS11S3', 'MS11S2')
             #   Then, the line ID in the pedigree file has a leading 0, and in
             #   the yield data it does not. But only in some cases.
             if lineid.startswith('MS'):
@@ -31,10 +30,10 @@ with open(sys.argv[1], 'r') as f:
                         lineid = parts[0] + '-0' + parts[1]
             #   If the phenotype column is missing, then we skip it and move on
             #   to the next row.
-            if tmp[2] == 'NA':
+            if tmp[5] == 'NA':
                 continue
             else:
-                phen = float(tmp[2])
+                phen = float(tmp[5])
                 phenotype[lineid] = phen
 
 #   Iterate through the PED file, and drop in the phenotype data.

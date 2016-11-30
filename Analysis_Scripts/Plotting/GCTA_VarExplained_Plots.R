@@ -3,9 +3,9 @@
 #   classes.
 
 #   Set working directory
-#setwd("/Users/tomkono/DataDisk/Dropbox/Projects/DM_GenomicPrediction/Data/Progeny_Genotypes/GCTA")
+setwd("/Users/tomkono/DataDisk/Dropbox/Projects/DM_GenomicPrediction/Data/Progeny_Genotypes/GCTA/Yield")
 #setwd("/home/tom/DataDisk/Dropbox/Projects/DM_GenomicPrediction/Data/Progeny_Genotypes/GCTA")
-setwd("/Volumes/Data_Disk/VBox_Shared/PropPheno")
+#setwd("/Volumes/Data_Disk/VBox_Shared/PropPheno/DON")
 #   Load ggplot2
 library(ggplot2)
 
@@ -27,8 +27,8 @@ plot_data <- data.frame(
         rep("All", length(all_snps$V1)),
         rep("Noncoding", length(noncoding$V1)),
         rep("Coding", length(coding$V1)),
-        rep("Nonsynonymous", length(nonsyn$V1)),
-        rep("Deleterious", length(del$V1))), levels=c("Null", "All", "Noncoding", "Coding", "Nonsynonymous", "Deleterious"))
+        rep("Nonsyn.", length(nonsyn$V1)),
+        rep("Deleterious", length(del$V1))), levels=c("Null", "All", "Noncoding", "Coding", "Nonsyn.", "Deleterious"))
     )
 
 #   Make a plot
@@ -42,15 +42,13 @@ plt <- ggplot(
 plt + geom_boxplot() +
     scale_fill_manual(
         name="Partition",
-        breaks=c("Null", "All", "Noncoding", "Coding", "Nonsynonymous", "Deleteirous"),
+        breaks=c("Null", "All", "Noncoding", "Coding", "Nonsyn.", "Deleteirous"),
         values=c("#ffffff", "#fef0d9", "#fdcc8a", "#fc8d59", "#e34a33", "#b30000")) +
     theme_bw() +
     theme(
-        axis.text.x = element_text(colour="black",size=10),
-        axis.text.y = element_text(colour="black",size=10),
-        axis.title.y = element_text(colour="black", size=12, face="bold"),
-        axis.title.x = element_text(color="black", size=12, face="bold"),
-        legend.position="none"
+        legend.position="none",
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank()
         ) +
     labs(x="Partition", y="Proportion of Phenotypic Variance Explained")
 dev.off()

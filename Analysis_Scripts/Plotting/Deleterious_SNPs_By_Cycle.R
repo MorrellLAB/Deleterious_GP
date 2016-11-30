@@ -43,7 +43,8 @@ beeswarm(
     ylim=c(600, 750),
     xlab="Cycle",
     ylab="Number of Deleterious SNPs",
-    main="Deleterious SNPs Over Time")
+    main="Deleterious SNPs Over Time",
+    axes=F)
 beeswarm(
     ran$Count ~ ran$Cycle,
     col="#333333",
@@ -52,7 +53,8 @@ beeswarm(
     method="hex",
     ylim=c(600, 750),
     add=TRUE,
-    side=-1)
+    side=-1,
+    axes=F)
 beeswarm(
     sel$Count ~ sel$Cycle,
     col="#aa0000",
@@ -61,7 +63,8 @@ beeswarm(
     method="hex",
     ylim=c(600, 750),
     add=TRUE,
-    side=1)
+    side=1,
+    axes=F)
 boxplot(
     Count~Cycle + Type,
     data=droplevels(rbind(ran, sel)),
@@ -72,4 +75,10 @@ boxplot(
     axes=F,
     add=TRUE)
 legend("topright", pch=19, col=c("black", "red"), legend=c("Random", "Selected"))
+axis(
+    side=1,
+    at=c(1, 2, 3, 4),
+    labels=c("Parents", "C1", "C2", "C3"))
+axis(
+    side=2)
 dev.off()

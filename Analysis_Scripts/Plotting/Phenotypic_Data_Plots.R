@@ -26,8 +26,7 @@ pdf(
 plt <- ggplot(
     don_data,
     aes(x=factor(cycle), y=DON.BLUE_mv, fill=factor(type)))
-plt + geom_boxplot(outlier.size=0) +
-    geom_point(aes(color=factor(type)), pch=19, alpha=0.5, position=position_jitterdodge()) +
+plt + geom_boxplot(position=position_dodge(width=0.75)) +
     scale_fill_manual(
         values=c("white", "white", "white", "grey", "grey"),
         name="type") +
@@ -36,8 +35,8 @@ plt + geom_boxplot(outlier.size=0) +
         values=c("black", "black", "black", "red", "red"),
         name="type") +
     scale_x_discrete(
-        breaks=c("chk", "C0", "C1", "C2", "C3"),
-        labels=c("Check", "Parents", "C1", "C2", "C3")) +
+        breaks=c("chk", "C0", "C1", "C2", "C3", "C3"),
+        labels=c("Check", "Parents", "C1", "C2", "C3", "C3")) +
     theme(
         legend.position="none",
         panel.grid.major=element_blank(),
@@ -54,8 +53,7 @@ pdf(
 plt <- ggplot(
     yield_data,
     aes(x=factor(cycle), y=yld.BLUE_mv, fill=factor(type)))
-plt + geom_boxplot(outlier.size=0) +
-    geom_point(aes(color=factor(type)), pch=19, alpha=0.5, position=position_jitterdodge()) +
+plt + geom_boxplot(position=position_dodge(width=0.75)) +
     scale_fill_manual(
         values=c("white", "white", "white", "grey", "grey"),
         name="type") +

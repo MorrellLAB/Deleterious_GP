@@ -67,7 +67,7 @@ effects <- effects[!is.na(effects$Position),]
 pdf(file="RecRate_AllSNPs.pdf", 10, 6)
 ggplot(effects) +
     geom_vline(aes(xintercept=Position/1000000), size=0.05, alpha=0.1, color="#a6cee3") +
-    geom_line(aes(x=(Start+End)/2000000, y=NExCap/15), data=excap, size=0.75, color="#1f78b4", alpha=0.9) +
+    geom_line(aes(x=(Start+End)/2000000, y=NExCap/10), data=excap, size=0.75, color="#1f78b4", alpha=0.7) +
     geom_line(aes(x= (LeftBP+RightBP)/2000000, y=Smoothed_cMMb), data=rec_rate, color="#329f2a", size=1.1, alpha=0.7) +
     facet_grid(Chromosome~.) +
     scale_y_continuous(limits=c(0, 10), breaks=c(0, 5, 10)) +

@@ -44,7 +44,7 @@ downsample <- function(maf, binsize, weights) {
             return(sample(in_int, nsamp, replace=F))
         }))
     #   Then, randomly prune the set down to the subsampled size
-    sampled <- sample(sampled, 500, replace=FALSE)
+    sampled <- sample(sampled, 750, replace=FALSE)
     return(sampled)
 }
 
@@ -52,12 +52,12 @@ args <- commandArgs(TRUE)
 source_maf <- read.table(args[1], header=T)
 target_maf <- read.table(args[2], header=T)
 
-source.dist <- source_freq_dist(source_maf$MAF, 0.01)
-target.dist <- downsample(target_maf, 0.01, source.dist)
-
-#   Density plots to check that the distributions are equal
-#plot(density(source_maf[sample(1:nrow(source_maf)), "MAF"]))
-#plot(density(target_maf[target_maf$SNP %in% target.dist, "MAF"]))
-
-#   Print the SNPs to stdout
-write(target.dist, file="", ncolumns=1)
+if(args[1] == args[2]) {
+    s <- sample(as.character(target_maf$SNP), 750, replace=F)
+    write(s, file="", ncolumns=1)
+} else {
+    source.dist <- source_freq_dist(source_maf$MAF, 0.01)
+    target.dist <- downsample(target_maf, 0.01, source.dist)
+    #   Print the SNPs to stdout
+    write(target.dist, file="", ncolumns=1)
+}
