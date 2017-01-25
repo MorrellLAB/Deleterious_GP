@@ -1,20 +1,17 @@
 #!/bin/bash
-#PBS -l mem=48gb,nodes=1:ppn=16,walltime=36:00:00
+#PBS -l mem=64gb,nodes=1:ppn=16,walltime=4:00:00
 #PBS -m abe
 #PBS -M konox006@umn.edu
 #PBS -q mesabi
 
 module load java
-module load gatk
 
 #	Path to the reference
-REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.fasta
-#	The capture design
-CAP_DES=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference_ExCap_Design.bed
+REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/barley_RefSeq_v1.0/barley_pseudomolecules_parts.fa
 
-BAM_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Recalibrated
+BAM_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Cleaned
 #	 Build the sample list
-SAMPLE_LIST=($(find ${BAM_DIR} -name '*_recal.bam'))
+SAMPLE_LIST=($(find ${BAM_DIR} -name '*_realigned.bam'))
 CURRENT_SAMPLE=$(basename ${SAMPLE_LIST[${PBS_ARRAYID}]})
 SAMPLENAME=$(echo ${CURRENT_SAMPLE} | cut -f 1 -d '_')
 INFILE=${BAM_DIR}/${CURRENT_SAMPLE}
@@ -33,11 +30,10 @@ mkdir -p ${OUTPUT_DIR}
 #		--heterozygosity 0.008: Use a prior on nucleotide diversity of 0.008/bp
 #		-nct 4: use 4 CPU threads
 
-export _JAVA_OPTIONS="-Xmx47g"
-java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar\
+export _JAVA_OPTIONS="-Xmx63g"
+java -jar ~/Soft/GenomeAnalysisTK-3.6/GenomeAnalysisTK.jar\
 	-T HaplotypeCaller\
 	-R ${REF}\
-	-L ${CAP_DES}\
 	-I ${INFILE}\
 	-o ${OUTPUT_DIR}/${SAMPLENAME}_RawGLs.g.vcf\
 	-nct 16\

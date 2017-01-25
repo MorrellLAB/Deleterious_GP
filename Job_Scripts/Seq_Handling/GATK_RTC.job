@@ -25,12 +25,8 @@ done
 #	The output targets file
 RTC_OUT=/panfs/roc/scratch/tkono/Genomic_Prediction/Cleaned/realign.intervals
 
-#	The known Indels file
-INDELS=${HOME}/Shared/Datasets/SNP_Calls/Hv_Known_Variants/18_Loci_Sanger_Indels.vcf
-#	The capture design file
-CAPTURE_DESIGN=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference_ExCap_Design.bed
 #	The reference sequence
-REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.fasta
+REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/barley_RefSeq_v1.0/barley_pseudomolecules_parts.fa
 
 #	JAVA OPTIONS
 #	-Xmx[amount]	:	use [amount] of memory.
@@ -56,12 +52,10 @@ REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.f
 #		NOTE: This file must end in .list, .intervals, or .interval_list
 
 export _JAVA_OPTIONS="-Xmx127g -Djava.io.tmpdir=/panfs/roc/scratch/tkono/PICARD_TMP"
-java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar \
+java -jar ~/Soft/GenomeAnalysisTK-3.6/GenomeAnalysisTK.jar\
 	-T RealignerTargetCreator\
-	-L ${CAPTURE_DESIGN}\
 	-nt 1\
 	-R ${REF}\
 	${GATK_IN[@]}\
-	-known ${INDELS}\
 	-o ${RTC_OUT}
 

@@ -1,0 +1,41 @@
+#!/bin/bash
+#PBS -l mem=48gb,nodes=1:ppn=1,walltime=72:00:00
+#PBS -m abe
+#PBS -M konox006@umn.edu
+#PBS -q mesabi
+
+module load java
+module load gatk
+
+#	Which BP are we calling?
+BP=ND
+
+#	Path to the reference
+REF=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference.fasta
+#	Path to the capture design
+CAP_DES=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/Morex_Reference_ExCap_Design.bed
+#	Path to directory containing GVCFs
+GVCF_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/GVCFs/${BP}
+#	 Build the sample list
+SAMPLE_LIST=($(find ${GVCF_DIR} -name '*.g.vcf'))
+#	Put them into a format that will be accepted by the GATK command line
+GATK_IN=()
+for s in "${SAMPLE_LIST[@]}"
+do
+		GATK_IN+=("-V $s")
+	done
+#	Make sure the output directory exists
+OUTPUT_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Variants/${BP}
+mkdir -p ${OUTPUT_DIR}
+
+#	GenotypeGVCFs options:
+#		-R Reference
+#		-V Input gVCF
+#		-o Output gVCF
+
+export _JAVA_OPTIONS="-Xmx47g"
+java -jar /panfs/roc/itascasoft/gatk/3.3.0/GenomeAnalysisTK.jar\
+	-T CombineGVCFs \
+	-R ${REF} \
+	${GATK_IN[@]}\
+	-o ${OUTPUT_DIR}/BadMutationsII_${BP}.g.vcf

@@ -1,12 +1,12 @@
 #!/bin/sh
-#PBS -l mem=8gb,nodes=1:ppn=1,walltime=2:00:00
-#PBS -m abe
-#PBS -M konox006@umn.edu
-#PBS -q lab
+#PBS -l mem=16gb,nodes=1:ppn=1,walltime=3:00:00 
+#PBS -m abe 
+#PBS -M konox006@umn.edu 
+#PBS -q mesabi
 
 #   Programs and versions
-SAMTOOLS=${HOME}/Soft/samtools/samtools
-PICARD=${HOME}/Soft/picard-tools-2.0.1/picard.jar
+SAMTOOLS=${HOME}/Soft/samtools-1.3.1/samtools
+PICARD=${HOME}/Soft/picard-tools-2.5.0/picard.jar
 
 #	Picard now requires a version of java that is not used by default on MSI
 module load java
@@ -15,23 +15,27 @@ module load java
 #   jobs. It is a nicer way to submit groups of jobs without having to use
 #   a for loop. To populate our array, we will get the contents of the reads
 #   directory
-SAM_DIR=/scratch/tkono/Genomic_Prediction/Aligned
-OUTPUT_DIR=/scratch/tkono/Genomic_Prediction/Cleaned
+SAM_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Aligned
+OUTPUT_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Cleaned
+
+#	Since /tmp fills up quickly, we'll define our own temporary directory here
+PICARD_TEMP=/panfs/roc/scratch/tkono/PICARD_TMP
+
 #   Get just the sample names and store them in an array. $() does command
 #   substitution, and ($()) will convert that output into an array that we can
 #   fetch data from.
 #   Sample names are the first field before an underscore.
 SAMPLE_NAMES=($(/bin/ls -1 ${SAM_DIR} | grep '.sam' | cut -f 1 -d '_' | uniq))
+SAM_FILES=($(/bin/ls -1 ${SAM_DIR} | grep '.sam'))
 #   The sample to analyze is the value of the ${PBS_ARRAYID} variable
 SAMPLE=${SAMPLE_NAMES[${PBS_ARRAYID}]}
 #   Build the paths to the SAM file
-ALIGN_DATE="2016-01-23"
-SAMFILE=${SAM_DIR}/${SAMPLE}_${ALIGN_DATE}.sam
+SAMFILE=${SAM_DIR}/${SAM_FILES[${PBS_ARRAYID}]}
 
 #	Build the output files for each program
-SAMTOOLS_OUT=${OUTPUT_DIR}/${SAMPLE}_${ALIGN_DATE}_trimmed.bam
-PICARD_SORT=${SAMTOOLS_OUT/.bam/_sorted.bam}
-PICARD_DUP=${PICARD_SORT/.bam/_nodup.bam}
+SAMTOOLS_OUT=${OUTPUT_DIR}/${SAMPLE}_trimmed.bam
+SAMTOOLS_SORT=${SAMTOOLS_OUT/.bam/_sorted.bam}
+PICARD_DUP=${SAMTOOLS_SORT/.bam/_nodup.bam}
 PICARD_DUP_MET=${SAMTOOLS_OUT/_trimmed.bam/_DuplicationMetrics.txt}
 PICARD_RG=${PICARD_DUP/.bam/_finished.bam}
 
@@ -46,20 +50,16 @@ echo "Cleaning ${SAMPLE}, with task ID of ${PBS_ARRAYID}."
 #		-F 256: excludes reads' secondary alignments (split hits etc.)
 ${SAMTOOLS} view -f 3 -F 256 -bS ${SAMFILE} > ${SAMTOOLS_OUT}
 #	Then sort the file
-java -jar ${PICARD} SortSam\
-	INPUT=${SAMTOOLS_OUT}\
-	OUTPUT=${PICARD_SORT}\
-	SO="coordinate"\
-	CREATE_INDEX="true"
-
+${SAMTOOLS} sort -o ${SAMTOOLS_SORT} -O BAM ${SAMTOOLS_OUT}
 #	And then remove duplicates
 java -jar ${PICARD} MarkDuplicates\
-	INPUT=${PICARD_SORT}\
+	INPUT=${SAMTOOLS_SORT}\
 	OUTPUT=${PICARD_DUP}\
 	METRICS_FILE=${PICARD_DUP_MET}\
 	REMOVE_DUPLICATES="true"\
 	ASSUME_SORTED="true"\
-	CREATE_INDEX="true"
+	CREATE_INDEX="true"\
+	TMP_DIR=${PICARD_TEMP}
 
 #	Add read groups
 #		Most of the values in the RG tags are just the sample name. Could
@@ -72,4 +72,8 @@ java -jar ${PICARD} AddOrReplaceReadGroups\
 	RGPL="illumina"\
 	RGPU=${SAMPLE}\
 	RGSM=${SAMPLE}\
-	CREATE_INDEX="true"
+	CREATE_INDEX="true"\
+	TMP_DIR=${PICARD_TEMP}
+
+#	We have to index separately as Picard chokes on long references
+${SAMTOOLS} index ${PICARD_RG}

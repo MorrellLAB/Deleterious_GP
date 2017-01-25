@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#PBS -l mem=15gb,nodes=1:ppn=8,walltime=12:00:00
-#PBS -m abe
-#PBS -M konox006@umn.edu
-#PBS -q lab
+#PBS -l mem=16gb,nodes=1:ppn=16,walltime=12:00:00 
+#PBS -m abe 
+#PBS -M konox006@umn.edu 
+#PBS -q mesabi
 
 SHARED=/home/morrellp/shared
 #   The file with the adapters
@@ -17,7 +17,7 @@ export PRIOR=0.05
 module load parallel
 
 #	Directory where our reads are stored
-READS_DIR=/scratch.global/tkono/Genomic_Prediction/Reads
+READS_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Reads
 #	Define a bash function for doing the scythe trimming
 #	since it is the same for each file, and we don't want to keep repeating
 

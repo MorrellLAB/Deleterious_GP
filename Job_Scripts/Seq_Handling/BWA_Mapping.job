@@ -1,23 +1,24 @@
 #!/bin/sh
-#PBS -l mem=8gb,nodes=1:ppn=8,walltime=12:00:00
-#PBS -m abe
-#PBS -M konox006@umn.edu
-#PBS -q lab
+#PBS -l mem=16gb,nodes=1:ppn=8,walltime=8:00:00 
+#PBS -m abe 
+#PBS -M konox006@umn.edu 
+#PBS -q mesabi
 
 #	Date, for versioning
 YMD=$(date +%Y-%m-%d)
 
 #   Programs and versions
-BWA=${HOME}/Shared/Software/bwa-0.7.12/bwa
-SAMTOOLS=${HOME}/Shared/Software/samtools-0.1.19/samtools
-REFERENCE=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/bwa_MorexRef
+#	BWA was cloned on 2016-07-19
+BWA=${HOME}/Soft/bwa/bwa
+SAMTOOLS=${HOME}/Shared/Software/samtools-1.3.1/samtools
+REFERENCE=${HOME}/Shared/References/Reference_Sequences/Barley/Morex/barley_RefSeq_v1.0/barley_pseudomolecules_parts.fa
 
 #   We will use a PBS Task Array to handle batch submission of these alignment
 #   jobs. It is a nicer way to submit groups of jobs without having to use
 #   a for loop. To populate our array, we will get the contents of the reads
 #   directory
-READS_DIR=/scratch/tkono/Genomic_Prediction/Reads
-OUTPUT_DIR=/scratch/tkono/Genomic_Prediction/Aligned
+READS_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Reads
+OUTPUT_DIR=/panfs/roc/scratch/tkono/Genomic_Prediction/Aligned
 #   Get just the sample names and store them in an array. $() does command
 #   substitution, and ($()) will convert that output into an array that we can
 #   fetch data from.
@@ -40,6 +41,7 @@ echo "Output stored in ${OUTPUT_DIR}/${SAMPLE}_${YMD}.bam"
 
 #   Now we run the program with all our options
 #   Changes:
+#       2016-12-26: Align against the pseudomolecule parts, since it kills GATK
 #       2015-12-11: Borrow alignment parameters from Bad Mutations 1 barley
 #                   cultivars.
 #	Options summary:
@@ -49,7 +51,7 @@ echo "Output stored in ${OUTPUT_DIR}/${SAMPLE}_${YMD}.bam"
 #       -r 1.0: re-seed of MEM is greater than 1xseed_length
 #       -M: mark split hits as secondary alignments, for Picard compat.
 #       -T 85: don't print alignments with score less than 85. Match score is
-#       1, so the max score for a read is 100. Mismatch penalty is 4, so a
+#       1, so the max score for a read is 100. Mismatch penalty is 4, so a 
 #       cutoff of 85 filters alignments with more than 3 mismatches in one read.
 #       -O 8: Gap open penalty of 8
 #       -E 1: Gap extend penalty of 1
