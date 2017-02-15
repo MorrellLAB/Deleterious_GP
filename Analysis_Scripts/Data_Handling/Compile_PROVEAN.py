@@ -9,7 +9,7 @@ pred_dir = sys.argv[2]
 
 
 #   Set this to the extnesion that contains the PROVEAN prediction output
-prov_extension = '.out'
+prov_extension = '_predictions.txt'
 #   Get the prediction files out of the predictions directory
 pred_dir_contents = os.listdir(pred_dir)
 pred_files = [
@@ -22,7 +22,7 @@ provean_predictions = {}
 #   Then, iterate through the files and open them up, and save the prediction
 #   information in them. We use the transcript ID and cds position as keys
 for f in pred_files:
-    txid = '.'.join(f.rstrip('_prov_out.txt').rsplit('_', 1))
+    txid = f.rstrip('_predictions.txt')
     if txid not in provean_predictions:
         provean_predictions[txid] = {}
     with open(os.path.join(pred_dir, f), 'r') as g:
