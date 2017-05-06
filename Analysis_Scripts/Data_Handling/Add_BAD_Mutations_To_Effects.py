@@ -32,13 +32,13 @@ with open(effect_table, 'r') as f:
             tmp = line.strip().split()
             silent = tmp[3]
             if silent == 'Yes':
-                print line.strip() + '\t' + '\t'.join(['NA']*11)
+                print line.strip() + '\t' + '\t'.join(['NA']*13)
             else:
                 txid = tmp[4]
-                cdspos = tmp[12]
+                cdspos = tmp[11]
                 if txid not in bad_mutations_data:
-                    print line.strip() + '\t' + '\t'.join(['NA']*11)
+                    print line.strip() + '\t' + '\t'.join(['NA']*13)
                 elif cdspos not in bad_mutations_data[txid]:
-                    print line.strip() + '\t' + '\t'.join(['NA']*11)
+                    print line.strip() + '\t' + '\t'.join(['NA']*13)
                 else:
                     print line.strip() + '\t' + '\t'.join(bad_mutations_data[txid][cdspos][2:])

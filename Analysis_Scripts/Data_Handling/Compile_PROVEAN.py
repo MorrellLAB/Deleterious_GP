@@ -47,7 +47,7 @@ with open(effects_table, 'r') as f:
                 print line.strip() + '\t' + 'NA'
             else:
                 txid = tmp[4]
-                cdspos = tmp[10]
+                cdspos = tmp[11]
                 if txid not in provean_predictions:
                     print line.strip() + '\t' + 'NA'
                 elif cdspos not in provean_predictions[txid]:

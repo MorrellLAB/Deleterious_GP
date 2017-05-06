@@ -43,7 +43,7 @@ with open(effect_table, 'r') as f:
             # tid = tmp[4].replace('.', '_')
             #   We don't need to do the replacement anymore!
             tid = tmp[4]
-            k = (tid, tmp[10], tmp[9], tmp[8])
+            k = (tid, tmp[11], tmp[8], tmp[9])
             if k in pph_data:
                 towrite = line.strip() + '\t' + pph_data[k]
             else:

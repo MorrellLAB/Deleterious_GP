@@ -30,8 +30,8 @@ with open(exon_effects, 'r') as f:
             silent = 'No'
         ann = tmp[2].split(':')
         txid = ann[1]
-        aa1 = ann[4][-2]
-        aa2 = ann[4][2]
+        aa1 = ann[4][2]
+        aa2 = ann[4][-2]
         if tmp[1] == 'stopgain':
             aa2 = '*'
         if tmp[1] == 'stoploss':
@@ -53,6 +53,7 @@ with open(exon_effects, 'r') as f:
             alt_allele,
             aa1,
             aa2,
+            cdspos,
             aapos)
 
 print '\t'.join(
@@ -67,7 +68,8 @@ print '\t'.join(
         'Alt_Base',
         'AA1',
         'AA2',
-        'CDS_Pos'
+        'CDS_Pos',
+        'Reside_Num'
     ])
 
 with open(all_effects, 'r') as f:
@@ -75,7 +77,7 @@ with open(all_effects, 'r') as f:
         tmp = line.strip().split('\t')
         snpid = tmp[12]
         if tmp[0] == 'exonic':
-            chrom, pos, silent, txid, codonpos, ref_allele, alt_allele, aa1, aa2, aapos = coding_variants[snpid]
+            chrom, pos, silent, txid, codonpos, ref_allele, alt_allele, aa1, aa2, cdspos, aapos = coding_variants[snpid]
         else:
             chrom = tmp[2]
             pos = tmp[3]
@@ -86,6 +88,7 @@ with open(all_effects, 'r') as f:
             alt_allele = tmp[6]
             aa1 = '-'
             aa2 = '-'
+            cdspos = '-'
             aapos = '-'
         print '\t'.join(
             [
@@ -99,5 +102,6 @@ with open(all_effects, 'r') as f:
                 alt_allele,
                 aa1,
                 aa2,
+                cdspos,
                 aapos
             ])
