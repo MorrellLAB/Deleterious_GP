@@ -16,7 +16,7 @@ parents = []
 
 with open(sys.argv[1], 'r') as f:
     for index, line in enumerate(f):
-        tmp = line.strip().split('\t')
+        tmp = line.strip().split()
         family = tmp[0]
         if family == '0':
             continue
