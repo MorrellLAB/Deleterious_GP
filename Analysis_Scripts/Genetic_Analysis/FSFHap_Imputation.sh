@@ -21,7 +21,7 @@ PEDIGREE="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alch
 
 # Define paths to the output data
 YMD=$(date +%F)
-OUT_DIR="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputed_SNPs/"
+OUT_DIR="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputed_SNPs/Try_Again"
 LOG="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputed_SNPs/FSFHap_${YMD}.log"
 OUT_FNAME="GP_Imputed.hmp.txt"
 
@@ -33,15 +33,16 @@ CLUSTER="false"     # Use the cluster algorithm. Works well for F4+
 WINDOW_LD="true"    # Use window LD algorithm. Works well for inbred parents.
 BC="false"          # Use backcross model.
 MULTI_BC="false"    # Use multiple backcross model.
-MIN_MAF="0.04"      # Minimum minor allele frequency per family
-WINDOW_SIZE="30"    # Number of markers to consider for a haplotype
-MIN_R="0.1"         # Minimum correlation (LD) for pruning haplotypes
-MAX_MISSING="0.8"   # Maximum missing calls per site, per family
+MIN_MAF="0.12"      # Minimum minor allele frequency per family
+WINDOW_SIZE="35"    # Number of markers to consider for a haplotype
+MIN_R="0.15"         # Minimum correlation (LD) for pruning haplotypes
+MAX_MISSING="0.9"   # Maximum missing calls per site, per family
 NO_HETS="false"     # Remove heterozygous genotypes
 MAX_DIFF="0"        # Number of differences allowed to call haplotypes equal
-MIN_HAP="2"         # Minimum obs. for haplotype to be considered valid
+MIN_HAP="4"         # Minimum obs. for haplotype to be considered valid
 OVERLAP="20"        # Overlap between windows
-P_HET="0.01"        # Proportion of heterozygous genotypes
+FILL_GAP="true"     # Fill gaps with flanking falues
+P_HET="0.1"        # Proportion of heterozygous genotypes
 MERGE="false"       # Merge parents/progeny/families
 OUT_PARENTS="true"  # Replace missing with parents if no recombination
 OUT_NUC="true"      # Not sure. Same description as above in manual
@@ -49,6 +50,7 @@ OUT_IUPAC="true"    # Use IUPAC ambiguities for heterozygotes in output
 
 # move to the output directory. For some reason, TASSEL cannot create files
 # with meaningful names outside the current working directory.
+mkdir -p ${OUT_DIR}
 cd ${OUT_DIR}
 
 # Run the command
@@ -71,6 +73,7 @@ ${TASSEL} \
     -maxDiff ${MAX_DIFF} \
     -minHap ${MIN_HAP} \
     -overlap ${OVERLAP} \
+    -fillgaps ${FILL_GAPS} \
     -phet ${P_HET} \
     -merge ${MERGE} \
     -outParents ${OUT_PARENTS} \
