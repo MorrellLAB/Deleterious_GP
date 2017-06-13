@@ -15,14 +15,14 @@
 # with PLINK 1.9, and having only numeric chromosome names.
 
 # Define paths to the input data
-GP_PED="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/For_TASSEL/GP.ped"
-GP_MAP="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/For_TASSEL/GP.map"
-PEDIGREE="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/GP_Tassel_Pedigree_Reduced.txt"
+GP_PED="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/TASSEL_Inputs/GP.ped"
+GP_MAP="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/TASSEL_Inputs/GP.map"
+PEDIGREE="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/TASSEL_Inputs/GP_Tassel_Pedigree_Reduced.txt"
 
 # Define paths to the output data
 YMD=$(date +%F)
-OUT_DIR="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputed_SNPs/Try_Again"
-LOG="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputed_SNPs/FSFHap_${YMD}.log"
+OUT_DIR="/Volumes/LaCie/Genomic_Prediction/Imputation/FSFHap/${YMD}"
+LOG="/Volumes/LaCie/Genomic_Prediction/Imputation/FSFHap/FSFHap_${YMD}.log"
 OUT_FNAME="GP_Imputed.hmp.txt"
 
 # Define paths to the TASSEL pipeline script
@@ -34,13 +34,13 @@ WINDOW_LD="true"    # Use window LD algorithm. Works well for inbred parents.
 BC="false"          # Use backcross model.
 MULTI_BC="false"    # Use multiple backcross model.
 MIN_MAF="0.12"      # Minimum minor allele frequency per family
-WINDOW_SIZE="35"    # Number of markers to consider for a haplotype
+WINDOW_SIZE="45"    # Number of markers to consider for a haplotype
 MIN_R="0.15"         # Minimum correlation (LD) for pruning haplotypes
 MAX_MISSING="0.9"   # Maximum missing calls per site, per family
 NO_HETS="false"     # Remove heterozygous genotypes
 MAX_DIFF="0"        # Number of differences allowed to call haplotypes equal
 MIN_HAP="4"         # Minimum obs. for haplotype to be considered valid
-OVERLAP="20"        # Overlap between windows
+OVERLAP="30"        # Overlap between windows
 FILL_GAP="true"     # Fill gaps with flanking falues
 P_HET="0.1"        # Proportion of heterozygous genotypes
 MERGE="false"       # Merge parents/progeny/families

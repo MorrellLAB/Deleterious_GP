@@ -68,6 +68,11 @@ def fix_alleles(ped_column, states):
     """Check the states of the SNPs passed, and fix them accordingly. If they
     cannot be resolved, set them to 0 (missing in PED)"""
     fixed_states = []
+    # Generate a list of the segregating alleles for each marker, according to
+    # the ALCHEMY data.
+    genotyped = set([c for a in ped_column for c in a])
+    genotyped.discard('0')
+    genotyped = list(genotyped)
     for call in zip(*ped_column):
         a1 = call[0]
         a2 = call[1]
@@ -75,6 +80,8 @@ def fix_alleles(ped_column, states):
             fixed_states.append((a1, a2))
         elif a1 == '0' and a2 == '0':
             fixed_states.append(('0', '0'))
+        elif (a1, a2) == (a2, a1):
+            fixed_states.append((a1, a2))
         elif REVCOMP[a1] in states and REVCOMP[a2] in states:
             fixed_states.append((REVCOMP[a1], REVCOMP[a2]))
         else:

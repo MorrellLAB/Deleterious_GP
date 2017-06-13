@@ -91,9 +91,9 @@ def generate_ped(ped_data, maporder):
     """Generate the PED in the proper order."""
     ped = []
     for sample in sorted(ped_data):
-        fid = '-9'
-        pid = '-9'
-        mid = '-9'
+        fid = '0'
+        pid = '0'
+        mid = '0'
         sex = '0'
         pheno = '-9'
         geno = []
