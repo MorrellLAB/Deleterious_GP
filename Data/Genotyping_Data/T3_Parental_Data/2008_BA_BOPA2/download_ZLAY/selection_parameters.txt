@@ -1,0 +1,2 @@
+Minimum MAF = 0
+Maximum Missing = 100
