@@ -1,0 +1,24 @@
+PLINK v1.90b3 64-bit (11 Jan 2015)
+6 arguments: --allow-extra-chr --file Genomic_Prediction_Combined_MapOrder --out TASSEL_Inputs/GP --recode
+Hostname: C02SR6DZHF1R
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls
+Start time: Tue May 23 12:49:55 2017
+
+Random number seed: 1495561795
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (364 variants, 3357 people).
+--file: TASSEL_Inputs/GP-temporary.bed + TASSEL_Inputs/GP-temporary.bim +
+TASSEL_Inputs/GP-temporary.fam written.
+364 variants loaded from .bim file.
+3357 people (0 males, 0 females, 3357 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to TASSEL_Inputs/GP.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 21 founders and 3336 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.974106.
+364 variants and 3357 people pass filters and QC.
+Note: No phenotypes present.
+--recode to TASSEL_Inputs/GP.ped + TASSEL_Inputs/GP.map ... done.
+
+End time: Tue May 23 12:49:55 2017

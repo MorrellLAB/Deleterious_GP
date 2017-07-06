@@ -1,0 +1,25 @@
+PLINK v1.90b3 64-bit (11 Jan 2015)
+10 arguments: --allow-extra-chr --flip /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/Flipping/Progeny_Flip_List.txt --map /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/Flipping/Genomic_Prediction_Combined_MapOrder.map --out Progeny_Flipped --ped /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/Flipping/Progeny.ped --recode
+Hostname: C02SR6DZHF1R
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/Flipping
+Start time: Tue Jul  4 17:49:38 2017
+
+Random number seed: 1499208578
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (377 variants, 3336 people).
+--file: Progeny_Flipped-temporary.bed + Progeny_Flipped-temporary.bim +
+Progeny_Flipped-temporary.fam written.
+377 variants loaded from .bim file.
+3336 people (0 males, 0 females, 3336 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to Progeny_Flipped.nosex .
+--flip: 160 SNPs flipped.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 0 founders and 3336 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.974598.
+377 variants and 3336 people pass filters and QC.
+Note: No phenotypes present.
+--recode to Progeny_Flipped.ped + Progeny_Flipped.map ... done.
+
+End time: Tue Jul  4 17:49:38 2017
