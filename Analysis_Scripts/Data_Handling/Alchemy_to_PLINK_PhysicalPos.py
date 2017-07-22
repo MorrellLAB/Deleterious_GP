@@ -5,7 +5,8 @@ alleles and fix as necessary. Takes four arguments:
     1) Alchemy report
     2) BOPA Physical positions VCF
     3) Genetic map CSV
-    4) SNP Name Translation CSV"""
+    4) SNP Name Translation CSV
+    5) SNP State Translation CSV"""
 
 import sys
 
@@ -52,6 +53,19 @@ def parse_translation(name_trans):
     return trans
 
 
+def parse_snpstate(snp_trans):
+    """Store the translation table as a dictionary, and nucleotide state of A & B as a tuple."""
+    s_trans = {}
+    with open(snp_trans, 'r') as f:
+        for index, line in enumerate(f):
+            if index == 0:
+                continue
+            else:
+                tmp = line.strip().split(',')
+                s_trans[tmp[0]] = {'A': tmp[1], 'B': tmp[2], '0': '0'}
+    return s_trans
+
+
 def parse_alchemy(trans, alchemy):
     """Parse the ALCHEMY report, and store the genotyping data in a dictionary
     of dictionaries. The first key is the individual ID, and the second key is
@@ -70,6 +84,7 @@ def parse_alchemy(trans, alchemy):
                 else:
                     snpid = tmp[0]
                 sample = tmp[1]
+                ab_call = tmp[2]
                 nuc_call = tmp[3]
                 prob = float(tmp[4])
                 # Check the sample ID and the probability. If the sample ID is
@@ -96,7 +111,8 @@ def parse_alchemy(trans, alchemy):
                         else:
                             alc_data[sample] = {snpid: (missing, missing)}
                     else:
-                        calls = (nuc_call[0], nuc_call[1])
+                        #calls = (nuc_call[0], nuc_call[1])
+                        calls = (ab_call[0], ab_call[1])
                         if sample in alc_data:
                             alc_data[sample].update({snpid: calls})
                         else:
@@ -153,7 +169,7 @@ def order_snps(ped_data, p_map):
     return snp_order
 
 
-def generate_ped(g_mat, map_order):
+def generate_ped(g_mat, map_order, translation):
     """Generate the PED data with the genotype matrix and the map order of
     the SNPs."""
     ped_file = []
@@ -167,7 +183,11 @@ def generate_ped(g_mat, map_order):
         pheno = '-9'
         geno = []
         for marker in map_order:
-            geno += list(g_mat[sample][marker])
+            atcg_calls = [
+                translation[marker][c]
+                for c
+                in g_mat[sample][marker]]
+            geno += atcg_calls
         ped_file.append([fid, sample, pid, mid, sex, pheno] + geno)
     return ped_file
 
@@ -205,14 +225,17 @@ def generate_map(map_order, genetic_map, physical_map):
     return map_file
 
 
-def main(alchemy, bopa, genetic_map, name_trans):
+def main(alchemy, bopa, genetic_map, name_trans, snp_trans):
     """Main function."""
     bopa_alleles, phys_map = parse_vcf(bopa)
     name_key = parse_translation(name_trans)
-    alchemy_calls = parse_alchemy(name_key, alchemy)
-    fixed_calls = fix_alleles(alchemy_calls, bopa_alleles)
-    ordered = order_snps(fixed_calls, phys_map)
-    plinkped = generate_ped(fixed_calls, ordered)
+    geno_ab_states = parse_snpstate(snp_trans)
+    alchemy_calls = parse_alchemy(name_key, alchemy)\
+    #fixed_calls = fix_alleles(alchemy_calls, bopa_alleles)
+    #ordered = order_snps(fixed_calls, phys_map)
+    ordered = order_snps(alchemy_calls, phys_map)
+    #plinkped = generate_ped(fixed_calls, ordered)
+    plinkped = generate_ped(alchemy_calls, ordered, geno_ab_states)
     plinkmap = generate_map(ordered, genetic_map, phys_map)
     # Then write out the data
     for row in plinkped:
@@ -222,4 +245,4 @@ def main(alchemy, bopa, genetic_map, name_trans):
     return
 
 
-main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
