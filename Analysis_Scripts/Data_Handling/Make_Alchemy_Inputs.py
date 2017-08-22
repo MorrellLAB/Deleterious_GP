@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 """Generate the required SNP map and sample map files for ALCHEMY input. Be sure
 to set the flags/constants at the head of the script to properly generate the
-files. Takes four arguments:
+files. Takes three arguments:
     1) Alchemy input intensities file
     2) SNP A-B mapping CSV file
-    3) SNP name translation table
-    4) Prefix for output file name
+    3) Prefix for output file name
 Note that files will be written into the currect directory."""
 
 import sys
@@ -54,9 +53,9 @@ def translate_snps(tl_table):
 
 
 def store_ab(ab_map, trans):
-    """Store the A/B allele calls in a dictionary. The keys are "SNP Name" and
-    the values are BOPA_C_Name. We need the translation table, because the
-    SNPs are listed on their BOPA_C_Name."""
+    """Store the A/B allele calls in a dictionary. We no longer need to use
+    the translation table, because we will convert all GenomeStudio reports into
+    BOPAC names."""
     ab = {}
     with open(ab_map, 'r') as f:
         for index, line in enumerate(f):
@@ -64,11 +63,7 @@ def store_ab(ab_map, trans):
                 continue
             else:
                 tmp = line.strip().split(',')
-                if tmp[0] in trans:
-                    bopac = trans[tmp[0]]
-                    ab[bopac] = (tmp[1], tmp[2])
-                else:
-                    continue
+                ab[tmp[0]] = (tmp[1], tmp[2])
     return ab
 
 
@@ -97,27 +92,24 @@ def generate_inputs(samples, ab_alleles, prefix):
     return
 
 
-def main(intensities, ab_map, tl_table, prefix):
+def main(intensities, ab_map, prefix):
     """Main function."""
     # Get the samples
     samp = get_samples(intensities)
-    # Get the SNP translation table
-    snp_name_trans = translate_snps(tl_table)
     # Store the A/B alleles
-    ab_alleles = store_ab(ab_map, snp_name_trans)
+    ab_alleles = store_ab(ab_map)
     # Then, generate the inputs
     generate_inputs(samp, ab_alleles, prefix)
     return
 
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 4:
     print """Generate the required SNP map and sample map files for ALCHEMY input. Be sure
 to set the flags/constants at the head of the script to properly generate the
-files. Takes four arguments:
+files. Takes three arguments:
     1) Alchemy input intensities file
     2) SNP A-B mapping CSV file
-    3) SNP name translation table
-    4) Prefix for output file name"""
+    3) Prefix for output file name"""
     exit(1)
 else:
-    main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
