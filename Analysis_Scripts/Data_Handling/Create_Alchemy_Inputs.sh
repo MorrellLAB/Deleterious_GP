@@ -23,5 +23,5 @@ for i in "${INTENSITIES[@]}"
     do
         echo "${i}"
         TMP=$(basename "${i}" .txt)
-        python $MAKE_ALCHEMY_INPUTS "${i}" "${TRANSLATE}" "${TMP}"
+        python "${MAKE_ALCHEMY_INPUTS}" "${i}" "${TRANSLATE}" "${TMP}"
     done
