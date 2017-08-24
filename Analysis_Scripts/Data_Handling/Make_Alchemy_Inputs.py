@@ -52,7 +52,7 @@ def translate_snps(tl_table):
     return t
 
 
-def store_ab(ab_map, trans):
+def store_ab(ab_map):
     """Store the A/B allele calls in a dictionary. We no longer need to use
     the translation table, because we will convert all GenomeStudio reports into
     BOPAC names."""
