@@ -1,0 +1,32 @@
+
+Log file sent to /home/morrellp/vonde026/Alchemy/Alchemy_Outputs/Cycle_2_log.txt
+
+ALCHEMY startup: command line is
+ alchemy -f /home/morrellp/vonde026/Alchemy/Alchemy_Intensities/Cycle_2_Custom_BOPAC.txt -s /home/morrellp/vonde026/Alchemy/Alchemy_Inputs/Cycle_2_Custom_BOPAC_samp_map.txt -m /home/morrellp/vonde026/Alchemy/Alchemy_Inputs/Cycle_2_Custom_BOPAC_snp_map.txt --log=/home/morrellp/vonde026/Alchemy/Alchemy_Outputs/Cycle_2_log.txt --illumina
+
+Detected 16 CPUs/cores using sysconf(). Use --n-threads=<# of cores> if this is incorrect.
+ALCHEMY startup: setting random seed to 2791FC01
+
+Loading sample map ... 
+Loading sample map ... 1912 samples defined[  OK  ]
+Loading snp map ...
+Loading SNP map ... 384 SNPs defined[  OK  ]
+Loading intensities ... 734208 intensities loaded[  OK  ]
+
+Normalizing sample signal and noise levels... 
+
+Log file sent to /home/morrellp/vonde026/Alchemy/Alchemy_Outputs/Cycle_2_log.txt
+
+ALCHEMY startup: command line is
+ alchemy -f /home/morrellp/vonde026/Alchemy/Alchemy_Intensities/Cycle_2_Custom_BOPAC.txt -s /home/morrellp/vonde026/Alchemy/Alchemy_Inputs/Cycle_2_Custom_BOPAC_samp_map.txt -m /home/morrellp/vonde026/Alchemy/Alchemy_Inputs/Cycle_2_Custom_BOPAC_snp_map.txt --log=/home/morrellp/vonde026/Alchemy/Alchemy_Outputs/Cycle_2_log.txt --illumina
+
+Detected 16 CPUs/cores using sysconf(). Use --n-threads=<# of cores> if this is incorrect.
+ALCHEMY startup: setting random seed to 2791FC01
+
+Loading sample map ... 
+Loading sample map ... 1912 samples defined[  OK  ]
+Loading snp map ...
+Loading SNP map ... 384 SNPs defined[  OK  ]
+Loading intensities ... 734208 intensities loaded[  OK  ]
+
+Normalizing sample signal and noise levels... 

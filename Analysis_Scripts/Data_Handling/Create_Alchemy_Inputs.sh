@@ -13,7 +13,7 @@ INTENSITIES_DIR=${HOME}/Alchemy/Alchemy_Intensities/
 #INTENSITIES_DIR=$1
 
 #    Create an array of intensity files 
-INTENSITIES=($(find ${INTENSITIES_DIR} -name "GS*Custom_BOPAC.txt"))
+INTENSITIES=($(find ${INTENSITIES_DIR} -name "Cycle*Custom_BOPAC.txt"))
 
 #    Location of BOPA 384 SNP AB genotype to nucleotide translation table
 TRANSLATE=${HOME}/Deleterious_GP/Data/Genotyping_Data/BOPA_384_AB_genotypes.csv
