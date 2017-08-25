@@ -10,7 +10,7 @@ set -o pipefail
 module load alchemy_ML
 
 #    Directory containing intensity files
-INTENSITY_DIR=${HOME}/Alchemy/Alchemy_Intensities/
+INTENSITY_DIR=${HOME}/Alchemy/Alchemy_Intensities
 INPUT_DIR=${HOME}/Alchemy/Alchemy_Inputs
 OUT_DIR=${HOME}/Alchemy/Alchemy_Outputs
 
@@ -26,5 +26,5 @@ INTENSITY_PATH=$(dirname "${INTENSITIES[0]}")
 for i in "${INTENSITIES[@]}"
 	do
 		sample=$(basename "${i}" | cut -d _ -f 1,2,3,4)
-	    	alchemy -f "${INTENSITY_PATH}/${sample}" -s "${INPUT_DIR}/${sample}_samp_map.txt" -m "${INPUT_DIR}/${sample}_snp_map.txt" --log="$OUT_DIR/${sample}_log.txt" --illumina > "${OUT_DIR}/${sample}_calls.txt"
+	    	alchemy -f "${INTENSITY_PATH}/${sample}_Custom_BOPAC.txt" -s "${INPUT_DIR}/${sample}_Custom_BOPAC_samp_map.txt" -m "${INPUT_DIR}/${sample}_Custom_BOPAC_snp_map.txt" --log="$OUT_DIR/${sample}_log.txt" --illumina > "${OUT_DIR}/${sample}_calls.txt"
     done
