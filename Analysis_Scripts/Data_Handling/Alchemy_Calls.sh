@@ -15,7 +15,7 @@ INPUT_DIR=${HOME}/Alchemy/Alchemy_Inputs
 OUT_DIR=${HOME}/Alchemy/Alchemy_Outputs
 
 declare -a INTENSITIES=($(find "${INTENSITY_DIR}" -name "GS*Custom_BOPAC.txt"))
-INTENSITY_PATH=$(dirname "$INTENSITIES[0]")
+INTENSITY_PATH=$(dirname "${INTENSITIES[0]}")
 
 for i in "${INTENSITIES[@]}"
 	do
