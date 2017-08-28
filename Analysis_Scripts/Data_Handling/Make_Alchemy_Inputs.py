@@ -15,7 +15,7 @@ import os
 #   Alternate sample ID for sample map
 ALT_ID = 'FAKE'
 #   Inbreeding coefficient. We are working with F3 individuals.
-INB_COEFF = '0.985'
+INB_COEFF = '0.75'
 #   Dummy values for chromosome and position in SNP map
 DUMMY = '1'
 
