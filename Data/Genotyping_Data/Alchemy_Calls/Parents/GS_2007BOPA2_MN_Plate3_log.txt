@@ -1,0 +1,14 @@
+2017-08-25 14:08.52: 
+ALCHEMY startup: command line is
+2017-08-25 14:08.52:  alchemy -f /home/morrellp/vonde026/Alchemy/Alchemy_Intensities/GS_2007BOPA2_MN_Plate3_Custom_BOPAC.txt -s /home/morrellp/vonde026/Alchemy/Alchemy_Inputs/GS_2007BOPA2_MN_Plate3_Custom_BOPAC_samp_map.txt -m /home/morrellp/vonde026/Alchemy/Alchemy_Inputs/GS_2007BOPA2_MN_Plate3_Custom_BOPAC_snp_map.txt --log=/home/morrellp/vonde026/Alchemy/Alchemy_Outputs/GS_2007BOPA2_MN_Plate3_log.txt --illumina
+
+2017-08-25 14:08.52: Detected 16 CPUs/cores using sysconf(). Use --n-threads=<# of cores> if this is incorrect.
+2017-08-25 14:08.52: ALCHEMY startup: setting random seed to 2791FC01
+2017-08-25 14:08.52: 
+2017-08-25 14:08.53: 
+2017-08-25 14:08.53: EM prior: signal 10.045 noise  7.023 sd  0.409
+2017-08-25 14:08.53: 
+2017-08-25 14:08.53: EM estimation of inbreeding coefficients disabled.
+2017-08-25 14:08.53: 
+Full ALCHEMY analysis of genotypes starts.
+2017-08-25 14:08.54: ALCHEMY execution finished.
