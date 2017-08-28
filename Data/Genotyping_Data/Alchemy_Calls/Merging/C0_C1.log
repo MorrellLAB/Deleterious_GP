@@ -1,0 +1,33 @@
+PLINK v1.90b3 64-bit (11 Jan 2015)
+11 arguments: --allow-extra-chr --map GS_Parents.map --merge Cycle_1/Cycle_1_calls_ALCHEMY.ped Cycle_1/Cycle_1_calls_ALCHEMY.map --out Merging/C0_C1 --ped GS_Translated_Parents.ped --recode
+Hostname: C02SR6DZHF1R
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls
+Start time: Mon Aug 28 16:25:23 2017
+
+Random number seed: 1503955523
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (364 variants, 12 people).
+--file: Merging/C0_C1-temporary.bed + Merging/C0_C1-temporary.bim +
+Merging/C0_C1-temporary.fam written.
+12 people loaded from Merging/C0_C1-temporary.fam.
+1896 people to be merged from (null).
+Of these, 1896 are new, while 0 are present in the base dataset.
+364 markers loaded from Merging/C0_C1-temporary.bim.
+364 markers to be merged from Cycle_1/Cycle_1_calls_ALCHEMY.map.
+Of these, 0 are new, while 364 are present in the base dataset.
+Performing single-pass merge (1908 people, 364 variants).
+Merged fileset written to Merging/C0_C1.bed + Merging/C0_C1.bim +
+Merging/C0_C1.fam .
+364 variants loaded from .bim file.
+1908 people (0 males, 0 females, 1908 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to Merging/C0_C1.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 0 founders and 1908 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.991518.
+364 variants and 1908 people pass filters and QC.
+Note: No phenotypes present.
+--recode to Merging/C0_C1.ped + Merging/C0_C1.map ... done.
+
+End time: Mon Aug 28 16:25:23 2017

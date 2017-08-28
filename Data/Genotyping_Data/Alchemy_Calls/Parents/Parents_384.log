@@ -1,0 +1,32 @@
+PLINK v1.90b3 64-bit (11 Jan 2015)
+11 arguments: --allow-extra-chr --map GS_2006BOPA1_BA_Plate7_calls_ALCHEMY.map --merge Parents_BOPA2.ped GS_2006BOPA2_BA_Plate7_calls_ALCHEMY.map --out Parents_384 --ped Parents_BOPA1.ped --recode
+Hostname: C02SR6DZHF1R
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/Parents
+Start time: Mon Aug 28 10:57:15 2017
+
+Random number seed: 1503935835
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (226 variants, 576 people).
+--file: Parents_384-temporary.bed + Parents_384-temporary.bim +
+Parents_384-temporary.fam written.
+576 people loaded from Parents_384-temporary.fam.
+576 people to be merged from (null).
+Of these, 0 are new, while 576 are present in the base dataset.
+226 markers loaded from Parents_384-temporary.bim.
+138 markers to be merged from GS_2006BOPA2_BA_Plate7_calls_ALCHEMY.map.
+Of these, 138 are new, while 0 are present in the base dataset.
+Performing single-pass merge (576 people, 364 variants).
+Merged fileset written to Parents_384.bed + Parents_384.bim + Parents_384.fam .
+364 variants loaded from .bim file.
+576 people (0 males, 0 females, 576 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to Parents_384.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 0 founders and 576 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.99027.
+364 variants and 576 people pass filters and QC.
+Note: No phenotypes present.
+--recode to Parents_384.ped + Parents_384.map ... done.
+
+End time: Mon Aug 28 10:57:15 2017
