@@ -15,7 +15,7 @@ OUT_DIR=/home/morrellp/vonde026/Alchemy
 #    Specify the path to the Python program
 TRANSLATE_GS_SNP_NAMES=/home/morrellp/vonde026/Deleterious_GP/Analysis_Scripts/Data_Handling/Translate_GS_SNP_Names.py
 #    Read the file list into an array
-GSFP=($(cat "${Sample_List}"))
+GSFP=($(cat "${FILE}"))
 
 #    Iterate over the list of intensity files
 for i in "${GSFP[@]}"
