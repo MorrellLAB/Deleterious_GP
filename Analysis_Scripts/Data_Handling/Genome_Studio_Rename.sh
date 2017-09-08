@@ -6,6 +6,8 @@
 set -e
 set -o pipefail
 
+module load python3_ML/3.6.1
+
 #    A SNP translation table list various SNP names
 TS_TABLE=/home/morrellp/vonde026/Alchemy/BOPA_Name_Translation.csv
 #    A list of intensity files; may have older SNP names
