@@ -1,5 +1,12 @@
 #!/bin/env bash
 
+#PBS -l mem=16gb,nodes=1:ppn=8,walltime=24:00:00
+#PBS -m abe
+#PBS -M vonde026@umn.edu
+#PBS -q lab
+#PBS -e /panfs/roc/groups/9/morrellp/vonde026/Error_Files 
+#PBS -o /panfs/roc/groups/9/morrellp/vonde026/Error_Files
+
 #    A script to execute Alchemy genotype calling on a set of samples.
 #    Alchemy requires 1) an intensity file, 2) a sample sheet, and 3) a SNP map listing positions
 
@@ -16,7 +23,7 @@ OUT_DIR=${HOME}/Alchemy/Alchemy_Outputs
 
 #    Alchemy intensities files have a name like "GS_2006BOPA1_BA_Plate7_Custom_BOPAC.txt"
 #    Saving the name and path to an array
-declare -a INTENSITIES=($(find "${INTENSITY_DIR}" -name "Cycle_2*Custom_BOPAC.txt"))
+declare -a INTENSITIES=($(find "${INTENSITY_DIR}" -name "GS_*Custom_BOPAC.txt"))
 #    Taking the path name from the 1st entry in the array
 INTENSITY_PATH=$(dirname "${INTENSITIES[0]}")
 
