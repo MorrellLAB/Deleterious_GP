@@ -23,7 +23,7 @@ OUT_DIR=${HOME}/Alchemy/Alchemy_Outputs
 
 #    Alchemy intensities files have a name like "GS_2006BOPA1_BA_Plate7_Custom_BOPAC.txt"
 #    Saving the name and path to an array
-declare -a INTENSITIES=($(find "${INTENSITY_DIR}" -name "GS_*Custom_BOPAC.txt"))
+declare -a INTENSITIES=($(find "${INTENSITY_DIR}" -maxdepth 1 -name "GS_*Custom_BOPAC.txt"))
 #    Taking the path name from the 1st entry in the array
 INTENSITY_PATH=$(dirname "${INTENSITIES[0]}")
 
@@ -32,6 +32,6 @@ INTENSITY_PATH=$(dirname "${INTENSITIES[0]}")
 #    The path is then built back up to reach each sample
 for i in "${INTENSITIES[@]}"
 	do
-		sample=$(basename "${i}" | cut -d _ -f 1,2)
+		sample=$(basename "${i}" | cut -d "_" -f 1,2,3,4)
 	    	alchemy -f "${INTENSITY_PATH}/${sample}_Custom_BOPAC.txt" -s "${INPUT_DIR}/${sample}_Custom_BOPAC_samp_map.txt" -m "${INPUT_DIR}/${sample}_Custom_BOPAC_snp_map.txt" --log="$OUT_DIR/${sample}_log.txt" --illumina > "${OUT_DIR}/${sample}_calls.txt"
     done
