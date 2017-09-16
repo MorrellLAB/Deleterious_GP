@@ -230,7 +230,7 @@ def main(alchemy, bopa, genetic_map, name_trans, snp_trans):
     bopa_alleles, phys_map = parse_vcf(bopa)
     name_key = parse_translation(name_trans)
     geno_ab_states = parse_snpstate(snp_trans)
-    alchemy_calls = parse_alchemy(name_key, alchemy)\
+    alchemy_calls = parse_alchemy(name_key, alchemy)
     #fixed_calls = fix_alleles(alchemy_calls, bopa_alleles)
     #ordered = order_snps(fixed_calls, phys_map)
     ordered = order_snps(alchemy_calls, phys_map)
