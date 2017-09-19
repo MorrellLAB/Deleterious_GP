@@ -166,6 +166,9 @@ def order_snps(ped_data, p_map):
         for snp in p_map[chrom]:
             if snp[0] in ped_data[ped_data.keys()[0]]:
                 snp_order.append(snp[0])
+    for nophys in sorted(ped_data[ped_data.keys()[0]]):
+        if nophys not in snp_order:
+            snp_order.append(nophys)
     return snp_order
 
 
