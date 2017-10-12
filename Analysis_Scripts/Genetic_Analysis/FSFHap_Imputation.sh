@@ -15,15 +15,15 @@
 # with PLINK 1.9, and having only numeric chromosome names.
 
 # Define paths to the input data
-GP_PED="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/GP_Filtered_ME_Missing.ped"
-GP_MAP="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls/GP_Filtered.map"
-PEDIGREE="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/GP_Tassel_Pedigree.txt"
+GP_PED="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/Test_C1_Fams.ped"
+GP_MAP="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/Test_C1_Fams.map"
+PEDIGREE="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/Test_Pedigree.txt"
 
 # Define paths to the output data
 YMD=$(date +%F)
-OUT_DIR="/Volumes/DataDisk/tmp/${YMD}"
-LOG="/Volumes/DataDisk/tmp/FSFHap_${YMD}.log"
-OUT_FNAME="GP_Imputed.hmp.txt"
+OUT_DIR="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/${YMD}"
+LOG="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/FSFHap_${YMD}.log"
+OUT_FNAME="Test_C1_FSFHap.hmp.txt"
 
 # Define paths to the TASSEL pipeline script
 TASSEL="/Volumes/DataDisk/Software/tassel-5-standalone/run_pipeline.pl"
