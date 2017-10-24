@@ -1,27 +1,27 @@
 PLINK v1.90b3 64-bit (11 Jan 2015)
 14 arguments: --allow-extra-chr --exclude High_ME_SNPs.txt --flip ../To_Flip.txt --map GP_All.map --out GP_Filtered --ped GP_All.ped --recode --remove High_Missing_Lines.txt
-Hostname: Toms-MacBook-Pro.local
-Working directory: /Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls
-Start time: Wed Oct  4 21:32:42 2017
+Hostname: x-134-84-3-142.vpn.umn.edu
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/Alchemy_Calls
+Start time: Tue Oct 24 07:58:37 2017
 
-Random number seed: 1507170762
+Random number seed: 1508849917
 16384 MB RAM detected; reserving 8192 MB for main workspace.
 Scanning .ped file... done.
-Performing single-pass .bed write (384 variants, 3354 people).
+Performing single-pass .bed write (384 variants, 3355 people).
 --file: GP_Filtered-temporary.bed + GP_Filtered-temporary.bim +
 GP_Filtered-temporary.fam written.
 384 variants loaded from .bim file.
-3354 people (0 males, 0 females, 3354 ambiguous) loaded from .fam.
+3355 people (0 males, 0 females, 3355 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to GP_Filtered.nosex .
 --flip: 128 SNPs flipped, 1929 SNP IDs not present.
 --exclude: 379 variants remaining.
---remove: 3256 people remaining.
+--remove: 3257 people remaining.
 Using 1 thread (no multithreaded calculations invoked).
-Before main variant filters, 0 founders and 3256 nonfounders present.
+Before main variant filters, 0 founders and 3257 nonfounders present.
 Calculating allele frequencies... done.
-Total genotyping rate in remaining samples is 0.991741.
-379 variants and 3256 people pass filters and QC.
+Total genotyping rate in remaining samples is 0.991743.
+379 variants and 3257 people pass filters and QC.
 Note: No phenotypes present.
 --recode to GP_Filtered.ped + GP_Filtered.map ... done.
 
-End time: Wed Oct  4 21:32:43 2017
+End time: Tue Oct 24 07:58:38 2017
