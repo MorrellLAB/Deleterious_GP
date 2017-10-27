@@ -31,9 +31,14 @@ def main(plinkmap, gmap):
     with open(plinkmap, 'r') as f:
         for line in f:
             tmp = line.strip().split()
+            chrom = tmp[0]
             snpid = tmp[1]
+            if chrom == 'chrUn':
+                phys = '-9'
+            else:
+                phys = tmp[3]
             if snpid in genetic_pos:
-                toprint = [genetic_pos[snpid][0], snpid, genetic_pos[snpid][1], tmp[3]]
+                toprint = [genetic_pos[snpid][0], snpid, genetic_pos[snpid][1], phys]
             else:
                 toprint = ['0', snpid, '-9', tmp[3]]
             print '\t'.join(toprint)
