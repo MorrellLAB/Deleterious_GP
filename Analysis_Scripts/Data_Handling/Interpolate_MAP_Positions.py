@@ -12,9 +12,21 @@ def parse_map(mapfile):
     """Return the MAP data as a list of lists. We do this so that we don't have
     to hit the disk over and over again."""
     map_data = []
+    # Keep track of the previous genetic position we saw. If it is identical to
+    # the current one, we increment it by 1/1000 to prevent identical position
+    # clobbering
+    prev_pos = 'NA'
     with open(mapfile, 'r') as f:
         for line in f:
-            map_data.append(line.strip().split())
+            dat = line.strip().split()
+            chrom = dat[0]
+            snpid = dat[1]
+            gpos = dat[2]
+            ppos = dat[3]
+            if gpos == prev_pos:
+                gpos = str(float(gpos) + 0.001)
+            prev_pos = gpos
+            map_data.append([chrom, snpid, gpos, ppos])
     return map_data
 
 

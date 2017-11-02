@@ -40,7 +40,7 @@ def main(plinkmap, gmap):
             if snpid in genetic_pos:
                 toprint = [genetic_pos[snpid][0], snpid, genetic_pos[snpid][1], phys]
             else:
-                toprint = ['0', snpid, '-9', tmp[3]]
+                toprint = ['0', snpid, '-9', phys]
             print '\t'.join(toprint)
     return
 
