@@ -23,7 +23,7 @@ def parse_geno(genotypes):
                 continue
             else:
                 tmp = line.strip().split()
-                geno[tmp[0]] = tmp[1]
+                geno[tmp[0]] = tmp[1][0]
     return geno
 
 

@@ -20,11 +20,11 @@ FAM_SCRIPT="${GH_ROOT}/Analysis_Scripts/Data_Handling/Add_Family_to_PED.py"
 PARENT_NAMES="${GH_ROOT}/Analysis_Scripts/Data_Handling/Parental_Names.txt"
 SED_PARENTS="${GH_ROOT}/Analysis_Scripts/Data_Handling/Replace_Parent_Names.sed"
 ALCHEMY_REPORTS="/Volumes/Scratch/GP"
-PHYS_MAP="${GH_ROOT}/Data/BOPA1_BOPA2_physical.vcf"
-GEN_MAP="${GH_ROOT}/Data/Munoz2011_BOPA_ConsensusMap.csv"
-NAME_TRANS="${GH_ROOT}/Data/BOPA_Name_Translation.csv"
+PHYS_MAP="${GH_ROOT}/Data/SNP_Positions/sorted_all_BOPA_masked_95idt.vcf"
+GEN_MAP="${GH_ROOT}/Data/SNP_Positions/Munoz2011_BOPA_ConsensusMap.csv"
+NAME_TRANS="${GH_ROOT}/Data/SNP_Positions/BOPA_Name_Translation.csv"
 AB_TRANS="${GH_ROOT}/Data/Genotyping_Data/BOPA_384_AB_genotypes.csv"
-PEDIGREES="${GH_ROOT}/Data/Population_Pedigrees.csv"
+PEDIGREES="${GH_ROOT}/Data/Pedigrees/Population_Pedigrees.csv"
 
 cd ${ALCHEMY_REPORTS}
 # Find all files with names that end in 'calls.txt'
