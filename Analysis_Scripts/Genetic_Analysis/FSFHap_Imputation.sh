@@ -15,14 +15,14 @@
 # with PLINK 1.9, and having only numeric chromosome names.
 
 # Define paths to the input data
-GP_PED="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/C3_Imputation/C3_Families.ped"
-GP_MAP="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/C3_Imputation/C3_Families.map"
-PEDIGREE="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/C3_Imputation/C3_Pedigree.txt"
+GP_PED="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Imputation/FSFHap_Testing/GP_Comb_Cleaned.ped"
+GP_MAP="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Imputation/FSFHap_Testing/GP_Comb_Cleaned.map"
+PEDIGREE="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Pedigrees/GP_Tassel_Pedigree.txt"
 
 # Define paths to the output data
 YMD=$(date +%F)
-OUT_DIR="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/C3_Imputation/${YMD}"
-LOG="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/FSFHap_Testing/C3_Imputation/FSFHap_${YMD}.log"
+OUT_DIR="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Imputation/FSFHap_Testing/${YMD}"
+LOG="/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Imputation/FSFHap_Testing/FSFHap_${YMD}.log"
 OUT_FNAME="C3_FSFHap.hmp.txt"
 
 # Define paths to the TASSEL pipeline script
@@ -82,40 +82,41 @@ ${TASSEL} \
     -endplugin \
     -export
 
-# Then, we need to merge them together. We will need to generate a big ugly
-# merge command. It has to be done this way...
-#   pipeline.pl -fork1 -h in1.txt -fork2 -h in2.txt ... -forkN -h inN.txt ...
-#               -combineN -input1 -input2 ... -inputN -mergeGenotypeTables
-#               -export out.hmp.txt -runfork1 -runfork2 ... -runforkN
-# We will build this command up iteratively.
-# First, get an array of the file names
-FNAMES=($(find . -type f -name 'imputed_genotypes*' | sort))
-# Then start the command
-CMD="${TASSEL} "
-# For each filename, put the -forkN -h in.txt bit
-COUNTER=1
-for f in ${FNAMES[@]}
-do
-    CMD+="-fork${COUNTER} -h ${f} "
-    COUNTER=$((${COUNTER} + 1))
-done
-# Then add the -combineN bit
-CMD+="-combine${COUNTER} "
-# Then, add the -inputN bits. We have to reset the counter
-COUNTER=1
-for f in ${FNAMES[@]}
-do
-    CMD+="-input${COUNTER} "
-    COUNTER=$((${COUNTER} + 1))
-done
-# And add the -mergeGenotypeTables bit, and the export bit
-CMD+="-mergeGenotypeTables -export ${OUT_FNAME} "
-# And finally, add the -runforkN bits. Reset the counter again
-COUNTER=1
-for f in ${FNAMES[@]}
-do
-    CMD+="-runfork${COUNTER} "
-    COUNTER=$((${COUNTER} + 1))
-done
-# And execute the command
-${CMD}
+# Don't use the tassel merge. It sucks, and they admit it.
+# # Then, we need to merge them together. We will need to generate a big ugly
+# # merge command. It has to be done this way...
+# #   pipeline.pl -fork1 -h in1.txt -fork2 -h in2.txt ... -forkN -h inN.txt ...
+# #               -combineN -input1 -input2 ... -inputN -mergeGenotypeTables
+# #               -export out.hmp.txt -runfork1 -runfork2 ... -runforkN
+# # We will build this command up iteratively.
+# # First, get an array of the file names
+# FNAMES=($(find . -type f -name 'imputed_genotypes*' | sort))
+# # Then start the command
+# CMD="${TASSEL} "
+# # For each filename, put the -forkN -h in.txt bit
+# COUNTER=1
+# for f in ${FNAMES[@]}
+# do
+#     CMD+="-fork${COUNTER} -h ${f} "
+#     COUNTER=$((${COUNTER} + 1))
+# done
+# # Then add the -combineN bit
+# CMD+="-combine${COUNTER} "
+# # Then, add the -inputN bits. We have to reset the counter
+# COUNTER=1
+# for f in ${FNAMES[@]}
+# do
+#     CMD+="-input${COUNTER} "
+#     COUNTER=$((${COUNTER} + 1))
+# done
+# # And add the -mergeGenotypeTables bit, and the export bit
+# CMD+="-mergeGenotypeTables -export ${OUT_FNAME} "
+# # And finally, add the -runforkN bits. Reset the counter again
+# COUNTER=1
+# for f in ${FNAMES[@]}
+# do
+#     CMD+="-runfork${COUNTER} "
+#     COUNTER=$((${COUNTER} + 1))
+# done
+# # And execute the command
+# ${CMD}

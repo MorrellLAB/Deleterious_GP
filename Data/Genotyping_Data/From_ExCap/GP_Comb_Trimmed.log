@@ -1,0 +1,26 @@
+PLINK v1.90b3 64-bit (11 Jan 2015)
+8 arguments: --allow-extra-chr --exclude High_ME_SNPs.txt --file GP_Comb --out GP_Comb_Trimmed --recode
+Hostname: Toms-MacBook-Pro.local
+Working directory: /Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Genotyping_Data/From_ExCap
+Start time: Wed Nov  8 22:57:38 2017
+
+Random number seed: 1510203458
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+Scanning .ped file... done.
+Warning: Variant 145 (post-sort/filter) triallelic; setting rarest missing.
+Performing single-pass .bed write (310 variants, 3357 people).
+--file: GP_Comb_Trimmed-temporary.bed + GP_Comb_Trimmed-temporary.bim +
+GP_Comb_Trimmed-temporary.fam written.
+310 variants loaded from .bim file.
+3357 people (0 males, 0 females, 3357 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to GP_Comb_Trimmed.nosex .
+--exclude: 306 variants remaining.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 21 founders and 3336 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.976423.
+306 variants and 3357 people pass filters and QC.
+Note: No phenotypes present.
+--recode to GP_Comb_Trimmed.ped + GP_Comb_Trimmed.map ... done.
+
+End time: Wed Nov  8 22:57:38 2017
