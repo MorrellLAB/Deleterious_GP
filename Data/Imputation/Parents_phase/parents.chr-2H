@@ -1,0 +1,255 @@
+*************************************************************
+****                                                     ****
+****            Output from PHASE v2.1.1                 ****
+****  Code by M Stephens, with contributions from N Li   ****
+****                                                     ****
+*************************************************************
+
+BEGIN COMMAND_LINE 
+/Applications/PHASE2.1.1/PHASE parents.chr-2H.recode.phase.inp parents.chr-2H 100 10 10 
+END COMMAND_LINE 
+
+BEGIN OUTFILE_LIST
+parents.chr-2H_freqs : haplotype frequency estimates
+parents.chr-2H_pairs : most likely haplotype pairs for each individual
+parents.chr-2H_recom : estimates of recombination parameters
+parents.chr-2H_monitor : file for monitoring convergence
+END OUTFILE_LIST
+
+BEGIN INPUT_SUMMARY
+Number of Individuals: 21
+Number of Loci: 49
+Positions of loci: 3.3262e+06 6.42097e+06 1.11889e+07 1.62219e+07 3.48649e+07 3.83686e+07 3.8835e+07 4.22382e+07 4.99885e+07 5.81849e+07 5.92171e+07 7.14006e+07 1.00642e+08 1.10194e+08 1.13453e+08 1.19984e+08 1.8167e+08 5.87895e+08 5.89927e+08 6.153e+08 6.16919e+08 6.21115e+08 6.22888e+08 6.31621e+08 6.32679e+08 6.36434e+08 6.45203e+08 6.52032e+08 6.7201e+08 6.8549e+08 6.87073e+08 7.0489e+08 7.07539e+08 7.10843e+08 7.1123e+08 7.12677e+08 7.18629e+08 7.18882e+08 7.23372e+08 7.27211e+08 7.28831e+08 7.31305e+08 7.33666e+08 7.38842e+08 7.42026e+08 7.4322e+08 7.44274e+08 7.49742e+08 7.64421e+08 
+END INPUT_SUMMARY
+
+List of haplotypes found in best reconstruction, with counts.
+(See file parents.chr-2H_freqs for haplotype population frequency estimates)
+
+BEGIN LIST_SUMMARY
+         1 TACACAACACTCTGGTTAAGAGCAAAAGGAAATGTGGTACCAGCAGAGT    2.000000
+         2 TACACAACACTCTGGTTAAGAGCAAAAGGCGATGTGGTACCGGCCAGGT    1.000000
+         3 TACACAACACTCTGGTTAAGAGCAAAAGGCGATGTGGTACCGGCCAGGC    1.000000
+         4 TACACAACACTCTGGTTAAGAGCAAAAGGCGATACTGTACCGGCAGAGT    2.000000
+         5 TACACAACACTCTGGTTAAGAGCAACACACGACGTTCCGCCGCTCAGGT    2.000000
+         6 TACACAACACTCTGGTTAAGAGCAGCAGGCGATGTGGTACCAGCAGAGT    2.000000
+         7 TACACAACACTCTGGTTAAGAGCAGCAGGCGATACTGTACCGGCAGAGT    2.000000
+         8 TACACAACACTCTGGTTGCGGTTGGCAGGCGACGTTCCGCCGGCCAGGT    2.000000
+         9 TACACAACACCTTCGTTAAGAGCAAAAGGCGACGTTCCGTTAGCAGAGT    1.000000
+        10 TACACAACACCTTCGCTAAGAGCAAAAGGCGACGTTCCGTTAGCAGAGT    1.000000
+        11 TACACAACACCTTCGCCGCGGTTAAAAGGCGATATTCCGTTAGCAGAGT    1.000000
+        12 TACACAACACCTTCGCCGCGGTTAAAAGGCGATACTCCGTTAGCAGAGT    1.000000
+        13 TACACAACACCTTCGCCGCCGGTGGCGCACGGTATGCCGCCGGTCAGGC    1.000000
+        14 TACACAACACCTTCGCCGCCGGTGGCGCACGGTATGCCGCCGCTCAGGC    1.000000
+        15 TACACGGTACCTTCGTCGCGGTTAAAACACGACGTTCCGCCGCTAGGGT    1.000000
+        16 TACACGGTACCTTCGCCGCGGTTAAAACACGACGTTCCGCCGCTCAGGT    1.000000
+        17 TACATGGCACTCTGGTTAACGGTGGCGCACGACGTTCCGCCGCTCAGGT    2.000000
+        18 TATACAACACTCTGGTTAAGAGCAACACACGACGTTCCGCTGCTAGGTT    2.000000
+        19 CACACAACACTCTGGTTAAGAGCAAAAGGCGACGTTCCGCTGCTAGAGT    1.000000
+        20 CACACAACACTCTGGTTAAGAGCAAAACGCGACGTTCCGCTGCTAGAGT    1.000000
+        21 CACACAACACCTTGGCTGCGGTTGGCAGGCGATGTGGTACCAGCAGAGT    2.000000
+        22 CACACGGTACCCTGGTTAACGGTAAAAGGCGACGTTCCGCCGCTCAGGT    1.000000
+        23 CACGCAATCTCCTCGCTAAGAGCAGCAGGCGATACTGCACCGGCCAGTC    1.000000
+        24 CTCACAACACCTTCGCCGCCGGTGGCAGACGGTATGGTGTTACCAGGTT    2.000000
+        25 CTCACGGTACCCTGGTTAACGGTAAAAGGCGACGTTCCGCCGCTCAGGT    1.000000
+        26 CTCGCAATCTCCTCGCTAAGAGCAGCAGGCGATACTGTACCGGCCAGTC    1.000000
+        27 CTTGCAACACTTCGCCTAAGAGCGACAGGCGATACTGTACCGGCAGAGT    1.000000
+        28 CTTGCAACACTTCGCCTAAGAGCGGCAGGCGATACTGTACCGGCAGAGT    5.000000
+END LIST_SUMMARY
+
+
+Summary of best reconstruction
+(numbers refer to the list of haplotypes given above)
+
+BEGIN BESTPAIRS_SUMMARY
+#6B01-2218: (1,1)
+#6B03-4304: (9,10)
+#6B03-4478: (4,4)
+#6B04-0290: (19,20)
+#6B05-0922: (8,8)
+#6B06-1132: (2,3)
+#FEG141-20: (23,26)
+#FEG153-58: (28,28)
+#FEG154-47: (21,21)
+#FEG175-57: (7,7)
+#FEG183-52: (6,6)
+#M122: (28,28)
+#M138: (27,28)
+#ND20448: (13,14)
+#ND24906: (11,12)
+#ND25160: (18,18)
+#ND25652: (15,16)
+#ND25728: (22,25)
+#ND25986: (5,5)
+#ND26036: (24,24)
+#ND26104: (17,17)
+END BESTPAIRS_SUMMARY
+
+
+Haplotype estimates for each individual, with uncertain phases enclosed in ()
+and uncertain genotypes enclosed in []:
+
+BEGIN BESTPAIRS1
+0 #6B01-2218
+T A C A C A A C A C T C T G G T T A A G A G C A A A A G G A A A T G T G G T A C C A G C A G A G T 
+T A C A C A A C A C T C T G G T T A A G A G C A A A A G G A A A T G T G G T A C C A G C A G A G T 
+0 #6B03-4304
+T A C A C A A C A C C T T C G T T A A G A G C A A A A G G C G A C G T T C C G T T A G C A G A G T 
+T A C A C A A C A C C T T C G C T A A G A G C A A A A G G C G A C G T T C C G T T A G C A G A G T 
+0 #6B03-4478
+T A C A C A A C A C T C T G G T T A A G A G C A A A A G G C G A T A C T G T A C C G G C A G A G T 
+T A C A C A A C A C T C T G G T T A A G A G C A A A A G G C G A T A C T G T A C C G G C A G A G T 
+0 #6B04-0290
+C A C A C A A C A C T C T G G T T A A G A G C A A A A G G C G A C G T T C C G C T G C T A G A G T 
+C A C A C A A C A C T C T G G T T A A G A G C A A A A C G C G A C G T T C C G C T G C T A G A G T 
+0 #6B05-0922
+T A C A C A A C A C T C T G G T T G C G G T T G G C A G G C G A C G T T C C G C C G G C C A G G T 
+T A C A C A A C A C T C T G G T T G C G G T T G G C A G G C G A C G T T C C G C C G G C C A G G T 
+0 #6B06-1132
+T A C A C A A C A C T C T G G T T A A G A G C A A A A G G C G A T G T G G T A C C G G C C A G G T 
+T A C A C A A C A C T C T G G T T A A G A G C A A A A G G C G A T G T G G T A C C G G C C A G G C 
+0 #FEG141-20
+C (A) C G C A A T C T C C T C G C T A A G A G C A G C A G G C G A T A C T G C A C C G G C C A G T C 
+C (T) C G C A A T C T C C T C G C T A A G A G C A G C A G G C G A T A C T G T A C C G G C C A G T C 
+0 #FEG153-58
+C T T G C A A C A C T T C G C C T A A G A G C G G C A G G C G A T A C T G T A C C G G C A G A G T 
+C T T G C A A C A C T T C G C C T A A G A G C G G C A G G C G A T A C T G T A C C G G C A G A G T 
+0 #FEG154-47
+C A C A C A A C A C C T T G G C T G C G G T T G G C A G G C G A T G T G G T A C C A G C A G A G T 
+C A C A C A A C A C C T T G G C T G C G G T T G G C A G G C G A T G T G G T A C C A G C A G A G T 
+0 #FEG175-57
+T A C A C A A C A C T C T G G T T A A G A G C A G C A G G C G A T A C T G T A C C G G C A G A G T 
+T A C A C A A C A C T C T G G T T A A G A G C A G C A G G C G A T A C T G T A C C G G C A G A G T 
+0 #FEG183-52
+T A C A C A A C A C T C T G G T T A A G A G C A G C A G G C G A T G T G G T A C C A G C A G A G T 
+T A C A C A A C A C T C T G G T T A A G A G C A G C A G G C G A T G T G G T A C C A G C A G A G T 
+0 #M122
+C T T G C A A C A C T T C G C C T A A G A G C G G C A G G C G A T A C T G T A C C G G C A G A G T 
+C T T G C A A C A C T T C G C C T A A G A G C G G C A G G C G A T A C T G T A C C G G C A G A G T 
+0 #M138
+C T T G C A A C A C T T C G C C T A A G A G C G A C A G G C G A T A C T G T A C C G G C A G A G T 
+C T T G C A A C A C T T C G C C T A A G A G C G G C A G G C G A T A C T G T A C C G G C A G A G T 
+0 #ND20448
+T A C A C A A C A C C T T C G C C G C C G G T G G C G C A C G G T A T G C C G C C G G T C A G G C 
+T A C A C A A C A C C T T C G C C G C C G G T G G C G C A C G G T A T G C C G C C G C T C A G G C 
+0 #ND24906
+T A C A C A A C A C C T T C G C C G C G G T [T] A A A A G G C G A T A T T C C G T T A G C A G A G T 
+T A C A C A A C A C C T T C G C C G C G G T [T] A A A A G G C G A T A C T C C G T T A G C A G A G T 
+0 #ND25160
+T A T A C A A C A C T C T G G T T A A G A G C A A C A C A C G A C G T T C C G C T G C T A G G T T 
+T A T A C A A C A C T C T G G T T A A G A G C A A C A C A C G A C G T T C C G C T G C T A G G T T 
+0 #ND25652
+T A C A C G G T A C C T T C G (T) C G C G G T [T] A A A A C A C G A C G T T C C G C C G C T A G G G T 
+T A C A C G G T A C C T T C G (C) C G C G G T [T] A A A A C A C G A C G T T C C G C C G C T C A G G T 
+0 #ND25728
+C A C A C G G T A C C C T G G T T A A C G G T A A A A G G C G A C G T T C C G C C G C T C A G G T 
+C T C A C G G T A C C C T G G T T A A C G G T A A A A G G C G A C G T T C C G C C G C T C A G G T 
+0 #ND25986
+T A C A C A A C A C T C T G G T T A A G A G C A A C A C A C G A C G T T C C G C C G C T C A G G T 
+T A C A C A A C A C T C T G G T T A A G A G C A A C A C A C G A C G T T C C G C C G C T C A G G T 
+0 #ND26036
+C T C A C A A C A C C T T C G C C G C C G G T G G C A G A C G G T A T G G T G T T A C C A G G T T 
+C T C A C A A C A C C T T C G C C G C C G G T G G C A G A C G G T A T G G T G T T A C C A G G T T 
+0 #ND26104
+T A C A T G G C A C T C T G G T T A A C G G T G G C G C A C G A C G T T C C G C C G C T C A G G T 
+T A C A T G G C A C T C T G G T T A A C G G T G G C G C A C G A C G T T C C G C C G C T C A G G T 
+END BESTPAIRS1
+
+
+Haplotype estimates for each individual, with uncertain phases enclosed in ()
+and uncertain genotypes enclosed in []
+with phase known positions indicated by =
+
+BEGIN BESTPAIRS2
+0 #6B01-2218
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #6B03-4304
+= = = = = = = = = = = = = = = T = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = C = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #6B03-4478
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #6B04-0290
+= = = = = = = = = = = = = = = = = = = = = = = = = = = G = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = C = = = = = = = = = = = = = = = = = = = = = 
+0 #6B05-0922
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #6B06-1132
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ? = T 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ? = C 
+0 #FEG141-20
+= (A) = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = C = = = = = = = = = = = 
+= (T) = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = T = = = = = = = = = = = 
+0 #FEG153-58
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #FEG154-47
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #FEG175-57
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #FEG183-52
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #M122
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #M138
+= ? = = = = = = = ? = ? = = = ? = = = = = = = = A ? = = = = = = = = ? = = = = = = = = = = ? = = = 
+= ? = = = = = = = ? = ? = = = ? = = = = = = = = G ? = = = = = = = = ? = = = = = = = = = = ? = = = 
+0 #ND20448
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = G = = = ? = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = C = = = ? = = 
+0 #ND24906
+= = = = = = = = = = = = = = = = = = = = = = ? = = = = = = = = = = = T = = = = = = = = = = ? = = = 
+= = = = = = = = = = = = = = = = = = = = = = ? = = = = = = = = = = = C = = = = = = = = = = ? = = = 
+0 #ND25160
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #ND25652
+= = = = = = = = = = = = = = = (T) = = = = = = ? = = = = = = = = = = = = = = = = = = = = = A G = = = 
+= = = = = = = = = = = = = = = (C) = = = = = = ? = = = = = = = = = = = = = = = = = = = = = C A = = = 
+0 #ND25728
+= A = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= T = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #ND25986
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #ND26036
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+0 #ND26104
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+END BESTPAIRS2
+
+
+Phase probabilities at each site
+with phase known positions indicated by =
+and missing data positions indicated by ?
+
+BEGIN PHASEPROBS
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = 1.00 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = 1.00 = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ? = 1.00 
+= 0.50 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 1.00 = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= ? = = = = = = = ? = ? = = = ? = = = = = = = = 1.00 ? = = = = = = = = ? = = = = = = = = = = ? = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 1.00 = = = ? = = 
+= = = = = = = = = = = = = = = = = = = = = = ? = = = = = = = = = = = 1.00 = = = = = = = = = = ? = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = 0.52 = = = = = = ? = = = = = = = = = = = = = = = = = = = = = 1.00 1.00 = = = 
+= 1.00 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+END PHASEPROBS
