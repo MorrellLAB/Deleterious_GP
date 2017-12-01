@@ -1,0 +1,24 @@
+PLINK v1.90b3 64-bit (11 Jan 2015)
+8 arguments: --allow-extra-chr --exclude-snps 11_10130 --file ../FSFHap_Testing/GP_Comb_Cleaned --out GP_Comb_Beagle --recode
+Hostname: x-134-84-0-57.vpn.umn.edu
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/Beagle_4.1
+Start time: Thu Nov 30 20:36:54 2017
+
+Random number seed: 1512095814
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (306 variants, 3357 people).
+--file: GP_Comb_Beagle-temporary.bed + GP_Comb_Beagle-temporary.bim +
+GP_Comb_Beagle-temporary.fam written.
+305 variants loaded from .bim file.
+3357 people (0 males, 0 females, 3357 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to GP_Comb_Beagle.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 21 founders and 3336 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.972759.
+305 variants and 3357 people pass filters and QC.
+Note: No phenotypes present.
+--recode to GP_Comb_Beagle.ped + GP_Comb_Beagle.map ... done.
+
+End time: Thu Nov 30 20:36:54 2017
