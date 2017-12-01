@@ -167,15 +167,56 @@ def get_parent_of_origin(fam_id, parents, germline):
 def process_ibd(ibd):
     """Collapse any identical intervals and remove segments that overlap between
     parents."""
-    
-    pass
+    for individual in ibd:
+        for chromosome in sorted(CHROMOSOMES):
+            # Keep a dict of the segments from each parent
+            segments = {}
+            # And a list of the breakpoints for the interval testing
+            breakpoints = []
+            for parent in sorted(ibd[individual]):
+                for region in sorted(ibd[individual][parent]):
+                    if region[0] == chromosome:
+                        segments[parent] = (region[1], region[2])
+                        breakpoints.append(int(region[1]))
+                        breakpoints.append(int(region[2]))
+            # Then, cast the breakpoints to a set, then sort
+            breakpoints = sorted(list(set(breakpoints)))
+            # Then, for each pair of breakpoints (interval), test how many
+            # parents it occurs in. If it occurs in just one parent, then we
+            # have found an unique IBD segement and we pint it into the file. If
+            # it occurs in multiple parents, then it is an ambiguous segment,
+            # and we mark it as such.
+            for i in range(1, len(breakpoints)):
+                start = breakpoints[i-1]
+                end = breakpoints[i]
+                in_parents = []
+                for p in sorted(segments):
+                    if segments[p][0] <= start and segments[p][1] >= end:
+                        in_parents.append(p)
+                if len(in_parents) == 1:
+                    p_in = in_parents.pop()
+                elif len(in_parents) == 0:
+                    p_in = 'Ambiguous:Unassigned'
+                else:
+                    p_in = 'Ambiguous:' + ','.join(in_parents)
+                # Print the individual ID, the start, stop, and the founder
+                # that has the IBD
+                toprint = [
+                    individual,
+                    chromosome,
+                    str(start),
+                    str(end),
+                    p_in]
+                print '\t'.join(toprint)
+    return
 
 
 def main(ped, germline):
     """Main function."""
     pedigree = parse_pedigree(ped)
-    t = get_parent_of_origin('MS10S3012', ['FEG183-52', 'FEG141-20'], germline)
-    pprint.pprint(t)
+    for fam in sorted(pedigree):
+        t = get_parent_of_origin(fam, pedigree[fam], germline)
+        process_ibd(t)
 
 
 main(sys.argv[1], sys.argv[2])
