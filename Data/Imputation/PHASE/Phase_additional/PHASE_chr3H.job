@@ -1,0 +1,18 @@
+#/bin/env 
+
+#PBS -l mem=6000mb,nodes=1:ppn=8,walltime=8:00:00 
+#PBS -m abe 
+#PBS -M pmorrell@umn.edu 
+#PBS -q lab
+
+#    Link to program
+PHASE=${HOME}/Apps/MStephens/phase.2.1.1.linux/PHASE
+
+#    Genotype file
+GENOTYPES=${HOME}/Workshop/GP_Phasing/PHASE/parents.chr-3H.recode.phase.inp
+
+#    Output
+OUT=${HOME}/Workshop/GP_Phasing/PHASE/parents_chr3H
+
+$PHASE -MS $GENOTYPES $OUT 100 10 100  
+
