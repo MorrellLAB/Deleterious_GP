@@ -5,7 +5,7 @@
 GH="${HOME}/Dropbox/GitHub/Deleterious_GP"
 SCRIPT="${GH}/Analysis_Scripts/Data_Handling/PHASE_to_Panel.py"
 BOPA_PHYS="${GH}/Data/SNP_Positions/384_Physical.vcf"
-PHASEDIR="${GH}/Data/Imputation/PHASE/Phase_pairs/"
+PHASEDIR="${GH}/Data/Imputation/PHASE/Phase_ParentsOnly_pairs/"
 VCFTOOLS=$(which vcftools)
 
 # Define an array for the chromosomes

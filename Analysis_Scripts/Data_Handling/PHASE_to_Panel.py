@@ -68,7 +68,7 @@ def generate_vcf(haplotypes, chrom, vcfinfo):
     print header
     for index, snp in enumerate(vcfinfo):
         # keep the meta data 
-        toprint = [chrom, snp[0], snp[1], snp[2], snp[3], '.', '.', 'GT']
+        toprint = [chrom, snp[0], snp[1], snp[2], snp[3], '.', '.', '.', 'GT']
         # Then start printing the haplotypes
         for sample in sorted(haplotypes):
             gt = haplotypes[sample][index]
