@@ -1,0 +1,569 @@
+beagle.08Jun17.d8b.jar (version 4.1)
+Copyright (C) 2014-2015 Brian L. Browning
+Enter "java -jar beagle.08Jun17.d8b.jar" for a summary of command line arguments.
+Start time: 07:10 PM CST on 15 Dec 2017
+
+Command line: java -Xmx4096m -jar beagle.jar
+  gt=/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/Beagle_4.1/Beagle_BOPA_Out.vcf.gz
+  ref=/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/Phased_Panel.vcf
+  out=/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/Beagle_4.1//Beagle_BOPA_IBD
+  map=/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/Beagle_Inteprolated_MAP.map
+  window=10
+  overlap=4
+  seed=12345
+  niterations=10
+  impute=false
+  gprobs=true
+  ne=100000
+  ibd=true
+  ibdtrim=0
+
+reference samples:      21
+target samples:       3336
+
+Window 1 [ 1H:2514495-22567867 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 10
+mean edges/node:  1.727  mean count/edge: 1119
+
+Window 2 [ 1H:18807356-355336510 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.775  mean count/edge: 959
+
+Window 3 [ 1H:31354146-463802424 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.692  mean count/edge: 959
+
+Window 4 [ 1H:435096952-529829685 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 6
+mean edges/node:  1.690  mean count/edge: 1343
+
+Window 5 [ 1H:525407326-544586370 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.742  mean count/edge: 1343
+
+Window 6 [ 1H:538423095-555426554 ]
+reference markers:       9
+target markers:          9
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 6
+mean edges/node:  1.704  mean count/edge: 1343
+
+Window 7 [ 2H:3326203-58184860 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 7
+mean edges/node:  1.643  mean count/edge: 1343
+
+Window 8 [ 2H:38834969-119984321 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.632  mean count/edge: 1119
+
+Window 9 [ 2H:100641976-621115373 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.735  mean count/edge: 1119
+
+Window 10 [ 2H:589927297-652031655 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.758  mean count/edge: 1119
+
+Window 11 [ 2H:632678794-710843212 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.688  mean count/edge: 1343
+
+Window 12 [ 2H:687072769-727211279 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 10
+mean edges/node:  1.730  mean count/edge: 1119
+
+Window 13 [ 2H:718628790-743219980 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 10
+mean edges/node:  1.778  mean count/edge: 1119
+
+Window 14 [ 2H:733665592-764420842 ]
+reference markers:       7
+target markers:          7
+
+Refined IBD
+model scale: 5.79
+run time:    1 second
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.652  mean count/edge: 1343
+
+Window 15 [ 3H:1367441-54793321 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 10
+mean edges/node:  1.815  mean count/edge: 1343
+
+Window 16 [ 3H:17409756-540867182 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 4      max edges/level: 5
+mean edges/node:  1.500  mean count/edge: 1679
+
+Window 17 [ 3H:479845259-628935245 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.588  mean count/edge: 1343
+
+Window 18 [ 3H:567974349-667178220 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.724  mean count/edge: 1343
+
+Window 19 [ 3H:650644517-688380435 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 4      max edges/level: 6
+mean edges/node:  1.500  mean count/edge: 1679
+
+Window 20 [ 3H:678513370-693425600 ]
+reference markers:       5
+target markers:          5
+
+Refined IBD
+model scale: 5.79
+run time:    1 second
+
+mean edges/level: 4      max edges/level: 6
+mean edges/node:  1.357  mean count/edge: 1679
+
+Window 21 [ 4H:1302636-35787748 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 6
+mean edges/node:  1.714  mean count/edge: 1343
+
+Window 22 [ 4H:24251091-544747990 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.697  mean count/edge: 1119
+
+Window 23 [ 4H:459813388-580170313 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.698  mean count/edge: 959
+
+Window 24 [ 4H:569760181-600035002 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.714  mean count/edge: 959
+
+Window 25 [ 4H:586901572-622965542 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.750  mean count/edge: 1119
+
+Window 26 [ 4H:604442990-646103540 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.657  mean count/edge: 1119
+
+Window 27 [ 5H:1070678-12380644 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.605  mean count/edge: 1119
+
+Window 28 [ 5H:9125206-378886729 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 12
+mean edges/node:  1.667  mean count/edge: 959
+
+Window 29 [ 5H:24737439-553412544 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 10
+mean edges/node:  1.758  mean count/edge: 1119
+
+Window 30 [ 5H:535623343-598250952 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.733  mean count/edge: 1343
+
+Window 31 [ 5H:562730312-619075695 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.606  mean count/edge: 1343
+
+Window 32 [ 5H:611999790-636962193 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.750  mean count/edge: 1119
+
+Window 33 [ 5H:629295778-651487057 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 10
+mean edges/node:  1.778  mean count/edge: 1119
+
+Window 34 [ 5H:644819909-659736826 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.634  mean count/edge: 959
+
+Window 35 [ 5H:657853771-668031986 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 11
+mean edges/node:  1.756  mean count/edge: 959
+
+Window 36 [ 6H:343390-22810044 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    1 second
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.742  mean count/edge: 1343
+
+Window 37 [ 6H:16749731-46946031 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 12
+mean edges/node:  1.721  mean count/edge: 959
+
+Window 38 [ 6H:30807567-384884951 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.757  mean count/edge: 959
+
+Window 39 [ 6H:92409121-495778737 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 8      max edges/level: 12
+mean edges/node:  1.711  mean count/edge: 839
+
+Window 40 [ 6H:427175857-536786820 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.763  mean count/edge: 959
+
+Window 41 [ 6H:512160455-573497440 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 4      max edges/level: 6
+mean edges/node:  1.826  mean count/edge: 1679
+
+Window 42 [ 6H:562812969-583345643 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.650  mean count/edge: 959
+
+Window 43 [ 7H:6314541-48001348 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 5      max edges/level: 8
+mean edges/node:  1.688  mean count/edge: 1343
+
+Window 44 [ 7H:23576066-98043395 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.765  mean count/edge: 1119
+
+Window 45 [ 7H:66195606-522445562 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    1 second
+
+mean edges/level: 6      max edges/level: 8
+mean edges/node:  1.686  mean count/edge: 1119
+
+Window 46 [ 7H:310311500-597748994 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    1 second
+
+mean edges/level: 5      max edges/level: 10
+mean edges/node:  1.742  mean count/edge: 1343
+
+Window 47 [ 7H:576344998-636617013 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 7      max edges/level: 10
+mean edges/node:  1.692  mean count/edge: 959
+
+Window 48 [ 7H:623438216-645016449 ]
+reference markers:      10
+target markers:         10
+
+Refined IBD
+model scale: 5.79
+run time:    2 seconds
+
+mean edges/level: 8      max edges/level: 13
+mean edges/node:  1.756  mean count/edge: 839
+
+Window 49 [ 7H:641613113-654900595 ]
+reference markers:       6
+target markers:          6
+
+Refined IBD
+model scale: 5.79
+run time:    1 second
+
+mean edges/level: 4      max edges/level: 6
+mean edges/node:  1.438  mean count/edge: 1679
+
+Number of markers:                 309
+Total time for building model: 0 seconds
+Total time for IBD detection:  1 minute 26 seconds
+Total run time:                1 minute 27 seconds
+
+End time: 07:12 PM CST on 15 Dec 2017
+beagle.08Jun17.d8b.jar (version 4.1) finished
