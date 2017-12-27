@@ -7,9 +7,9 @@ BEAGLE="/Volumes/Scratch/Software/beagle.08Jun17.d8b.jar"
 
 # Directories and required files
 GH="/Users/tomkono/Dropbox/GitHub/Deleterious_GP"
-PANEL="${GH}/Data/Imputation/Phased_Panel.vcf"
+PANEL="${GH}/Data/Imputation/Phased_Panel.vcf.gz"
 MAP="${GH}/Data/Imputation/Beagle_Inteprolated_MAP.map"
-VCF_IN="${GH}/Data/Imputation/Beagle_4.1/Beagle_BOPA_Out.vcf.gz"
+VCF_IN="${GH}/Data/Imputation/Beagle_4.1/Phased_BOPA_AllIndividuals.vcf"
 OUT_DIR="${GH}/Data/Imputation/Beagle_4.1/"
 
 # Define the Beagle options here
@@ -27,7 +27,6 @@ IBDTRIM="0"
 # Run it
 java -jar ${BEAGLE} \
     gt=${VCF_IN} \
-    ref=${PANEL} \
     out=${OUT_FILE} \
     map=${MAP} \
     window=${WINDOW} \
