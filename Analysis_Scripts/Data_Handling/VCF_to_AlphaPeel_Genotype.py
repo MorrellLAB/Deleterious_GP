@@ -3,16 +3,17 @@
 from the VCF format - lines are individuals, and columns are sites. There is one
 line per individual. Genotypes are coded as 0 (hom ref), 1 (het), and 2 
 (hom alt). Takes two arguments:
-    1) Cleaned VCF
+    1) Cleaned VCF (Gzipped)
     2) Chromosome
 """
 
 import sys
+import gzip
 
 
 def main(vcf, chrom):
     """Main function."""
-    with open(vcf, 'r') as f:
+    with gzip.open(vcf, 'rb') as f:
         for line in f:
             if line.startswith('##'):
                 continue
@@ -48,7 +49,7 @@ if len(sys.argv) != 3:
 from the VCF format - lines are individuals, and columns are sites. There are
 two lines per individual: one for the reference read counts, and one for the
 alternate read counts. Takes two arguments:
-    1) Cleaned VCF
+    1) Cleaned VCF (Gzipped)
     2) Chromosome"""
     exit(1)
 else:

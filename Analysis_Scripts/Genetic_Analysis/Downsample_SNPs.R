@@ -22,7 +22,7 @@ source_freq_dist <- function(maf, binsize) {
     return(counts)
 }
 
-downsample <- function(maf, binsize, weights) {
+downsample <- function(maf, binsize, weights, tosamp) {
     #   To downsample, we will decide which bin the target SNP lands in, then
     #   assign the weights of the source distribution to it.
     bins <- seq(0, 0.5, by=binsize)
@@ -44,20 +44,21 @@ downsample <- function(maf, binsize, weights) {
             return(sample(in_int, nsamp, replace=F))
         }))
     #   Then, randomly prune the set down to the subsampled size
-    sampled <- sample(sampled, 750, replace=FALSE)
+    sampled <- sample(sampled, tosamp, replace=FALSE)
     return(sampled)
 }
 
 args <- commandArgs(TRUE)
 source_maf <- read.table(args[1], header=T)
 target_maf <- read.table(args[2], header=T)
+subsamp <- args[3]
 
 if(args[1] == args[2]) {
-    s <- sample(as.character(target_maf$SNP), 750, replace=F)
+    s <- sample(as.character(target_maf$SNP), subsamp, replace=F)
     write(s, file="", ncolumns=1)
 } else {
     source.dist <- source_freq_dist(source_maf$MAF, 0.01)
-    target.dist <- downsample(target_maf, 0.01, source.dist)
+    target.dist <- downsample(target_maf, 0.01, source.dist, subsamp)
     #   Print the SNPs to stdout
     write(target.dist, file="", ncolumns=1)
 }

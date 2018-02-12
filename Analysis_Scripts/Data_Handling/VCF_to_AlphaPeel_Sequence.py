@@ -37,13 +37,20 @@ def main(vcf, chrom):
                         known = True
                     else:
                         known = False
-                    ad_col = tmp[8].split(':').index('AD')
+                    fmt = tmp[8].split(':')
+                    if 'AD' not in fmt:
+                        ad_col = None
+                    else:
+                        ad_col = fmt.index('AD')
                     gt_col = tmp[8].split(':').index('GT')
                     for index, field in enumerate(tmp[9:]):
-                        ad = field.split(':')[ad_col]
+                        if not ad_col:
+                            ad = None
+                        else:
+                            ad = field.split(':')[ad_col]
                         gt = field.split(':')[gt_col]
                         if known:
-                            if ad == '.':
+                            if ad == '.' or not ad:
                                 if gt == '0/0':
                                     out_ref[index].append('20')
                                     out_alt[index].append('0')
@@ -61,7 +68,7 @@ def main(vcf, chrom):
                                 out_ref[index].append(dp[0])
                                 out_alt[index].append(dp[1])
                         else:
-                            if ad == '.':
+                            if ad == '.' or not ad:
                                 out_ref[index].append('0')
                                 out_alt[index].append('0')
                             else:
