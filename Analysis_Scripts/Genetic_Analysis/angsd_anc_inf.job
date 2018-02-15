@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+#PBS -l mem=62gb,nodes=1:ppn=24,walltime=80:00:00
+#PBS -m abe
+#PBS -M liux1299@umn.edu
+#PBS -q mesabi
+
+set -e
+set -u
+set -o pipefail
+
+module load angsd_ML/0.920
+
+BAM_LIST=/home/morrellp/liux1299/Shared/Projects/GP/GP_Bams/gp_bam_list.txt
+ANC_SEQ=/panfs/roc/groups/9/morrellp/shared/Datasets/NGS/Outgroups/H_murinum/murinum_0.03.fa
+OUT_NAME=gp_murinum
+OUT_DIR=/home/morrellp/liux1299/Shared/Projects/GP/infer_ancestral
+
+#	Go into out directory
+cd "${OUT_DIR}"
+
+#	Infer ancestral state and output VCF file
+angsd -bam "${BAM_LIST}" \
+	  -dovcf 1 \
+	  -gl 2 \
+	  -dopost 1 \
+	  -out "${OUT_NAME}" \
+	  -anc "${ANC_SEQ}" \
+	  -domaf 1 \
+	  -doMajorMinor 5
+
