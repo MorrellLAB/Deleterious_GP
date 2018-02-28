@@ -7,6 +7,7 @@ Odd. Takes two arguments:
 """
 
 import sys
+import gzip
 
 
 def main(pos, vcf):
@@ -16,7 +17,7 @@ def main(pos, vcf):
     pos_flt = [s.strip() for s in handle.readlines()]
     handle.close()
     # Then, iterate through the VCF and print it out
-    with open(vcf, 'r') as f:
+    with gzip.open(vcf, 'rb') as f:
         for line in f:
             if line.startswith('#'):
                 print line.strip()

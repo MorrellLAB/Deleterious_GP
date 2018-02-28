@@ -1,0 +1,75 @@
+# Plot the difference in derived allele frequency for various functional
+# classes of SNPs across the genome.
+
+CHROMS <- c("chr1H", "chr2H", "chr3H", "chr4H", "chr5H", "chr6H", "chr7H")
+
+# Read the data files
+freqs <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/DAF_By_Cycle.txt", header=TRUE)
+nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt", header=FALSE)$V1)
+syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt", header=FALSE)$V1)
+nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt", header=FALSE)$V1)
+del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt", header=FALSE)$V1)
+pos <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputation/AlphaPeel/AllChr_AlphaPeel.map", header=FALSE)
+
+# Set the names of the columns of the positions
+names(pos) <- c("CHR", "SNP_ID", "GPOS", "BP")
+
+# Merge the positions into the frequencies
+posfreqs <- merge(freqs, pos, by="SNP_ID")
+posfreqs <- posfreqs[order(posfreqs$CHR, posfreqs$BP),]
+posfreqs$BP <- posfreqs$BP/1000000
+
+# Calculate a new column for the change in frequency
+posfreqs$ChFrq <- (posfreqs$C3_DAF - posfreqs$C1_DAF)/posfreqs$C1_DAF
+# Add the centromeres
+centromeres <- data.frame(
+    Chr=c("chr1H", "chr2H", "chr3H", "chr4H", "chr5H", "chr6H", "chr7H"),
+    Start=c(NA, 136904248, 115794456, 58804724, 60207685, 180782470, 202235859),
+    End=c(NA, 528069469, 438235281, 467767377, 368181264, 383275592, 449173785))
+
+# Separate the functional classes
+df_nc <- posfreqs[posfreqs$SNP_ID %in% nonc,]
+df_syn <- posfreqs[posfreqs$SNP_ID %in% syn,]
+df_nonsyn <- posfreqs[(posfreqs$SNP_ID %in% nonsyn) & !(posfreqs$SNP_ID %in% del),]
+df_del <- posfreqs[posfreqs$SNP_ID %in% del,]
+
+df_nc <- df_nc[!is.na(df_nc$ChFrq),]
+df_syn <- df_syn[!is.na(df_syn$ChFrq),]
+df_nonsyn <- df_nonsyn[!is.na(df_nonsyn$ChFrq),]
+df_del <- df_del[!is.na(df_del$ChFrq),]
+
+# Plot it
+png(file="Delta_DAF.png", res=300, height=10.5*300, width=8*300)
+par(mfrow=c(7, 1), mar=c(4, 4, 1, 2))
+for(chrom in CHROMS) {
+    nc_toplot <- df_nc[df_nc$CHR == chrom,]
+    syn_toplot <- df_syn[df_syn$CHR == chrom,]
+    nonsyn_toplot <- df_nonsyn[df_nonsyn$CHR == chrom,]
+    del_toplot <- df_del[df_del$CHR == chrom,]
+    cent <- centromeres[centromeres$Chr == chrom,]
+    plot(nc_toplot$ChFrq ~ nc_toplot$BP, type="l", lwd=1, col="black", ylim=c(-1, 5), xlim=c(0, 800), xlab="Position (Mb)", ylab="Fold Change in DAF", main=chrom, axes=F)
+    axis(side=2)
+    axis(side=1, at=seq(0, 800, by=50), labels=seq(0, 800, by=50))
+    lines(syn_toplot$ChFrq ~ syn_toplot$BP, lwd=1, col="blue")
+    lines(nonsyn_toplot$ChFrq ~ nonsyn_toplot$BP, lwd=1, col="green")
+    lines(del_toplot$ChFrq ~ del_toplot$BP, lwd=1, col="red")
+    rect(cent$Start/1000000, -2, cent$End/1000000, 5, density=NA, col=rgb(0, 0, 0, alpha=0.2))
+    abline(h=0, lwd=2, col="black", lty=3)
+}
+dev.off()
+
+pdf(file="Delta_DAF_Boxplot.pdf", 6, 6)
+toplot <- data.frame(
+    DDAF=c(df_nc$ChFrq, df_syn$ChFrq, df_nonsyn$ChFrq, df_del$ChFrq),
+    Class=c(rep("Noncoding", nrow(df_nc)), rep("Synonymous", nrow(df_syn)), rep("Nonsynonymous", nrow(df_nonsyn)), rep("Deleterious", nrow(df_del))))
+toplot$Class <- factor(toplot$Class, levels=c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), ordered=TRUE)
+boxplot(toplot$DDAF ~ toplot$Class,
+    xlab="Functional Class",
+    ylab="Fold Change in DAF",
+    main="Fold Change in DAF Over Three Cycles of Selection",
+    border=c("black", "blue", "green", "red"),
+    cex.axis=0.8,
+    pch=19,
+    ylim=c(-1, 5))
+abline(h=0, lwd=2, col="black", lty=3)
+dev.off()
