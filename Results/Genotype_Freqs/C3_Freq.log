@@ -1,0 +1,25 @@
+PLINK v1.90b5 64-bit (14 Nov 2017)
+Options in effect:
+  --allow-extra-chr
+  --bfile ../Imputation/AlphaPeel/t
+  --freqx gz
+  --keep Cycle_3.list
+  --nonfounders
+  --out C3_Freq
+
+Hostname: Thomass-iMac.local
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs
+Start time: Tue Jan 23 21:46:44 2018
+
+Random number seed: 1516765604
+16384 MB RAM detected; reserving 8192 MB for main workspace.
+407285 variants loaded from .bim file.
+3358 people (0 males, 0 females, 3358 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to C3_Freq.nosex .
+--keep: 960 people remaining.
+Using up to 8 threads (change this with --threads).
+Before main variant filters, 0 founders and 960 nonfounders present.
+Calculating allele frequencies... done.
+--freqx: Allele frequencies (all samples) written to C3_Freq.frqx.gz .
+
+End time: Tue Jan 23 21:46:44 2018
