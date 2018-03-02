@@ -28,7 +28,7 @@ for(chrom in chroms) {
         xlab="Position (Mb)",
         ylab="DSNPs per Codon",
         main=chrom,
-        ylim=c(0, 0.1),
+        ylim=c(0, 0.01),
         xlim=c(0, 800),
         cex=0.8,
         axes=F)

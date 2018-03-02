@@ -1,22 +1,24 @@
 #   Plot the number of deleterious SNPs in each line, separated by cycle.
 #   We want to make beeswarm plots
 library(beeswarm)
-#   Read in the data file with the raw counts
-dm_sel <- read.table("/Volumes/Data_Disk/Dropbox/Projects/DM_GenomicPrediction/Results/DM_Selection/Deleterious_Counts_By_Line.txt", header=TRUE)
-#   Read in the lines that are selected
-selected <- read.table("/Volumes/Data_Disk/Dropbox/Projects/DM_GenomicPrediction/Results/DM_Selection/Selected_Lines.txt", header=FALSE)
-#   And the lines that were random
-rand <- read.table("/Volumes/Data_Disk/Dropbox/Projects/DM_GenomicPrediction/Results/DM_Selection/Random_Lines.txt", header=FALSE)
+
+# Read the dosages
+dos <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Summaries/GP_Deleterious_TotalDosages.txt", header=TRUE)
+# Random lines
+rand <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Pedigrees/Random_Lines.txt", header=FALSE)$V1)
+# Selected lines
+selected <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Pedigrees/Selected_Lines.txt", header=FALSE)$V1)
+
 
 #   Assign a color to plot the random, selected, and 'none' lines
 #   They will be black, red, and grey, respectively.
 type <- sapply(
-    dm_sel$LineID,
+    dos$LineID,
     function(x) {
-        if(as.character(x) %in% selected$V1) {
+        if(as.character(x) %in% selected) {
             return("Sel")
         }
-        else if(as.character(x) %in% rand$V1) {
+        else if(as.character(x) %in% rand) {
             return("Ran")
         }
         else {
@@ -25,48 +27,71 @@ type <- sapply(
     }
     )
 
-dm_sel$Type <- type
+dos$Type <- type
+
+# Assign a cycle
+cyc <- sapply(
+    dos$LineID,
+    function(x) {
+        if(grepl("MS10", x)) {
+            return("C1")
+        }
+        else if(grepl("MS11", x)) {
+            return("C2")
+        }
+        else if(grepl("MS12", x)) {
+            return("C3")
+        }
+        else {
+            return("C0")
+        }
+    }
+    )
+
+dos$Cycle <- factor(cyc, levels=c("C0", "C1", "C2", "C3"))
+
 
 #   Separate the data now, so we can clearly show the random and selected lines
-ran <- dm_sel[dm_sel$Type == "Ran",]
-sel <- dm_sel[dm_sel$Type == "Sel",]
-non <- dm_sel[dm_sel$Type == "Non",]
+ran <- dos[dos$Type == "Ran",]
+sel <- dos[dos$Type == "Sel",]
+non <- dos[dos$Type == "Non",]
 
-pdf(file="DM_By_Cycle.pdf", height=6, width=8)
+pdf(file="DM_By_Cycle.pdf", height=6, width=6)
+par(mar=c(4, 4, 0.1, 0.1), mgp=c(2, 1, 0))
 #   Plot the not selected nor random lines
 beeswarm(
-    non$Count ~ non$Cycle,
+    non$Dosage ~ non$Cycle,
     col="#cccccc",
     pch=19,
     cex=0.35,
     method="hex",
-    ylim=c(600, 750),
+    ylim=c(400, 800),
     xlab="Cycle",
-    ylab="Number of Deleterious SNPs",
-    main="Deleterious SNPs Over Time",
+    ylab="Total Dosage of Deleterious Alleles",
+    main="",
     axes=F)
 beeswarm(
-    ran$Count ~ ran$Cycle,
+    ran$Dosage ~ ran$Cycle,
     col="#333333",
     pch=19,
     cex=0.5,
     method="hex",
-    ylim=c(600, 750),
+    ylim=c(400, 800),
     add=TRUE,
     side=-1,
     axes=F)
 beeswarm(
-    sel$Count ~ sel$Cycle,
+    sel$Dosage ~ sel$Cycle,
     col="#aa0000",
     pch=19,
     cex=0.5,
     method="hex",
-    ylim=c(600, 750),
+    ylim=c(400, 800),
     add=TRUE,
     side=1,
     axes=F)
 boxplot(
-    Count~Cycle + Type,
+    Dosage~Cycle + Type,
     data=droplevels(rbind(ran, sel)),
     at=c(1.75, 2.75, 3.75, 2.25, 3.25, 4.25),
     boxwex=0.2,
@@ -81,4 +106,5 @@ axis(
     labels=c("Parents", "C1", "C2", "C3"))
 axis(
     side=2)
+box()
 dev.off()
