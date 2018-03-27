@@ -1,0 +1,6 @@
+chr2H 136904248 528069469 pericentromere
+chr3H 115794456 438235281 pericentromere
+chr4H 58804724 467767377 pericentromere
+chr5H 60207685 368181264 pericentromere
+chr6H 180782470 383275592 pericentromere
+chr7H 202235859 449173785 pericentromere
