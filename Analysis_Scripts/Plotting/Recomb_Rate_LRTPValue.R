@@ -3,14 +3,22 @@
 library(ggplot2)
 
 #   Read the recombination rate table and the predictions
-rec_rate <- read.table("/Users/tomkono/Dropbox/Projects/DM_GenomicPrediction/Data/BOPA_cMMb_Smoothed.txt", header=T)
-effects <- read.table("/Users/tomkono/Dropbox/Projects/DM_GenomicPrediction/Results/Annotations/GenomicPrediction_Effcts_PROVEAN_PPH_BM.txt", header=T)
-excap <- read.table("/Users/tomkono/Dropbox/Projects/DM_GenomicPrediction/Results/Annotations/ExomeCaptureTargets_per_Mb.txt", header=T)
+rec_rate <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/SNP_Positions/BOPA_cMMb_Smoothed.txt", header=T)
+effects <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GenomicPrediction_Effcts_PROVEAN_PPH_BM.txt", header=T)
+excap <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Resequencing_Summaries/ExomeCaptureTargets_per_Mb.txt", header=T)
+bopa <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/SNP_Positions/384-Capture_Positions.txt", header=TRUE)
 
 #   Drop the unmapped chromosome
-rec_rate <- rec_rate[rec_rate$Chromosome != "chrUn",]
-effects <- effects[effects$Chromosome != "chrUn",]
-excap <- excap[excap$Chromosome != "chrUn",]
+chroms <- c("chr1H", "chr2H", "chr3H", "chr4H", "chr5H", "chr6H", "chr7H")
+rec_rate <- rec_rate[rec_rate$Chromosome %in% chroms,]
+effects <- effects[effects$Chromosome %in% chroms,]
+excap <- excap[excap$Chromosome %in% chroms,]
+bopa <- bopa[bopa$Chromosome %in% chroms,]
+
+rec_rate$Chromosome <- factor(rec_rate$Chromosome, levels=chroms)
+effects$Chromosome <- factor(effects$Chromosome, levels=chroms)
+excap$Chromosome <- factor(excap$Chromosome, levels=chroms)
+bopa$Chromosome <- factor(bopa$Chromosome, levels=chroms)
 
 #   Get get the deleterious SNPs
 #   PROVEAN parameters determined by power analysis, LL
@@ -67,6 +75,7 @@ ggplot(effects) +
     geom_vline(aes(xintercept=Position/1000000), size=0.05, alpha=0.1, color="#a6cee3") +
     geom_line(aes(x=(Start+End)/2000000, y=NExCap/10), data=excap, size=0.75, color="#1f78b4", alpha=0.7) +
     geom_line(aes(x= (LeftBP+RightBP)/2000000, y=Smoothed_cMMb), data=rec_rate, color="#329f2a", size=1.1, alpha=0.7) +
+    geom_point(aes(x=Position/1000000, y=0.25), size=2, color="#984ea3", shape=17, data=bopa) +
     facet_grid(Chromosome~.) +
     scale_y_continuous(limits=c(0, 10), breaks=c(0, 5, 10)) +
     scale_x_continuous(limits=c(0, 725), breaks=seq(0, 725, by=50)) +
@@ -79,11 +88,10 @@ ggplot(effects) +
 
 dev.off()
 
+deleterious <- deleterious[deleterious$Chromosome %in% chroms,]
+deleterious$Chromosome <- factor(deleterious$Chromosome, levels=chroms)
 deleterious$LogisticP_Masked <- -log(deleterious$LogisticP_Masked, base=2)
 deleterious$LogisticP_Masked[deleterious$LogisticP_Masked > 10] <- 10
-
-# Try to remove the "ChrUn" again
-deleterious <- deleterious[deleterious$Chromosome != "chrUn",]
 
 pdf(file="RecRate_LRT_DelOnly2.pdf", 10, 6)
 ggplot(deleterious, aes(x=Position/1000000, y=LogisticP_Masked)) +
@@ -91,6 +99,7 @@ ggplot(deleterious, aes(x=Position/1000000, y=LogisticP_Masked)) +
     geom_line(aes(x=(LeftBP+RightBP)/2000000, y=Smoothed_cMMb), data=rec_rate, color="#329f2a", size=1, alpha=1) +
     geom_point(pch=19, size=0.75, alpha=0.5, color="#ef8a62") +
     geom_point(aes(x=Position/1000000, y=10), data=nonsense, color="#cc0000", size=0.75, alpha=0.5) +
+    geom_point(aes(x=Position/1000000, y=0.25), size=2, color="#984ea3", shape=17, data=bopa) +
     facet_grid(Chromosome~.) +
     scale_y_continuous(limits=c(0, 10), breaks=c(0, 5, 10)) +
     scale_x_continuous(limits=c(0, 725), breaks=seq(0, 725, by=50)) +

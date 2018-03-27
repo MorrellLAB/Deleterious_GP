@@ -5,21 +5,23 @@
 
 # Set paths
 #   Base for output
-YIELD_BASE="/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Analysis/Yield_GCTA"
-DON_BASE="/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Analysis/DON_GCTA"
+YIELD_BASE="/Volumes/LaCie/Genomic_Prediction/GCTA/Analysis/Yield_GCTA"
+DON_BASE="/Volumes/LaCie/Genomic_Prediction/GCTA/Analysis/DON_GCTA"
+HEIGHT_BASE="/Volumes/LaCie/Genomic_Prediction/GCTA/Analysis/Height_GCTA"
 #   The GCTA control script
-GCTA_SCRIPT="/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/GCTA_Resampling.sh"
+GCTA_SCRIPT="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Analysis_Scripts/Genetic_Analysis/GCTA_Resampling.sh"
 #   The frequency distributions for the partitions of SNPs
 PARTITIONS=(
-    "/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Freq/noncoding.frq"
-    "/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Freq/synonymous.frq"
-    "/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Freq/nonsynonymous.frq"
-    "/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Freq/deleterious.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/noncoding.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/synonymous.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/nonsynonymous.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/deleterious.frq"
 )
-DELETERIOUS="/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Freq/deleterious.frq"
+DELETERIOUS="/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/deleterious.frq"
 #   The basenames of the yield and DON PLINK files
-YIELD_PED="/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Source/Yield"
-DON_PED="/panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Source/DON"
+YIELD_PED="/Volumes/LaCie/Genomic_Prediction/GCTA/Source/Yield/Yield"
+DON_PED="/Volumes/LaCie/Genomic_Prediction/GCTA/Source/DON/DON"
+HEIGHT_PED="/Volumes/LaCie/Genomic_Prediction/GCTA/Source/Height/Height"
 
 # The resampling intensities of the SNPs that we want to do
 INTENSITIES=(250 500 750 1000 1250 1500)
@@ -35,8 +37,10 @@ do
         part=$(basename ${p})
         part_f=${part/.frq/}
         # Start with yield
-        echo "mkdir -p ${YIELD_BASE}/${i}/${part_f}; cd ${YIELD_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${YIELD_PED} ${p} ${DELETERIOUS} ${i}"
+        #mkdir -p ${YIELD_BASE}/${i}/${part_f}; cd ${YIELD_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${YIELD_PED} ${p} ${DELETERIOUS} ${i}
         # Then do DON
-        echo "mkdir -p ${DON_BASE}/${i}/${part_f}; cd ${DON_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${DON_PED} ${p} ${DELETERIOUS} ${i}"
+        #mkdir -p ${DON_BASE}/${i}/${part_f}; cd ${DON_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${DON_PED} ${p} ${DELETERIOUS} ${i}
+        # And height
+        mkdir -p ${HEIGHT_BASE}/${i}/${part_f}; cd ${HEIGHT_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${HEIGHT_PED} ${p} ${DELETERIOUS} ${i}
     done
 done

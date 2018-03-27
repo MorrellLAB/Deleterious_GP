@@ -57,11 +57,13 @@ def anc_del_ids(i, a, d):
     # Next, we intersect the lists
     k_off = []
     k_pol = []
+    d_flt = []
     for snpid in del_ids:
         # if the SNP does not have ancestral state, we skip it
         if snpid not in anc_ids or snpid not in all_ids:
             continue
         else:
+            d_flt.append(snpid)
             # Get the offset of it from the main alphapeel file
             ap_off = all_ids.index(snpid)
             # And get its polarity
@@ -70,7 +72,7 @@ def anc_del_ids(i, a, d):
             k_off.append(ap_off)
             k_pol.append(pol)
     # Return the package
-    return (del_ids, k_off, k_pol)
+    return (d_flt, k_off, k_pol)
 
 
 def del_dosage(cols, pols, dos):

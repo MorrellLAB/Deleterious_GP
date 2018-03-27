@@ -30,10 +30,10 @@ with open(sys.argv[1], 'r') as f:
                         lineid = parts[0] + '-0' + parts[1]
             #   If the phenotype column is missing, then we skip it and move on
             #   to the next row.
-            if tmp[5] == 'NA':
+            if tmp[4] == 'NA':
                 continue
             else:
-                phen = float(tmp[5])
+                phen = float(tmp[4])
                 phenotype[lineid] = phen
 
 #   Iterate through the PED file, and drop in the phenotype data.
