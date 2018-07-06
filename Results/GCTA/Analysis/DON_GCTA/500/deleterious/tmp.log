@@ -1,0 +1,20 @@
+PLINK v1.90b1g 64-bit (10 Jun 2014)
+9 arguments: --allow-extra-chr --allow-no-sex --bfile /panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Source/DON --extract chosen.txt --make-bed --out tmp
+Hostname: node0897
+Working directory: /panfs/roc/scratch/konox006/Genomic_Prediction/GCTA/Analysis/DON_GCTA/500/deleterious
+Start time: Sun Jan 21 20:34:34 2018
+
+Random number seed: 1516588474
+24145 MB RAM detected; reserving 12072 MB for main workspace.
+407285 variants loaded from .bim file.
+319 people (0 males, 0 females, 319 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to tmp.nosex .
+319 phenotype values loaded from .fam.
+--extract: 500 variants remaining.
+Using 1 thread (no multithreaded calculations invoked).
+Calculating allele frequencies... done.
+500 variants and 319 people pass filters and QC.
+Phenotype data is quantitative.
+--make-bed to tmp.bed + tmp.bim + tmp.fam ... done.
+
+End time: Sun Jan 21 20:34:34 2018

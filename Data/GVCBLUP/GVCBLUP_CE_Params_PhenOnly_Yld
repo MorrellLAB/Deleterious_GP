@@ -1,0 +1,26 @@
+10000               # number of iterations 
+1.0 2.0 7.0        # Starting values of VA, VD and VE 
+1.0e-08            # tolerance level 
+GVCBLUP_Phens.txt  # phenotype file
+4                  # trait position in phenotype file 
+0                  # number of fixed factors
+2                  # positions of fixed factors in phenotype file
+0                  # number of covariables 
+3                  # positions of covariables in phenotype file 
+321                # number of individuals genotyped
+7                  # number of chromosomes
+51042 GVCBLUP_chr1H.txt
+66319 GVCBLUP_chr2H.txt
+55651 GVCBLUP_chr3H.txt
+42085 GVCBLUP_chr4H.txt
+58584 GVCBLUP_chr5H.txt
+68662 GVCBLUP_chr6H.txt
+64942 GVCBLUP_chr7H.txt
+output_greml_ce_yld    # output file for GREML
+output_gblup_ce_yld    # output file for GBLUP
+#def_Q              1  # definition of genetic relationship 
+#use_ai_reml        1
+#iter_ai_reml_start 3
+#missing_phen_val   -999
+map_file           map_yld.txt
+output_mrk_effect  output_snpeff_ce_yld.snpe

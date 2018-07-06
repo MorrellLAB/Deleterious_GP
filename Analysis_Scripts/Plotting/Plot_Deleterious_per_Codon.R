@@ -35,15 +35,15 @@ for(chrom in chroms) {
     plot(
         cdat$delSNP_codonNb ~ midp,
         xlab="Position (Mb)",
-        ylab="DSNPs per Codon",
+        ylab="dSNPs per Codon",
         main=chrom,
-        ylim=c(0, 0.015),
+        ylim=c(0, 0.125),
         xlim=c(0, 800),
         axes=F,
         type="n")
     rect(pcent$Start, 0, pcent$End, 1, density=NA, col=rgb(0, 0, 0, alpha=0.2))
     rect(cent$Start, 0, cent$End, 1, density=NA, col=rgb(0, 0, 0, alpha=0.3))
-    points(cdat$delSNP_codonNb ~ midp)
+    points(cdat$delSNP_codonNb ~ midp, pch=19)
     axis(side=2)
     axis(side=1, at=seq(0, 800, by=50), labels=seq(0, 800, by=50))
 }

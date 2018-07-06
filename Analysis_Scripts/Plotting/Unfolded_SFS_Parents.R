@@ -1,10 +1,16 @@
 # Plot an unfolded SFS for the functional classes in the parental data.
 
+# Set colors
+nc_col <- '#2c7bb6'
+syn_col <- '#abd9e9'
+ns_col <- '#fdae61'
+del_col <- '#d7191c'
+
 freqs <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Ancestral_State/GP_Ancestral.txt.gz", header=TRUE)
-nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt", header=FALSE)$V1)
-syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt", header=FALSE)$V1)
-nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt", header=FALSE)$V1)
-del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt", header=FALSE)$V1)
+nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt.gz", header=FALSE)$V1)
+syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt.gz", header=FALSE)$V1)
+nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt.gz", header=FALSE)$V1)
+del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt.gz", header=FALSE)$V1)
 
 # Separate the classes
 nc_freqs <- freqs[freqs$SNPID %in% nonc,]
@@ -27,16 +33,20 @@ del_sfs <- del_sfs/sum(del_sfs)
 
 toplot <- cbind(nc_sfs, s_sfs, ns_sfs, del_sfs)
 
-pdf(file="Parental_Derived_SFS_By_Class.pdf", height=4, width=8)
+pdf(file="Parental_Derived_SFS_By_Class.pdf", height=4, width=6)
+par(mar=c(4, 4, 1, 0.1), mgp=c(2, 1, 0))
 at <- barplot(t(toplot),
     beside=TRUE,
-    col=c("blacK", "blue", "green", "red"),
+    col=c(nc_col, syn_col, ns_col, del_col),
     xlab="Derived Allele Frequency",
     ylab="Proportion",
-    main="Unfolded SFS in Parents",
+    main="",
     axes=FALSE,
-    ylim=c(0, 0.7))
+    ylim=c(0, 0.6))
 axis(side=2)
 axis(side=1, at=apply(at, 2, mean), labels=names(nc_sfs))
-legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c("black", "blue", "green", "red"))
+legend(
+    "topright",
+    c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"),
+    fill=c(nc_col, syn_col, ns_col, del_col))
 dev.off()
