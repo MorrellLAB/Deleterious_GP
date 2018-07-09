@@ -1,16 +1,19 @@
 #   Generate and plot a joint site frequency spectrum, given two files that
-#   have vectors of derived allele frequencies. Takes three arguments:
-#       1) File with frequencies in partition 1
-#       2) File with frequencies in partition 2
-#       3) output filename
+#   have vectors of derived allele frequencies.
 
 library(fields)
-#   Take arguments. 
-args <- commandArgs(TRUE)
 
-part1 <- args[1]
-part2 <- args[2]
-output <- args[3]
+freqs <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/DAF_By_Cycle.txt.gz", header=TRUE)
+
+nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt.gz", header=FALSE)$V1)
+syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt.gz", header=FALSE)$V1)
+nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt.gz", header=FALSE)$V1)
+del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt.gz", header=FALSE)$V1)
+
+nc.freqs <- freqs[freqs$SNP_ID %in% nonc,]
+syn.freqs <- freqs[freqs$SNP_ID %in% syn,]
+nonsyn.freqs <- freqs[freqs$SNP_ID %in% nonsyn,]
+del.freqs <- freqs[freqs$SNP_ID %in% del,]
 
 #   Define a function that returns the matrix cell assignment for a single SNP
 #   based on its frequencies in partition 1 and partition 2.
@@ -82,37 +85,90 @@ heatmap_colors <- c(
     "#b30000",
     "#7f0000")
 
-#   Read in the frequencies and make them numeric vectors
-part1.freq <- read.table(part1, header=F)
-part1.freq <- as.numeric(part1.freq$V1)
-part2.freq <- read.table(part2, header=F)
-part2.freq <- as.numeric(part2.freq$V1)
 
 #   Get the cell assignments for each SNP
-joint_sfs <- apply(
-    cbind(part1.freq, part2.freq),
-    1,
-    jsfs_cell,
-    binsize=0.05,
-    folded=FALSE
-    )
+nc.joint_sfs <- apply(nc.freqs[,c("C1_DAF", "C2_DAF")], 1, jsfs_cell, binsize=0.05, folded=FALSE)
+syn.joint_sfs <- apply(syn.freqs[,c("C1_DAF", "C2_DAF")], 1, jsfs_cell, binsize=0.05, folded=FALSE)
+nonsyn.joint_sfs <- apply(nonsyn.freqs[,c("C1_DAF", "C2_DAF")], 1, jsfs_cell, binsize=0.05, folded=FALSE)
+del.joint_sfs <- apply(del.freqs[,c("C1_DAF", "C2_DAF")], 1, jsfs_cell, binsize=0.05, folded=FALSE)
 
 #   Then build the joint SFS
-joint_sfs_mat <- jsfs_matrix(joint_sfs, binsize=0.05, folded=FALSE)
-print(joint_sfs_mat)
-#   And plot it!
-#   Then we start building the image
-#       This first call builds the base of the heatmap, with axis labels
-#       and title string
-brk <- c(0, 0.0001, 0.00025, 0.0005, 0.001, 0.0025, 0.005, 0.01, 0.1, 0.25, 0.3, 0.4, 0.6)
-pdf(file=output, 6, 6)
-image.plot(joint_sfs_mat,
+nc.joint_sfs_mat <- jsfs_matrix(nc.joint_sfs, binsize=0.05, folded=FALSE)
+syn.joint_sfs_mat <- jsfs_matrix(syn.joint_sfs, binsize=0.05, folded=FALSE)
+nonsyn.joint_sfs_mat <- jsfs_matrix(nonsyn.joint_sfs, binsize=0.05, folded=FALSE)
+del.joint_sfs_mat <- jsfs_matrix(del.joint_sfs, binsize=0.05, folded=FALSE)
+
+pdf(file="Noncoding_Joint_SFS.pdf", 6, 6)
+image.plot(nc.joint_sfs_mat,
     col=rev(heat.colors(12)),
-    breaks=c(seq(0, 5, by=0.5), 6, 7),
-    lab.breaks=c(seq(0, 5, by=0.5), 6, 7),
+    breaks=c(seq(0, 5, by=0.5), 7.5, 10),
+    lab.breaks=c(seq(0, 5, by=0.5), 7.5, 10),
     xlab="Cycle 3 Derived Allele Frequency",
     ylab="Cycle 1 Derived Allele Frequency",
-    main="Random Panel",
+    main="Noncoding",
+    cex.axis=1.2)
+#   Then we add our own axes
+#       x-axis. number of rows in our matrix corresponds to the read length
+#axis(1, at=seq(0, 1, length.out=nrow(joint_sfs_mat$z)), labels=row.names(joint_sfs_mat$z), cex.axis=1.5)
+#       y-axis. We use the number of quality scores and the character vector
+#       of the scores themselves to build the axis
+#axis(2, at=seq(0, 1, length.out=ncol(joint_sfs_mat$z)), labels=colnames(joint_sfs_mat$z), cex.axis=1.5)
+#   Put a box on it
+box()
+#   Draw the diagonal
+abline(0, 1)
+dev.off()
+
+pdf(file="Synonymous_Joint_SFS.pdf", 6, 6)
+image.plot(syn.joint_sfs_mat,
+    col=rev(heat.colors(12)),
+    breaks=c(seq(0, 5, by=0.5), 7.5, 10),
+    lab.breaks=c(seq(0, 5, by=0.5), 7.5, 10),
+    xlab="Cycle 3 Derived Allele Frequency",
+    ylab="Cycle 1 Derived Allele Frequency",
+    main="Synonymous",
+    cex.axis=1.2)
+#   Then we add our own axes
+#       x-axis. number of rows in our matrix corresponds to the read length
+#axis(1, at=seq(0, 1, length.out=nrow(joint_sfs_mat$z)), labels=row.names(joint_sfs_mat$z), cex.axis=1.5)
+#       y-axis. We use the number of quality scores and the character vector
+#       of the scores themselves to build the axis
+#axis(2, at=seq(0, 1, length.out=ncol(joint_sfs_mat$z)), labels=colnames(joint_sfs_mat$z), cex.axis=1.5)
+#   Put a box on it
+box()
+#   Draw the diagonal
+abline(0, 1)
+dev.off()
+
+pdf(file="Nonsynonymous_Joint_SFS.pdf", 6, 6)
+image.plot(nonsyn.joint_sfs_mat,
+    col=rev(heat.colors(12)),
+    breaks=c(seq(0, 5, by=0.5), 7.5, 10),
+    lab.breaks=c(seq(0, 5, by=0.5), 7.5, 10),
+    xlab="Cycle 3 Derived Allele Frequency",
+    ylab="Cycle 1 Derived Allele Frequency",
+    main="Nonsynonymous",
+    cex.axis=1.2)
+#   Then we add our own axes
+#       x-axis. number of rows in our matrix corresponds to the read length
+#axis(1, at=seq(0, 1, length.out=nrow(joint_sfs_mat$z)), labels=row.names(joint_sfs_mat$z), cex.axis=1.5)
+#       y-axis. We use the number of quality scores and the character vector
+#       of the scores themselves to build the axis
+#axis(2, at=seq(0, 1, length.out=ncol(joint_sfs_mat$z)), labels=colnames(joint_sfs_mat$z), cex.axis=1.5)
+#   Put a box on it
+box()
+#   Draw the diagonal
+abline(0, 1)
+dev.off()
+
+pdf(file="Deleterious_Joint_SFS.pdf", 6, 6)
+image.plot(del.joint_sfs_mat,
+    col=rev(heat.colors(12)),
+    breaks=c(seq(0, 5, by=0.5), 7.5, 10),
+    lab.breaks=c(seq(0, 5, by=0.5), 7.5, 10),
+    xlab="Cycle 3 Derived Allele Frequency",
+    ylab="Cycle 1 Derived Allele Frequency",
+    main="Deleterious",
     cex.axis=1.2)
 #   Then we add our own axes
 #       x-axis. number of rows in our matrix corresponds to the read length

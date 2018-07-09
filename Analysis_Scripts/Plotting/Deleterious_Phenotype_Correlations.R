@@ -1,18 +1,23 @@
 # Make a plot of the phenotype (YLD and DON) versus the dosage of deleterious
 # alleles for C1, C2, and C3 progeny.
 
+nc_col <- '#2c7bb6'
+syn_col <- '#abd9e9'
+ns_col <- '#fdae61'
+del_col <- '#d7191c'
+
 # Read the phenotype data
-phen <- read.csv("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Phenotypic_Data/Adjusted_Phenotypic_Data.csv", header=TRUE)
+phen <- read.csv("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Phenotypic_Data/Adjusted_Phenotypic_Data.csv", header=TRUE)
 # Deleterious allele dosages
-dosages <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Results/Summaries/GP_Deleterious_Homozygotes.txt", header=TRUE)
+dosages <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Summaries/GP_Deleterious_Homozygotes.txt.gz", header=TRUE)
 dosages <- dosages[!dosages$line_name=="CELEBRATION",]
 # Nonsynonymous dosages
-nonsyn_dosages <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Results/Summaries/GP_Nonsynonymous_Homozygotes.txt", header=TRUE)
+nonsyn_dosages <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Summaries/GP_Nonsynonymous_Homozygotes.txt.gz", header=TRUE)
 nonsyn_dosages <- nonsyn_dosages[!nonsyn_dosages$line_name == "CELEBRATION",]
-syn_dosages <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Results/Summaries/GP_Synonymous_Homozygotes.txt", header=TRUE)
+syn_dosages <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Summaries/GP_Synonymous_Homozygotes.txt.gz", header=TRUE)
 syn_dosages <- syn_dosages[!nonsyn_dosages$line_name == "CELEBRATION",]
 # Pedigree file that gives sel/ran
-sel <- read.csv("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Pedigrees/Population_Pedigrees.csv", header=TRUE)
+sel <- read.csv("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Pedigrees/Population_Pedigrees.csv", header=TRUE)
 
 # Trim down the sel file to just line name and selection status
 sel <- sel[, c("Line", "Type")]

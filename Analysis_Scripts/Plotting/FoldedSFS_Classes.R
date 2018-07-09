@@ -1,16 +1,21 @@
 # Generate a folded site frequency spectrum for the classes of SNPs, using the
 # imputed genotypes.
 
-# Read the data files
-c0.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputation/AlphaPeel/Parents_Freq.frq", header=TRUE)
-c1.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputation/AlphaPeel/C1_Freq.frq", header=TRUE)
-c2.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputation/AlphaPeel/C2_Freq.frq", header=TRUE)
-c3.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputation/AlphaPeel/C3_Freq.frq", header=TRUE)
+nc_col <- '#2c7bb6'
+syn_col <- '#abd9e9'
+ns_col <- '#fdae61'
+del_col <- '#d7191c'
 
-nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt", header=FALSE)$V1)
-syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt", header=FALSE)$V1)
-nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt", header=FALSE)$V1)
-del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt", header=FALSE)$V1)
+# Read the data files
+c0.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/C0_MAF.frq", header=TRUE)
+c1.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/C1_MAF.frq", header=TRUE)
+c2.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/C2_MAF.frq", header=TRUE)
+c3.freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/C3_MAF.frq", header=TRUE)
+
+nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt.gz", header=FALSE)$V1)
+syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt.gz", header=FALSE)$V1)
+nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt.gz", header=FALSE)$V1)
+del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt.gz", header=FALSE)$V1)
 
 # slice the frequency table up by the classes
 c0.nonc.freq <- c0.freq$MAF[c0.freq$SNP %in% nonc]
@@ -64,30 +69,30 @@ pdf(file="Imputed_Folded_SFS.pdf", width=8.5, height=11)
 par(mfrow=c(4, 1))
 barplot(t(c0.toplot),
     beside=TRUE,
-    col=c("black", "blue", "green", "red"),
+    col=c(nc_col, syn_col, ns_col, del_col),
     xlab="Minor Allele Frequency",
     ylab="Proportion",
     main="Folded SFS in Parents")
-legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c("black", "blue", "green", "red"))
+legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c(nc_col, syn_col, ns_col, del_col))
 barplot(t(c1.toplot),
     beside=TRUE,
-    col=c("black", "blue", "green", "red"),
+    col=c(nc_col, syn_col, ns_col, del_col),
     xlab="Minor Allele Frequency",
     ylab="Proportion",
     main="Folded SFS in Cycle 1")
-legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c("black", "blue", "green", "red"))
+legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c(nc_col, syn_col, ns_col, del_col))
 barplot(t(c2.toplot),
     beside=TRUE,
-    col=c("black", "blue", "green", "red"),
+    col=c(nc_col, syn_col, ns_col, del_col),
     xlab="Minor Allele Frequency",
     ylab="Proportion",
     main="Folded SFS in Cycle 2")
-legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c("black", "blue", "green", "red"))
+legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c(nc_col, syn_col, ns_col, del_col))
 barplot(t(c3.toplot),
     beside=TRUE,
-    col=c("black", "blue", "green", "red"),
+    col=c(nc_col, syn_col, ns_col, del_col),
     xlab="Minor Allele Frequency",
     ylab="Proportion",
     main="Folded SFS in Cycle 3")
-legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c("black", "blue", "green", "red"))
+legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), fill=c(nc_col, syn_col, ns_col, del_col))
 dev.off()
