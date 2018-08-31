@@ -1,25 +1,26 @@
 PLINK v1.90b5 64-bit (14 Nov 2017)
 Options in effect:
   --allow-extra-chr
-  --bfile ../Imputation/AlphaPeel/t
-  --freqx gz
-  --keep Cycle_2.list
+  --allow-no-sex
+  --bfile ../Full_T3_Set/GP_AP
+  --freqx
+  --keep C2.list
   --nonfounders
   --out C2_Freq
 
 Hostname: Thomass-iMac.local
-Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs
-Start time: Tue Jan 23 21:47:00 2018
+Working directory: /Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/Cycle_Frequencies
+Start time: Mon Aug 27 21:44:40 2018
 
-Random number seed: 1516765620
+Random number seed: 1535424280
 16384 MB RAM detected; reserving 8192 MB for main workspace.
-407285 variants loaded from .bim file.
-3358 people (0 males, 0 females, 3358 ambiguous) loaded from .fam.
+487441 variants loaded from .bim file.
+5264 people (0 males, 0 females, 5264 ambiguous) loaded from .fam.
 Ambiguous sex IDs written to C2_Freq.nosex .
---keep: 1296 people remaining.
-Using up to 8 threads (change this with --threads).
-Before main variant filters, 0 founders and 1296 nonfounders present.
+--keep: 1904 people remaining.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 0 founders and 1904 nonfounders present.
 Calculating allele frequencies... done.
---freqx: Allele frequencies (all samples) written to C2_Freq.frqx.gz .
+--freqx: Allele frequencies (all samples) written to C2_Freq.frqx .
 
-End time: Tue Jan 23 21:47:00 2018
+End time: Mon Aug 27 21:44:41 2018

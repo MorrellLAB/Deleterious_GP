@@ -1,0 +1,5 @@
+Class Lost Seg Fixed
+Noncoding 19344 150883 4205
+Synonymous 4419 38195 1255
+Nonsynonymous 5754 34717 1072
+Deleterious 620 1911 11
