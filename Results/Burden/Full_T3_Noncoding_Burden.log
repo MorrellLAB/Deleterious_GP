@@ -1,0 +1,27 @@
+PLINK v1.90b5 64-bit (14 Nov 2017)
+Options in effect:
+  --allow-extra-chr
+  --bfile /Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/Full_T3_Set/GP_AP
+  --out Full_T3_Noncoding_Burden
+  --score /Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/Ancestral_State/Noncoding_Scores.txt
+
+Hostname: stp-er-10-129-77-139.wireless.umn.edu
+Working directory: /Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Burden
+Start time: Fri Aug 24 15:59:44 2018
+
+Random number seed: 1535144384
+8192 MB RAM detected; reserving 4096 MB for main workspace.
+487441 variants loaded from .bim file.
+5264 people (0 males, 0 females, 5264 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to Full_T3_Noncoding_Burden.nosex .
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 47 founders and 5217 nonfounders present.
+Calculating allele frequencies... done.
+487441 variants and 5264 people pass filters and QC.
+Note: No phenotypes present.
+Warning: 2069 lines skipped in --score file (0 due to variant ID mismatch, 2069
+due to allele code mismatch); see Full_T3_Noncoding_Burden.nopred for details.
+--score: 180349 valid predictors loaded.
+--score: Results written to Full_T3_Noncoding_Burden.profile .
+
+End time: Fri Aug 24 15:59:46 2018
