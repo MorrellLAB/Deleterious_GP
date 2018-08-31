@@ -22,7 +22,7 @@ part_lengths = {
 with open(sys.argv[1], 'r') as f:
     for line in f:
         if line.startswith('#'):
-            print line.strip()
+            print(line.strip())
         else:
             tmp = line.strip().split('\t')
             #   modify the chromosome to not have the part
@@ -37,4 +37,4 @@ with open(sys.argv[1], 'r') as f:
             #   then print out the VCF line with the new position and chromosome
             #   name
             toprint = [chrom, newpos] + tmp[2:]
-            print '\t'.join(toprint)
+            print('\t'.join(toprint))

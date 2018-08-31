@@ -58,7 +58,7 @@ def compare_hets(iid, pedi, genotypes):
     par2 = pedi[iid][1]
     # If the individual is a founder (both parents 0), then return NAs for the
     # number of seg sites
-    if par1 == '0' and par2 == '0':
+    if '0' in (par1, par2):
         exp_seg = 'NA'
     else:
         exp_seg = 0
@@ -81,20 +81,23 @@ def main(haps, ped):
     genotypes, order = parse_haps(haps)
     # Then, for each individual, in order, print the expected number of
     # segregating sites and the o bserved number of heterzoygous sites
-    print 'ID NSeg NHet'
+    print('ID NSeg NHet')
     for iid in order:
         e, o = compare_hets(iid, pedigree, genotypes)
-        print iid, e, o
+        if (e, o) == ('NA', 'NA'):
+            continue
+        else:
+            print(iid, e, o)
     return
 
 
 if len(sys.argv) != 3:
-    print """Summarize the .haps file from an AlphaPeel run in terms of heterozygosity.
+    print("""Summarize the .haps file from an AlphaPeel run in terms of heterozygosity.
 We will also want to keep track of the number of segregating sites in any
 parental combination. We will keep track of this with 0, 0.5, and 1 for AA, Aa,
 and aa, respectively. Takes tws arguments:
     1) .haps output file
-    2) Pedigree file"""
+    2) Pedigree file""")
     exit(1)
 else:
     main(sys.argv[1], sys.argv[2])

@@ -1,16 +1,16 @@
 # Summarize the pairwise diversity among separate cycles at the BOPA markers
 
 # Read all the chromosomes in
-chr1H <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_BOPA_chr1H.txt.gz", header=FALSE)
-chr2H <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_BOPA_chr2H.txt.gz", header=FALSE)
-chr3H <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_BOPA_chr3H.txt.gz", header=FALSE)
-chr4H <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_BOPA_chr4H.txt.gz", header=FALSE)
-chr5H <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_BOPA_chr5H.txt.gz", header=FALSE)
-chr6H <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_BOPA_chr6H.txt.gz", header=FALSE)
-chr7H <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_BOPA_chr7H.txt.gz", header=FALSE)
+chr1H <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/chr1H/AlphaPeel_BOPA_chr1H.txt", header=FALSE)
+chr2H <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/chr2H/AlphaPeel_BOPA_chr2H.txt", header=FALSE)
+chr3H <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/chr3H/AlphaPeel_BOPA_chr3H.txt", header=FALSE)
+chr4H <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/chr4H/AlphaPeel_BOPA_chr4H.txt", header=FALSE)
+chr5H <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/chr5H/AlphaPeel_BOPA_chr5H.txt", header=FALSE)
+chr6H <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/chr6H/AlphaPeel_BOPA_chr6H.txt", header=FALSE)
+chr7H <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/chr7H/AlphaPeel_BOPA_chr7H.txt", header=FALSE)
 
 # Read the summary of the segregating sites
-seg <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Imputation/AlphaPeel/BOPA_Inputs/AlphaPeel_AllBOPA_Seg.txt", header=TRUE)
+seg <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputation/AlphaPeel/BOPA_Segregation_Summary.txt", header=TRUE)
 
 # Merge chromosomes by the first column
 dat <- as.matrix(cbind(
@@ -69,11 +69,12 @@ c1.seg <- grep("MS10.+-001", seg$ID, perl=TRUE)
 c2.seg <- grep("MS11.+-001", seg$ID, perl=TRUE)
 c3.seg <- grep("MS12.+-001", seg$ID, perl=TRUE)
 
+
 # Make a data frame to store these in
 result <- data.frame(
     Cycle=c("C0", "C1", "C2", "C3"),
     NInd=c(length(c0), length(c1), length(c2), length(c3)),
-    NFam=c(NA, length(c1)/24, length(c2)/24, length(c3)/24),
+    NFam=c(NA, length(c1.seg), length(c2.seg), length(c3.seg)),
     AvgPropMissing=c(
         mean(apply(dat[c0, -1], 1, prop_missing)),
         mean(apply(dat[c1, -1], 1, prop_missing)),

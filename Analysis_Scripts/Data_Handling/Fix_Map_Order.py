@@ -23,7 +23,7 @@ def reorder_map(orig_map, new_map):
     #   First, do a check to make sure that the maps have the same SNPs.
     same_snp = [n in orig_map for n in new_map]
     if len(orig_map) != len(new_map) and not all(same_snp):
-        print "Error! The maps do not have the same SNPs!"
+        print("Error! The maps do not have the same SNPs!")
         exit(1)
     #   Then determine the order
     reorder = [orig_map.index(s) for s in new_map]
@@ -58,7 +58,7 @@ Physical_Order.map.
 
 Also assumes that the PED is "full" = it has columns for Family ID, Individual
 ID, Maternal ID, Paternal ID, Sex, and Phenotype."""
-    print usage
+    print(usage)
     return
 
 
@@ -74,7 +74,7 @@ def main(orig_map, new_map, ped):
     fixed_order = reorder_map(orig_order, new_order)
     fixed_ped = reorder_ped(fixed_order, ped)
     for l in fixed_ped:
-        print '\t'.join(l)
+        print('\t'.join(l))
     return
 
 if len(sys.argv) != 4:

@@ -11,7 +11,7 @@ allowable = ['0/0', '0/1', '1/0', '1/1', './.']
 with open(sys.argv[1], 'r') as f:
     for line in f:
         if line.startswith('#'):
-            print line.strip()
+            print(line.strip())
         else:
             tmp = line.strip().split('\t')
             #   Iterate through the genotypes, if any genotype is not in the
@@ -34,4 +34,4 @@ with open(sys.argv[1], 'r') as f:
                         t = g.split(':')
                         gt = ':'.join([t[0], ad_mod] + t[2:-1]) + ':.'
                 toprint.append(gt)
-            print '\t'.join(toprint)
+            print('\t'.join(toprint))

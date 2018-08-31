@@ -28,5 +28,5 @@ s/M138/FEG153-25/g
 s/M139/FEG153-58/g
 s/M140/FEG154-47/g
 s/M141/FEG175-57/g
-
-
+s/Quest/M122/g
+s/Celebration/6B01-2218/g

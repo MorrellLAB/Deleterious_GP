@@ -16,7 +16,7 @@ def store_ancestral(a):
     """Parse the gzipped ancestal alleles file and store it in a dictionary."""
     anc_alleles = {}
     snp_order = []
-    with gzip.open(a, 'rb') as f:
+    with gzip.open(a, 'rt') as f:
         for index, line in enumerate(f):
             if index == 0:
                 continue
@@ -35,7 +35,7 @@ def calc_daf(a, f):
     each variant. If the ancestral state is N, then we will return NA for the
     derived allele frequency."""
     dafs = {}
-    with gzip.open(f, 'rb') as f:
+    with gzip.open(f, 'rt') as f:
         for index, line in enumerate(f):
             if index == 0:
                 continue
@@ -75,25 +75,25 @@ def main(anc, c1, c2, c3):
     c2_daf = calc_daf(a_a, c2)
     c3_daf = calc_daf(a_a, c3)
     # Print a header
-    print 'SNP_ID\tAnc\tC1_DAF\tC2_DAF\tC3_DAF'
+    print('SNP_ID\tAnc\tC1_DAF\tC2_DAF\tC3_DAF')
     for snp in snp_order:
-        print '\t'.join([
+        print('\t'.join([
             snp,
             a_a.get(snp, 'N'),
             c1_daf.get(snp, 'NA'),
             c2_daf.get(snp, 'NA'),
-            c3_daf.get(snp, 'NA')])
+            c3_daf.get(snp, 'NA')]))
     return
 
 
 if len(sys.argv) != 5:
-    print """Calculate the derived site frequency spectra for the deleterious variants in
+    print("""Calculate the derived site frequency spectra for the deleterious variants in
 the three cycles of the genomic prediction and selection experiment. Takes four
 arguments:
     1) Ancestral state assignment
     2) C1 Frequencies
     3) C2 Frequencies
-    4) C3 Frequencies"""
+    4) C3 Frequencies""")
     exit(1)
 else:
     main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

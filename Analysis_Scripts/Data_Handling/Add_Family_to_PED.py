@@ -13,12 +13,12 @@ with open(sys.argv[1], 'r') as f:
             continue
         else:
             tmp = line.strip().split(',')
-            famid = tmp[1].split('-')[0]
+            famid = tmp[0]
             if famid in ped:
                 continue
             else:
-                mat = tmp[7]
-                pat = tmp[8]
+                mat = tmp[1]
+                pat = tmp[2]
                 ped[famid] = (mat, pat)
 
 #   Iterate through the PED file, dropping in the correct maternal and paternal
@@ -40,10 +40,10 @@ with open(sys.argv[2], 'r') as f:
         sex = '0'
         phen = tmp[5]
         genotype = tmp[6:]
-        print '\t'.join([
+        print('\t'.join([
             f1,
             f2,
             patid,
             matid,
             sex,
-            phen] + genotype)
+            phen] + genotype))

@@ -2,10 +2,10 @@
 """Print a PLINK PED file with the imputed genotypes from AlphaPeel. We will
 use the most likely haplotype configurating for the PED file. Takes four
 arguments:
-    1) VCF with ref/alt for the exome capture SNPs
-    2) Pedigree that does not include inbreeding
-    3) AlphaPeel haps output file
-    4) CHromosome
+    1) VCF with ref/alt for the exome capture SNPs (Gzipped)
+    2) Pedigree that does not include inbreeding (Gzipped)
+    3) AlphaPeel haps output file (Gzipped)
+    4) Chromosome
 """
 
 import sys
@@ -16,7 +16,7 @@ def parse_vcf(v, c):
     """Parse the VCF and store SNP ID, physical position, ref, and alt alleles.
     Restrict it to only the specified chromosome."""
     vcf_dat = []
-    with gzip.open(v, 'rb') as f:
+    with gzip.open(v, 'rt') as f:
         for line in f:
             if line.startswith('#'):
                 continue
@@ -36,7 +36,7 @@ def parse_ped(p):
     """Parse the pedigree and return a dictionary that gives the family ID,
     maternal ID, and paternal ID keyed on individual ID."""
     ped = {}
-    with gzip.open(p, 'rb') as f:
+    with gzip.open(p, 'rt') as f:
         for line in f:
             tmp = line.strip().split()
             if tmp[0].startswith('MS'):
@@ -51,7 +51,7 @@ def make_ped_string(h, v, p):
     """Iterate through the haps file, four at a time and taket he most likely
     haplotype to print. Use the ref and alt alleles from the VCF data, and the
     family info from the pedigree to make a complete PED file."""
-    with gzip.open(h, 'rb') as f:
+    with gzip.open(h, 'rt') as f:
         # Iterate through the file four lines at a time. The first element is
         # the probability of homozygous reference, then the two hetereozygous
         # phases, then homozygous alt.
@@ -87,7 +87,7 @@ def make_ped_string(h, v, p):
                     # Append the correct haplotype to the ped
                     highest = max(probs)
                     ped_string.append(genotypes[probs.index(highest)])
-            print ' '.join(ped_string)
+            print(' '.join(ped_string))
     return
 
 
@@ -113,15 +113,14 @@ def main(vcf, ped, haps, chrom):
     # Next, make the map file. Write this to stderr.
     make_map(chrom, v)
 
-
 if len(sys.argv) != 5:
-    print """Print a PLINK PED file with the imputed genotypes from AlphaPeel. We will
+    print("""Print a PLINK PED file with the imputed genotypes from AlphaPeel. We will
 use the most likely haplotype configurating for the PED file. Takes four
 arguments:
-    1) VCF with ref/alt for the exome capture SNPs
-    2) Pedigree that does not include inbreeding
-    3) AlphaPeel haps output file
-    4) Chromosome"""
+    1) VCF with ref/alt for the exome capture SNPs (Gzipped)
+    2) Pedigree that does not include inbreeding (Gzipped)
+    3) AlphaPeel haps output file (Gzipped)
+    4) Chromosome""")
     exit(1)
 else:
     main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

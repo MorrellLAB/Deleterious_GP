@@ -7,39 +7,39 @@ import gzip
 import sys
 
 C3_FREQS = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/C3_Freq.frqx.gz'
-ANCESTRAL = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Ancestral_State/GP_Ancestral.txt.gz'
-NONCODING = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt'
-SYNONYMOUS = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt'
-NONSYNONYMOUS = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt'
-DELETERIOUS = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt'
+ANCESTRAL = '/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/Ancestral_State/GP_Ancestral.txt.gz'
+NONCODING = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.names'
+SYNONYMOUS = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.names'
+NONSYNONYMOUS = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.names'
+DELETERIOUS = '/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.names'
 
 # Parse the lists and store SNP IDs
-nonc = []
+nonc = set()
 with open(NONCODING, 'r') as f:
     for line in f:
-        nonc.append(line.strip())
+        nonc.add(line.strip())
 
-syn = []
+syn = set()
 with open(SYNONYMOUS, 'r') as f:
     for line in f:
-        syn.append(line.strip())
+        syn.add(line.strip())
 
-deleterious = []
+deleterious = set()
 with open(DELETERIOUS, 'r') as f:
     for line in f:
-        deleterious.append(line.strip())
+        deleterious.add(line.strip())
 
 
-nonsyn = []
+nonsyn = set()
 with open(NONSYNONYMOUS, 'r') as f:
     for line in f:
         if line.strip() in deleterious:
             continue
         else:
-            nonsyn.append(line.strip())
+            nonsyn.add(line.strip())
 
 anc_alleles = {}
-with gzip.open(ANCESTRAL, 'rb') as f:
+with gzip.open(ANCESTRAL, 'rt') as f:
     for index, line in enumerate(f):
         if index == 0:
             continue
@@ -66,15 +66,13 @@ counts = [
     [0, 0, 0]
     ]
 
-with gzip.open(C3_FREQS, 'rb') as f:
+with gzip.open(C3_FREQS, 'rt') as f:
     for index, line in enumerate(f):
         if index == 0:
             continue
         else:
             tmp = line.strip().split()
             snpid = tmp[1]
-            if ';' in snpid:
-                snpid = tmp[1].split(';')[0]
             if snpid in nonc:
                 row = 0
             elif snpid in syn:
@@ -83,7 +81,6 @@ with gzip.open(C3_FREQS, 'rb') as f:
                 row = 2
             elif snpid in deleterious:
                 row = 3
-            sys.stderr.write(snpid + '\n')
             a1 = tmp[2]
             a2 = tmp[3]
             hom_a1 = tmp[4]
@@ -116,6 +113,6 @@ with gzip.open(C3_FREQS, 'rb') as f:
 
 # Then print out the counts
 classes = ['Noncoding', 'Synonymous', 'Nonsynonymous', 'Deleterious']
-print 'Class Lost Seg Fixed'
+print('Class Lost Seg Fixed')
 for index, row in enumerate(counts):
-    print classes[index], row[0], row[1], row[2]
+    print(classes[index], row[0], row[1], row[2])

@@ -9,7 +9,7 @@ N_ITERS="$1"
 #   Note that some of these executable names will be different on other
 #   platforms.
 PLINK=$(which plink2)
-GCTA="/Users/tomkono/Soft/gcta_1.91.2beta_mac/bin/gcta64"
+GCTA="/Users/tomkono/Soft/gcta_1.91.6beta_mac/bin/gcta64"
 SUBSAMP="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Analysis_Scripts/Genetic_Analysis/Downsample_SNPs.R"
 # These files will have the full genotypes and the phenotypes
 GCTA_SOURCE="$2"
@@ -53,7 +53,7 @@ while [ $(wc -l < VG_VP.txt) -lt ${N_ITERS} ]; do
         --pheno phenotypes.phen \
         --autosome-num 7 \
         --out tmp_VAR \
-        --reml-priors 0.01 0.05 0.15 0.25 0.35 0.45 0.6 0.8 \
+        --reml-priors 0.15 0.25 0.35 0.45 \
         --reml-maxit 1000
     #   Then get the variance components out of the output
     grep 'V(G)\s' tmp_VAR.hsq | cut -f 2,3 >> VG.txt

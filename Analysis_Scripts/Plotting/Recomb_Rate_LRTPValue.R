@@ -3,10 +3,12 @@
 library(ggplot2)
 
 #   Read the recombination rate table and the predictions
-rec_rate <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/SNP_Positions/BOPA_cMMb_Smoothed.txt", header=T)
-effects <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GenomicPrediction_Effcts_PROVEAN_PPH_BM.txt", header=T)
-excap <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/Resequencing_Summaries/ExomeCaptureTargets_per_Mb.txt", header=T)
-bopa <- read.table("/Volumes/DataDisk/Dropbox/GitHub/Deleterious_GP/Data/SNP_Positions/384-Capture_Positions.txt", header=TRUE)
+rec_rate <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/SNP_Positions/BOPA_cMMb_Smoothed.txt", header=T)
+effects <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GenomicPrediction_Effcts_PROVEAN_PPH_BM.txt.gz", header=T)
+excap <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Resequencing_Summaries/ExomeCaptureTargets_per_Mb.txt", header=T)
+bopa <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/AlphaPeel_Expanded/BOPA_AP_PLINK/GP_AlphaPeel_BOPA.map", header=FALSE)
+
+names(bopa) <- c("Chromosome", "SNP", "Genetic", "Position")
 
 #   Drop the unmapped chromosome
 chroms <- c("chr1H", "chr2H", "chr3H", "chr4H", "chr5H", "chr6H", "chr7H")

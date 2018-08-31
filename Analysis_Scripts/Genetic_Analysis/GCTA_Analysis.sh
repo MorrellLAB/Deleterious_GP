@@ -12,12 +12,12 @@ HEIGHT_BASE="/Volumes/LaCie/Genomic_Prediction/GCTA/Analysis/Height_GCTA"
 GCTA_SCRIPT="/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Analysis_Scripts/Genetic_Analysis/GCTA_Resampling.sh"
 #   The frequency distributions for the partitions of SNPs
 PARTITIONS=(
-    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/noncoding.frq"
-    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/synonymous.frq"
-    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/nonsynonymous.frq"
-    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/deleterious.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/GP_Noncoding.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/GP_Synonymous.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/GP_Nonsynonymous.frq"
+    "/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/GP_Deleterious.frq"
 )
-DELETERIOUS="/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/deleterious.frq"
+DELETERIOUS="/Volumes/LaCie/Genomic_Prediction/GCTA/Freqs/GP_Deleterious.frq"
 #   The basenames of the yield and DON PLINK files
 YIELD_PED="/Volumes/LaCie/Genomic_Prediction/GCTA/Source/Yield/Yield"
 DON_PED="/Volumes/LaCie/Genomic_Prediction/GCTA/Source/DON/DON"
@@ -37,9 +37,9 @@ do
         part=$(basename ${p})
         part_f=${part/.frq/}
         # Start with yield
-        #mkdir -p ${YIELD_BASE}/${i}/${part_f}; cd ${YIELD_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${YIELD_PED} ${p} ${DELETERIOUS} ${i}
+        mkdir -p ${YIELD_BASE}/${i}/${part_f}; cd ${YIELD_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${YIELD_PED} ${p} ${DELETERIOUS} ${i}
         # Then do DON
-        #mkdir -p ${DON_BASE}/${i}/${part_f}; cd ${DON_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${DON_PED} ${p} ${DELETERIOUS} ${i}
+        mkdir -p ${DON_BASE}/${i}/${part_f}; cd ${DON_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${DON_PED} ${p} ${DELETERIOUS} ${i}
         # And height
         mkdir -p ${HEIGHT_BASE}/${i}/${part_f}; cd ${HEIGHT_BASE}/${i}/${part_f}; bash ${GCTA_SCRIPT} ${ITERS} ${HEIGHT_PED} ${p} ${DELETERIOUS} ${i}
     done

@@ -13,7 +13,7 @@ import gzip
 
 def main(vcf, chrom):
     """Main function."""
-    with gzip.open(vcf, 'rb') as f:
+    with gzip.open(vcf, 'rt') as f:
         for line in f:
             if line.startswith('##'):
                 continue
@@ -40,17 +40,17 @@ def main(vcf, chrom):
                             out[i].append('9')
     # Print out the samples
     for samp in out:
-        print ' '.join(samp)
+        print(' '.join(samp))
     return
 
 
 if len(sys.argv) != 3:
-    print """Convert from a VCF to the AlphaPeel v0.1.0 format. The format is "transposed"
+    print("""Convert from a VCF to the AlphaPeel v0.1.0 format. The format is "transposed"
 from the VCF format - lines are individuals, and columns are sites. There are
 two lines per individual: one for the reference read counts, and one for the
 alternate read counts. Takes two arguments:
     1) Cleaned VCF (Gzipped)
-    2) Chromosome"""
+    2) Chromosome""")
     exit(1)
 else:
     main(sys.argv[1], sys.argv[2])

@@ -4,6 +4,13 @@ PED that was generated from VCF, as VCF does not store phenotype."""
 
 import sys
 
+# Dictionary for the columns that are the phenotypes in the CSV
+phen_cols = {
+    'Yld': 6,
+    'DON': 7,
+    'Pht': 8
+    }
+
 #   Read the phenotype data into a dictionary, keyed on line ID
 phenotype = {}
 with open(sys.argv[1], 'r') as f:
@@ -30,10 +37,10 @@ with open(sys.argv[1], 'r') as f:
                         lineid = parts[0] + '-0' + parts[1]
             #   If the phenotype column is missing, then we skip it and move on
             #   to the next row.
-            if tmp[4] == 'NA':
+            if tmp[phen_cols[sys.argv[3]]] == 'NA':
                 continue
             else:
-                phen = float(tmp[4])
+                phen = float(tmp[phen_cols[sys.argv[3]]])
                 phenotype[lineid] = phen
 
 #   Iterate through the PED file, and drop in the phenotype data.
@@ -46,4 +53,4 @@ with open(sys.argv[2], 'r') as f:
         else:
             #   take an arithmetic mean of the observations
             phen = str(phenotype[lineid])
-        print '\t'.join(tmp[0:5] + [phen] + tmp[6:])
+        print(' '.join(tmp[0:5] + [phen] + tmp[6:]))

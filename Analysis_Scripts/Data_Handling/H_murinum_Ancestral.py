@@ -14,7 +14,7 @@ def store_anc(a):
     """Read through the VCF and store the ancestral state. This will be in a
     dictionary keyed on chr:pos."""
     anc = {}
-    with gzip.open(a, 'rb') as f:
+    with gzip.open(a, 'rt') as f:
         for line in f:
             if line.startswith('#'):
                 continue
@@ -67,14 +67,14 @@ def main(anc_vcf, snps_vcf):
     # Parse and store the ancestral states in the H. hurinum VCF
     astates = store_anc(anc_vcf)
     # Then iterate through the derived VCF and print out the relevant fields
-    with gzip.open(snps_vcf, 'rb') as f:
+    with gzip.open(snps_vcf, 'rt') as f:
         for line in f:
             if line.startswith('##'):
                 continue
             elif line.startswith('#CHROM'):
                 samples = line.strip().split('\t')[9:]
                 # Print the header here
-                print '\t'.join(['Chromosome', 'Pos', 'SNPID', 'Ancestral', 'Derived', 'Morex'] + samples)
+                print('\t'.join(['Chromosome', 'Pos', 'SNPID', 'Ancestral', 'Derived', 'Morex'] + samples))
             else:
                 tmp = line.strip().split()
                 key = tmp[0] + ':' + tmp[1]
@@ -91,16 +91,16 @@ def main(anc_vcf, snps_vcf):
                 genos, derived = polarize(ref, alt, ancestral, samp)
                 # Print out the chrom, pos, ancestral, derived, morex state, and
                 # the polarized letters for the samples
-                print '\t'.join([tmp[0], tmp[1], tmp[2], ancestral, derived, morex] + genos)
+                print('\t'.join([tmp[0], tmp[1], tmp[2], ancestral, derived, morex] + genos))
     return
 
 
 if len(sys.argv) != 3:
-    print """Print out the ancestral/derived alleles for each SNP, and which samples have
+    print("""Print out the ancestral/derived alleles for each SNP, and which samples have
 the derived or ancestral alleles at each SNP. Both files must be anchored on
 the pseudomolecule assembly. Takes two arguments:
     1) Ancestral VCF (gzipped)
-    2) Non-ancestral VCF (gzipped)"""
+    2) Non-ancestral VCF (gzipped)""")
     exit(1)
 else:
     main(sys.argv[1], sys.argv[2])

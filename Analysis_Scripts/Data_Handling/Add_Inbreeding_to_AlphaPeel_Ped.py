@@ -69,17 +69,17 @@ def main(noinb_ped):
     full_ped = make_selfs(fam, pro, order)
     # Then print out the full pedigree
     for p in par:
-        print p, '0', '0'
+        print(p, '0', '0')
     for l in full_ped:
-        print ' '.join(l)
+        print(' '.join(l))
     return
 
 
 if len(sys.argv) != 2:
-    print """Add the intervening inbreeding steps to the pedigree for AlphaPeel. This is
+    print("""Add the intervening inbreeding steps to the pedigree for AlphaPeel. This is
 because we need to model the selfing of the progeny to the F3 generation. Takes
 one argument:
-    1) AlphaPeel pedigree without inbreeding"""
+    1) AlphaPeel pedigree without inbreeding""")
     exit(1)
 else:
     main(sys.argv[1])

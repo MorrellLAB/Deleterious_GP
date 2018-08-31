@@ -53,9 +53,17 @@ class PedFile(object):
             #           2: S2 (F3)
             #           XXX: Family ID
             #           YYY: Line ID
+            # Make the replacement of G10... To MS... For cycle 1
+            if ind_id.startswith('G10'):
+                c1_tmp = ind_id.replace('G10W', 'MS10S3')
+                c1_parts = c1_tmp.split('-')
+                iid = c1_parts [0] + '-' + '0' + c1_parts[1]
+            else:
+                iid = ind_id
+            fid = iid.split('-')[0]
             self.ped_data[ind_id] = {
-                'familyid': ind_id[6:9],
-                'individualid': ind_id[-3:],
+                'familyid': fid,
+                'individualid': iid,
                 'paternalid': self.missing,
                 'maternalid': self.missing,
                 'sex': self.missing,
@@ -117,9 +125,9 @@ class MapFile(object):
                         #   missing values.
                         if chrom == '':
                             chrom = '0'
-                        if cm == '':
+                        if cm == '' or cm == 'NA':
                             cm = '0'
-                        if gp == '':
+                        if gp == '' or gp == 'NA':
                             gp = '0'
                         self.genetic_data[snpid] = (
                             chrom,

@@ -113,7 +113,7 @@ def main(mapfile):
     reresorted = sorted(resorted, key=lambda x: (x[0], float(x[2])))
     # And print it out
     for row in reresorted:
-        print '\t'.join(row)
+        print('\t'.join(row))
 
 
 main(sys.argv[1])

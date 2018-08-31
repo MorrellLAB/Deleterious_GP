@@ -117,20 +117,20 @@ def main(ids, anc, dsnps, dosages):
     # Then, trim through the matrix
     s_ids, f_dos = del_dosage(offsets, polarities, dosages)
     # And print out the matrix
-    print ' '.join(['IID'] + d_ids + ['TotDos'])
+    print(' '.join(['IID'] + d_ids + ['TotDos']))
     for index, row in enumerate(f_dos):
-        print s_ids[index], ' '.join(row), sum([float(x) for x in row])
+        print(s_ids[index], ' '.join(row), sum([float(x) for x in row]))
     return
 
 
 if len(sys.argv) != 5:
-    print """Calculate the dosage of deleterious variants across all lines in the
+    print("""Calculate the dosage of deleterious variants across all lines in the
 experiment. Filters to those that only have ancestral state. Takes four
 arguments:
     1) SNP IDs in AlphaPeel dosages file
     2) Inferred ancestal states for each SNP (gzipped)
     3) Deleterious SNP IDs
-    4) Combined AlphaPeel dosages output (gzipped)"""
+    4) Combined AlphaPeel dosages output (gzipped)""")
     exit(1)
 else:
     main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
