@@ -104,7 +104,7 @@ beeswarm(
     axes=F)
 beeswarm(
     ran$Deleterious ~ ran$Cycle,
-    col="#333333",
+    col="#666666",
     pch=19,
     cex=0.5,
     method="hex",
@@ -129,6 +129,7 @@ boxplot(
     at=c(1.75, 2.75, 3.75, 2.25, 3.25, 4.25),
     boxwex=0.2,
     lwd=2,
+    boxlwd=3,
     border=c("black", "black", "black", "red", "red", "red"),
     axes=F,
     add=TRUE)
@@ -164,7 +165,7 @@ beeswarm(
     axes=F)
 beeswarm(
     ran$SCORE ~ ran$Cycle,
-    col="#333333",
+    col="#666666",
     pch=19,
     cex=0.5,
     method="hex",
@@ -189,6 +190,7 @@ boxplot(
     at=c(1.75, 2.75, 3.75, 2.25, 3.25, 4.25),
     boxwex=0.2,
     lwd=2,
+    boxlwd=3,
     border=c("black", "black", "black", "red", "red", "red"),
     axes=F,
     add=TRUE)

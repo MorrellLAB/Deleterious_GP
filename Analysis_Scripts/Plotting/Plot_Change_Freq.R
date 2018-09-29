@@ -5,10 +5,10 @@ CHROMS <- c("chr1H", "chr2H", "chr3H", "chr4H", "chr5H", "chr6H", "chr7H")
 
 # Read the data files
 freqs <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/DAF_By_Cycle.txt", header=TRUE)
-nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.names", header=FALSE)$V1)
-syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.names", header=FALSE)$V1)
-nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.names", header=FALSE)$V1)
-del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.names", header=FALSE)$V1)
+nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.names.gz", header=FALSE)$V1)
+syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.names.gz", header=FALSE)$V1)
+nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.names.gz", header=FALSE)$V1)
+del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.names.gz", header=FALSE)$V1)
 pos <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Imputation/AlphaPeel/GP_AP.bim", header=FALSE)
 
 # Set the names of the columns of the positions
@@ -37,6 +37,41 @@ df_nc <- df_nc[!is.na(df_nc$ChFrq),]
 df_syn <- df_syn[!is.na(df_syn$ChFrq),]
 df_nonsyn <- df_nonsyn[!is.na(df_nonsyn$ChFrq),]
 df_del <- df_del[!is.na(df_del$ChFrq),]
+
+# Make counts of increasing and decreasing
+nc.inc <- sum(df_nc$ChFrq > 0) / nrow(df_nc)
+nc.dec <- sum(df_nc$ChFrq < 0) / nrow(df_nc)
+syn.inc <- sum(df_syn$ChFrq > 0) / nrow(df_syn)
+syn.dec <- sum(df_syn$ChFrq < 0) / nrow(df_syn)
+nonsyn.inc <- sum(df_nonsyn$ChFrq > 0) / nrow(df_nonsyn)
+nonsyn.dec <- sum(df_nonsyn$ChFrq < 0) / nrow(df_nonsyn)
+del.inc <- sum(df_del$ChFrq > 0) / nrow(df_del)
+del.dec <- sum(df_del$ChFrq < 0) / nrow(df_del)
+
+# Mean change in DAF
+
+inc_dec <- data.frame(
+    Class=c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"),
+    MeanDeltaDAF=c(mean(df_nc$ChFrq), mean(df_syn$ChFrq), mean(df_nonsyn$ChFrq), mean(df_del$ChFrq)),
+    MedianDeltaDAF=c(median(df_nc$ChFrq), median(df_syn$ChFrq), median(df_nonsyn$ChFrq), median(df_del$ChFrq)),
+    Increasing=c(nc.inc, syn.inc, nonsyn.inc, del.inc),
+    Decreasing=c(nc.dec, syn.dec, nonsyn.dec, del.dec))
+print(inc_dec)
+
+# Make the 4H region expansion plot
+pdf(file="4H_ROI_DeltaDAF.pdf", height=3, width=6)
+nc_roi <- df_nc[df_nc$CHR == "chr4H" & df_nc$BP > 18 & df_nc$BP < 36,]
+syn_roi <- df_syn[df_syn$CHR == "chr4H" & df_syn$BP > 18 & df_syn$BP < 36,]
+nonsyn_roi <- df_nonsyn[df_nonsyn$CHR == "chr4H" & df_nonsyn$BP > 18 & df_nonsyn$BP < 36,]
+del_roi <- df_del[df_del$CHR == "chr4H" & df_del$BP > 18 & df_del$BP < 36,]
+plot(nc_roi$ChFrq ~ nc_roi$BP, type="l", lwd=1, col="black", ylim=c(-1, 5), xlim=c(18, 36), xlab="Position (Mb)", ylab="Fold Change in DAF", main="4H Yield and DON Region", axes=F)
+axis(side=2)
+axis(side=1, at=seq(18, 36, by=2), labels=seq(18, 36, by=2))
+lines(syn_roi$ChFrq ~ syn_roi$BP, lwd=1, col="blue")
+lines(nonsyn_roi$ChFrq ~ nonsyn_roi$BP, lwd=1, col="green")
+lines(del_roi$ChFrq ~ del_roi$BP, lwd=2, col="red")
+abline(h=0, lwd=2, col="black", lty=3)
+dev.off()
 
 # Plot it
 png(file="Delta_DAF.png", res=300, height=10.5*300, width=8*300)
