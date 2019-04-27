@@ -99,7 +99,7 @@ beeswarm(
     ylim=c(110, 300),
     corral="wrap",
     xlab="Cycle",
-    ylab="Number of Homozygous Deleterious SNPs",
+    ylab="Number of Homozygous dSNPs",
     main="",
     axes=F)
 beeswarm(
@@ -142,6 +142,28 @@ axis(
     side=2)
 box()
 dev.off()
+
+dsnp_sel <- aov(sel$Deleterious ~ sel$Cycle)
+summary(dsnp_sel)
+TukeyHSD(dsnp_sel)
+
+
+summary(sel$Deleterious[sel$Cycle == "C1"])
+summary(sel$Deleterious[sel$Cycle == "C2"])
+summary(sel$Deleterious[sel$Cycle == "C3"])
+
+sd(sel$Deleterious[sel$Cycle == "C1"])
+sd(sel$Deleterious[sel$Cycle == "C2"])
+sd(sel$Deleterious[sel$Cycle == "C3"])
+
+
+dsnp_ran <- aov(ran$Deleterious ~ ran$Cycle)
+summary(dsnp_ran)
+TukeyHSD(dsnp_ran)
+
+sd(ran$Deleterious[ran$Cycle == "C1"])
+sd(ran$Deleterious[ran$Cycle == "C2"])
+sd(ran$Deleterious[ran$Cycle == "C3"])
 
 # Do the same for average burden
 ran <- del_dosages[del_dosages$Type == "Ran",]

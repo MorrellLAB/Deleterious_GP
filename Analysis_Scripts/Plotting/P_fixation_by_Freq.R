@@ -1,7 +1,12 @@
 # Make a plot of the proportion of fixed sites by class and by C1 frequency.
 
+nc_col <- '#2c7bb6'
+syn_col <- '#abd9e9'
+ns_col <- '#fdae61'
+del_col <- '#d7191c'
+
 # Read in the genotype frequency data
-par_frq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Ancestral_State/GP_Ancestral.txt.gz", header=TRUE)
+par_frq <- read.table("/Users/tomkono/Dropbox/Large_Project_Files/Genomic_Prediction/Ancestral_State/GP_Ancestral.txt.gz", header=TRUE)
 par_frq <- par_frq[,c("SNPID", "DAF")]
 names(par_frq) <- c("SNP_ID", "C0_DAF")
 freq <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Genotype_Freqs/DAF_By_Cycle.txt.gz", header=TRUE)
@@ -22,10 +27,10 @@ dim(freq)
 freq <- freq[keep,]
 dim(freq)
 # Read in the functional class lists
-nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.txt", header=FALSE)$V1)
-syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.txt", header=FALSE)$V1)
-nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.txt", header=FALSE)$V1)
-del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.txt", header=FALSE)$V1)
+nonc <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Noncoding.names.gz", header=FALSE)$V1)
+syn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Synonymous.names.gz", header=FALSE)$V1)
+nonsyn <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Nonsynonymous.names.gz", header=FALSE)$V1)
+del <- as.character(read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/SNP_Annotations/GP_Deleterious.names.gz", header=FALSE)$V1)
 
 # Slice down the matrix to the functional classes
 nonc.dafs <- freq[freq$SNP_ID %in% nonc,]
@@ -94,19 +99,19 @@ par(mar=c(4, 4, 0, 0), mgp=c(2, 1, 0))
 plot(
     nonc.lprop,
     type="b",
-    col="black",
+    col=nc_col,
     lwd=3,
     pch=19,
     xlab="DAF in Parents",
     ylab="Proportion of Variants Fixed for Ancestral Allele",
     axes=F,
     ylim=c(0, 0.5))
-lines(syn.lprop, col="blue", lwd=3, pch=19, type="b")
-lines(nonsyn.lprop, col="green", lwd=3, pch=19, type="b")
-lines(del.lprop, col="red", lwd=3, pch=19, type="b")
+lines(syn.lprop, col=syn_col, lwd=3, pch=19, type="b")
+lines(nonsyn.lprop, col=ns_col, lwd=3, pch=19, type="b")
+lines(del.lprop, col=del_col, lwd=3, pch=19, type="b")
 axis(side=2)
 axis(side=1, at=1:(length(breaks)-1), labels=levels(nonc.poly$Bin))
-legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), col=c("black", "blue", "green", "red"), pch=19)
+legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), col=c(nc_col, syn_col, ns_col, del_col), pch=19)
 dev.off()
 
 # Let's plot the mean change in frequency by DAF in C1
@@ -152,20 +157,20 @@ par(mar=c(4, 4, 0, 0), mgp=c(2, 1, 0))
 plot(
     nonc.mddaf,
     type="b",
-    col="black",
+    col=nc_col,
     lwd=3,
     pch=19,
     xlab="DAF in Parents",
     ylab="Median Change in DAF From C1 to C3",
     axes=F,
     ylim=c(-0.25, 0.25))
-lines(syn.mddaf, col="blue", lwd=3, pch=19, type="b")
-lines(nonsyn.mddaf, col="green", lwd=3, pch=19, type="b")
-lines(del.mddaf, col="red", lwd=3, pch=19, type="b")
+lines(syn.mddaf, col=syn_col, lwd=3, pch=19, type="b")
+lines(nonsyn.mddaf, col=ns_col, lwd=3, pch=19, type="b")
+lines(del.mddaf, col=del_col, lwd=3, pch=19, type="b")
 abline(h=0, lwd=1, lty=2)
 axis(side=2)
 axis(side=1, at=1:(length(breaks)-1), labels=levels(nonc.poly$Bin))
-legend("top", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), col=c("black", "blue", "green", "red"), pch=19)
+legend("top", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), col=c(nc_col, syn_col, ns_col, del_col), pch=19)
 dev.off()
 
 
@@ -223,17 +228,17 @@ par(mar=c(4, 4, 0, 0), mgp=c(2, 1, 0))
 plot(
     nonc.decprop,
     type="b",
-    col="black",
+    col=nc_col,
     lwd=3,
     pch=19,
     xlab="DAF in Parents",
     ylab="Proportion of Variants Decreasing in DAF",
     axes=F,
     ylim=c(0, 1))
-lines(syn.decprop, col="blue", lwd=3, pch=19, type="b")
-lines(nonsyn.decprop, col="green", lwd=3, pch=19, type="b")
-lines(del.decprop, col="red", lwd=3, pch=19, type="b")
+lines(syn.decprop, col=syn_col, lwd=3, pch=19, type="b")
+lines(nonsyn.decprop, col=ns_col, lwd=3, pch=19, type="b")
+lines(del.decprop, col=del_col, lwd=3, pch=19, type="b")
 axis(side=2)
 axis(side=1, at=1:(length(breaks)-1), labels=levels(nonc.poly$Bin))
-legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), col=c("black", "blue", "green", "red"), pch=19)
+legend("topright", c("Noncoding", "Synonymous", "Nonsynonymous", "Deleterious"), col=c(nc_col, syn_col, ns_col, del_col), pch=19)
 dev.off()

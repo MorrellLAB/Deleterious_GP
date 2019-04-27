@@ -31,5 +31,5 @@ for chrom in CHR_SIZES:
             end = chrom[1]
         else:
             end = curr + winlen
-        print '\t'.join([chrom[0], str(curr), str(end)])
+        print('\t'.join([chrom[0], str(curr), str(end)]))
         curr += winlen
