@@ -15,6 +15,12 @@ c3_col <- "#33a02c"
 phen <- read.csv("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Data/Phenotypic_Data/Adjusted_Phenotypic_Data_800Lines.csv", header=TRUE)
 # Deleterious allele dosages
 dosages <- read.table("/Users/tomkono/Dropbox/GitHub/Deleterious_GP/Results/Burden/Homozygous_Derived_Counts.txt.gz", header=TRUE)
+# Scale the dosages
+dosages$Noncoding_Scaled <- (dosages$Noncoding - mean(dosages$Noncoding)) / sd(dosages$Noncoding)
+dosages$Synonymous_Scaled <- (dosages$Synonymous - mean(dosages$Synonymous)) / sd(dosages$Synonymous)
+dosages$Nonsynonymous_Scaled <- (dosages$Nonsynonymous - mean(dosages$Nonsynonymous)) / sd(dosages$Nonsynonymous)
+dosages$Deleterious_Scaled <- (dosages$Deleterious - mean(dosages$Deleterious)) / sd(dosages$Deleterious)
+
 
 # Merge the tables
 merged <- merge(phen, dosages, by.x="line", by.y="LineID", all.x=TRUE, all.y=FALSE)
@@ -49,7 +55,7 @@ par(mfrow=c(2, 2), mar=c(4, 4, 1, 0.1), mgp=c(2, 1, 0))
 plot(
     merged$yld_kg ~ merged$Noncoding,
     cex=0.6,
-    xlab="Hom. Derived SNPs",
+    xlab="Number of Homozygous Derived Genotypes",
     ylab="Yield BLUE (kg/ha)",
     main="Noncoding",
     pch=19,
@@ -64,7 +70,7 @@ abline(lm(merged$yld_kg ~ merged$Noncoding), col="red")
 plot(
     merged$yld_kg ~ merged$Synonymous,
     cex=0.6,
-    xlab="Hom. Derived SNPs",
+    xlab="Number of Homozygous Derived Genotypes",
     ylab="Yield BLUE (kg/ha)",
     main="Synonymous",
     pch=19,
@@ -80,7 +86,7 @@ legend("topright", c("C0", "C1", "C2", "C3"), pch=c(15, 16, 17, 19), col=c(c0_co
 plot(
     merged$yld_kg ~ merged$Nonsynonymous,
     cex=0.6,
-    xlab="Hom. Derived SNPs",
+    xlab="Number of Homozygous Derived Genotypes",
     ylab="Yield BLUE (kg/ha)",
     main="Nonsynonymous",
     pch=19,
@@ -95,7 +101,7 @@ abline(lm(merged$yld_kg ~ merged$Nonsynonymous), col="red")
 plot(
     merged$yld_kg ~ merged$Deleterious,
     cex=0.6,
-    xlab="Hom. Derived SNPs",
+    xlab="Number of Homozygous Derived Genotypes",
     ylab="Yield BLUE (kg/ha)",
     main="Deleterious",
     pch=19,

@@ -30,7 +30,7 @@ yld_plt <- data.frame(
         yld$ps[yld$chr == "chr5H"] + chr4H_end,
         yld$ps[yld$chr == "chr6H"] + chr5H_end,
         yld$ps[yld$chr == "chr7H"] + chr6H_end) / 1000000,
-    Y=-log10(yld$p_lrt),
+    Y=-log10(p.adjust(yld$p_lrt, method="BH")),
     Chrom=c(
         rep("Chr1H", sum(yld$chr == "chr1H")),
         rep("Chr2H", sum(yld$chr == "chr2H")),
@@ -51,7 +51,7 @@ don_plt <- data.frame(
         don$ps[don$chr == "chr5H"] + chr4H_end,
         don$ps[don$chr == "chr6H"] + chr5H_end,
         don$ps[don$chr == "chr7H"] + chr6H_end) / 1000000,
-    Y=-log10(don$p_lrt),
+    Y=-log10(p.adjust(don$p_lrt, method="BH")),
     Chrom=c(
         rep("Chr1H", sum(don$chr == "chr1H")),
         rep("Chr2H", sum(don$chr == "chr2H")),
@@ -72,7 +72,7 @@ hgt_plt <- data.frame(
         hgt$ps[hgt$chr == "chr5H"] + chr4H_end,
         hgt$ps[hgt$chr == "chr6H"] + chr5H_end,
         hgt$ps[hgt$chr == "chr7H"] + chr6H_end) / 1000000,
-    Y=-log10(hgt$p_lrt),
+    Y=-log10(p.adjust(hgt$p_lrt, method="BH")),
     Chrom=c(
         rep("Chr1H", sum(hgt$chr == "chr1H")),
         rep("Chr2H", sum(hgt$chr == "chr2H")),
@@ -89,7 +89,7 @@ png(file="GEMMA_BOPA_Manhattan.png", res=150, height=600, width=1200)
 par(mfrow=c(3, 1), mar=c(1, 3, 0.75, 0.1), mgp=c(2, 1, 0))
 chroms <- c("Chr1H", "Chr2H", "Chr3H", "Chr4H", "Chr5H", "Chr6H", "Chr7H")
 # Make a plot for Yield
-plot(0, type="n", axes=FALSE, ylim=c(0, 7), xlim=c(0, 4600), xlab="", ylab="-log10(P)", main="Yield (kg/ha)")
+plot(0, type="n", axes=FALSE, ylim=c(0, 4), xlim=c(0, 4600), xlab="", ylab="-log10(P)", main="Yield (kg/ha)")
 sapply(
     seq_along(chroms),
     function(x) {
@@ -101,8 +101,8 @@ sapply(
             cex=0.25,
             col=color)
     })
-abline(h=-log10(0.01/nrow(yld_plt)), col="red", lwd=0.75, lty=3)
-abline(h=-log10(0.1/nrow(yld_plt)), col="blue", lwd=0.75, lty=3)
+abline(h=-log10(0.01), col="red", lwd=0.75, lty=3)
+abline(h=-log10(0.1), col="blue", lwd=0.75, lty=3)
 abline(
     v=c(chr1H_end, chr2H_end, chr3H_end, chr4H_end, chr5H_end, chr6H_end)/1000000,
     lwd=0.25,
@@ -111,7 +111,7 @@ abline(
 axis(side=2)
 
 # Make a plot for DON
-plot(0, type="n", axes=FALSE, ylim=c(0, 7), xlim=c(0, 4600), xlab="", ylab="-log10(P)", main="DON (ppm)")
+plot(0, type="n", axes=FALSE, ylim=c(0, 4), xlim=c(0, 4600), xlab="", ylab="-log10(P)", main="DON (ppm)")
 sapply(
     seq_along(chroms),
     function(x) {
@@ -123,8 +123,8 @@ sapply(
             cex=0.25,
             col=color)
     })
-abline(h=-log10(0.01/nrow(don_plt)), col="red", lwd=0.75, lty=3)
-abline(h=-log10(0.1/nrow(don_plt)), col="blue", lwd=0.75, lty=3)
+abline(h=-log10(0.01), col="red", lwd=0.75, lty=3)
+abline(h=-log10(0.1), col="blue", lwd=0.75, lty=3)
 abline(
     v=c(chr1H_end, chr2H_end, chr3H_end, chr4H_end, chr5H_end, chr6H_end)/1000000,
     lwd=0.25,
@@ -133,7 +133,7 @@ abline(
 axis(side=2)
 
 # Make a plot for Height
-plot(0, type="n", axes=FALSE, ylim=c(0, 7), xlim=c(0, 4600), xlab="", ylab="-log10(P)", main="Height (cm)")
+plot(0, type="n", axes=FALSE, ylim=c(0, 4), xlim=c(0, 4600), xlab="", ylab="-log10(P)", main="Height (cm)")
 sapply(
     seq_along(chroms),
     function(x) {
@@ -145,8 +145,8 @@ sapply(
             cex=0.25,
             col=color)
     })
-abline(h=-log10(0.01/nrow(hgt_plt)), col="red", lwd=0.75, lty=3)
-abline(h=-log10(0.1/nrow(hgt_plt)), col="blue", lwd=0.75, lty=3)
+abline(h=-log10(0.01), col="red", lwd=0.75, lty=3)
+abline(h=-log10(0.1), col="blue", lwd=0.75, lty=3)
 abline(
     v=c(chr1H_end, chr2H_end, chr3H_end, chr4H_end, chr5H_end, chr6H_end)/1000000,
     lwd=0.25,

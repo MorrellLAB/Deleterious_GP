@@ -46,29 +46,30 @@ d_s <- d_s[keep]
 rec_rate <- syn_count$V4[keep]
 # Cap the recombination rate at 20 cM/Mb
 rec_rate[rec_rate > 20] <- 20
+l_d_s <- log2(1+d_s)
+l_rec_rate <- log2(1+rec_rate)
 
-cor.test(d_s, rec_rate, use="pairwise.complete.obs")
+cor.test(l_d_s, l_rec_rate, use="pairwise.complete.obs", method="spearman")
 
 # Make a plot
-pdf(file="dSNPs_per_sSNP_cMMb.pdf", 6, 6)
+pdf(file="log_dSNPs_per_sSNP_cMMb.pdf", 6, 6)
 par(mar=c(3, 3, 0.25, 0.25), mgp=c(2, 1, 0))
 plot(
-    d_s ~ rec_rate,
-    xlab="cM/Mb Estimate",
-    ylab="dSNPs per sSNP",
+    l_d_s ~ l_rec_rate,
+    xlab="log2(cM/Mb Estimate + 1)",
+    ylab="log2(dSNPs per sSNP + 1)",
     main="")
-legend("topright", c("r=-0.073", "p=9.05 E-4"))
+legend("topright", c("rho=-0.096", "p=1.25E-5"))
 dev.off()
 
 rr_trim <- as.numeric(del_count$V4)
-rr_trim[rr_trim > 20] <- 20
-cor.test(dSNPs, rr_trim, use="pairwise.complete.obs")
+cor.test(log2(1+dSNPs), log2(1+rr_trim), use="pairwise.complete.obs", method="spearman")
 # Make a plot of just dSNPs across recombination rate
-pdf(file="dSNPs_per_cMMb_Window.pdf", 6, 6)
+pdf(file="log_dSNPs_per_cMMb_Window.pdf", 6, 6)
 par(mar=c(3, 3, 0.25, 0.25), mgp=c(2, 1, 0))
 plot(
-    dSNPs ~ rr_trim,
-    xlab="cM/Mb Estimate",
-    ylab="dSNP Count",
+    log2(1+dSNPs) ~ log2(1+rr_trim),
+    xlab="log2(cM/Mb Estimate + 1)",
+    ylab="log2(dSNP Count + 1)",
     main="")
 dev.off()
